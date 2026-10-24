@@ -1,0 +1,45 @@
+name: fitlog_pro
+description: "FitLog Pro — Pure-focus workout tracking with sub-2-second logging."
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Typography & Design System
+  google_fonts: ^6.2.1
+
+  # Local Relational Database (SQLite)
+  drift: ^2.24.2
+  sqlite3_flutter_libs: ^0.5.28
+  path_provider: ^2.1.5
+  path: ^1.9.1
+
+  # Identifiers & Localization
+  uuid: ^4.5.1
+  intl: ^0.20.2
+
+  # Visualization & Charts
+  fl_chart: ^0.70.2
+  http: ^1.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  drift_dev: ^2.24.2
+  build_runner: ^2.4.15
+  custom_lint: ^0.7.0
+  riverpod_lint: ^2.6.1
+
+flutter:
+  uses-material-design: true

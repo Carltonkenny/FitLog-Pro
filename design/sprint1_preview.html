@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitLog Pro — Sprint 1 Core Workout Loop & High-Leverage Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0B0B0C;
+    color: #F4F4F5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    padding-bottom: 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top App Bar */
+  .header-nav {
+    background: #161618;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 14px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #C6FF3D;
+    color: #0B0B0C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+  }
+  .brand-text h1 { font-size: 17px; font-weight: 800; }
+  .brand-text p { font-size: 12px; color: #8A8A90; }
+
+  /* Flow Stepper Bar */
+  .flow-stepper-bar {
+    background: #121215;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 14px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    overflow-x: auto;
+  }
+  .step-pill {
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    background: #202023;
+    color: #8A8A90;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  .step-pill.active {
+    background: #C6FF3D;
+    color: #0B0B0C;
+    box-shadow: 0 2px 14px rgba(198, 255, 61, 0.35);
+  }
+
+  /* Main Workspace */
+  .workspace {
+    max-width: 1240px;
+    margin: 28px auto 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 28px;
+  }
+  @media (max-width: 980px) {
+    .workspace { flex-direction: column; align-items: center; }
+  }
+
+  /* Mobile Frame */
+  .device-mockup {
+    width: 390px;
+    height: 844px;
+    border-radius: 48px;
+    background: #0B0B0C;
+    border: 12px solid #1C1C1F;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .dynamic-island {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 30px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 999;
+  }
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+  .screen-body::-webkit-scrollbar { width: 4px; }
+  .screen-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+  /* Side Explainer & High-Leverage Deck */
+  .side-deck {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .info-box {
+    background: #161618;
+    border-radius: 16px;
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .info-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .info-desc {
+    font-size: 13px;
+    color: #8A8A90;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  /* High-Leverage Feature Cards */
+  .leverage-card {
+    background: #202023;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-left: 4px solid #C6FF3D;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .leverage-card:hover { background: #28282d; }
+  .leverage-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .leverage-tag {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(198, 255, 61, 0.15);
+    color: #C6FF3D;
+  }
+  .leverage-detail {
+    font-size: 12px;
+    color: #8A8A90;
+    line-height: 1.5;
+  }
+
+  /* In-App Styling Components */
+  .stage-view { display: none; flex-direction: column; min-height: 100%; }
+  .stage-view.active { display: flex; }
+
+  .status-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 18px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8A8A90;
+  }
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px 14px;
+  }
+  .app-title { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+  .timer-badge {
+    font-size: 13px;
+    font-weight: 700;
+    color: #C6FF3D;
+    background: #202023;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .content-pad { padding: 0 16px 20px; flex: 1; }
+
+  .exercise-card {
+    background: #161618;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .set-grid-head {
+    display: grid;
+    grid-template-columns: 36px 1fr 68px 62px 42px;
+    gap: 6px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #8A8A90;
+    text-transform: uppercase;
+  }
+  .set-row-item {
+    display: grid;
+    grid-template-columns: 36px 1fr 68px 62px 42px;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .set-tag-badge {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px;
+    text-align: center;
+    border-radius: 6px;
+    background: #202023;
+    color: #8A8A90;
+    cursor: pointer;
+  }
+  .set-tag-badge.warmup { background: #3f3f46; color: #a1a1aa; }
+  .set-tag-badge.dropset { background: #7c2d12; color: #fdba74; }
+
+  .set-input-box {
+    background: #202023;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    height: 38px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+  }
+
+  .check-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    border: none;
+    background: #202023;
+    color: #8A8A90;
+    transition: all 0.15s ease;
+  }
+  .check-button.done { background: #C6FF3D; color: #0B0B0C; }
+  .check-button.pr { background: #FFD24A; color: #0B0B0C; }
+
+  /* Plate Calculator Modal */
+  .plate-calc-sheet {
+    background: #1c1c20;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    margin-top: auto;
+    border-top: 2px solid #C6FF3D;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  .barbell-visualizer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0B0B0C;
+    border-radius: 12px;
+    height: 90px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .bar-steel {
+    position: absolute;
+    width: 80%;
+    height: 10px;
+    background: #52525b;
+    border-radius: 4px;
+  }
+  .plate-stack {
+    display: flex;
+    gap: 4px;
+    z-index: 2;
+    align-items: center;
+  }
+  .plate-disc {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .p-20 { height: 70px; width: 14px; background: #2563eb; }
+  .p-10 { height: 55px; width: 12px; background: #16a34a; }
+  .p-5 { height: 44px; width: 10px; background: #eab308; color:#000; }
+  .p-2half { height: 34px; width: 8px; background: #dc2626; }
+  .p-1quarter { height: 26px; width: 6px; background: #6b7280; }
+
+  /* PR Banner */
+  .pr-gold-card {
+    background: linear-gradient(135deg, rgba(255, 210, 74, 0.16) 0%, rgba(255, 210, 74, 0.04) 100%);
+    border: 1.5px solid rgba(255, 210, 74, 0.4);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .primary-action-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 999px;
+    background: #C6FF3D;
+    color: #0B0B0C;
+    border: none;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+
+  .bottom-app-bar {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 6px 20px;
+    background: #161618;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: auto;
+  }
+  .nav-item { font-size: 10px; color: #8A8A90; text-align: center; }
+  .nav-item.active { color: #C6FF3D; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header-nav">
+  <div class="brand-logo">
+    <div class="logo-box">⚡</div>
+    <div class="brand-text">
+      <h1>FitLog Pro · Sprint 1 Visualizer</h1>
+      <p>The Core Workout Loop & High-Leverage Superpowers</p>
+    </div>
+  </div>
+  <div style="font-size:12px; color:#C6FF3D; font-weight:700;">SPRINT 1 SPECIFICATION</div>
+</header>
+
+<!-- Step Progression Bar -->
+<div class="flow-stepper-bar">
+  <div class="step-pill active" id="pill-s11" onclick="showStep('s11')">1. S-11 Routine Start</div>
+  <div class="step-pill" id="pill-s13" onclick="showStep('s13')">2. S-13 Active Grid</div>
+  <div class="step-pill" id="pill-plate" onclick="showStep('plate')">★ Plate Calculator</div>
+  <div class="step-pill" id="pill-s14" onclick="showStep('s14')">3. S-14 Rest Timer</div>
+  <div class="step-pill" id="pill-s16" onclick="showStep('s16')">4. S-16 PR Moment</div>
+  <div class="step-pill" id="pill-s17" onclick="showStep('s17')">5. S-17 Workout Finish</div>
+</div>
+
+<main class="workspace">
+
+  <!-- Interactive Device Mockup -->
+  <div class="device-mockup">
+    <div class="dynamic-island"></div>
+
+    <div class="screen-body">
+
+      <!-- STAGE 1: S-11 Routine Preview & Start -->
+      <div class="stage-view active" id="view-s11">
+        <div class="status-header"><span>13:42</span><span>📶 🔋 87%</span></div>
+        <div class="content-pad" style="padding-top:10px;">
+          <div style="font-size:12px; color:#C6FF3D; font-weight:700; text-transform:uppercase;">Routine Preview</div>
+          <h2 style="font-size:24px; font-weight:900; margin:4px 0 16px;">Push Day (Chest / Tris)</h2>
+
+          <div style="background:#161618; border-radius:14px; padding:16px; margin-bottom:12px; display:flex; justify-content:space-between;">
+            <div><div style="font-size:11px; color:#8A8A90;">LAST PERFORMED</div><div style="font-size:14px; font-weight:700;">4 days ago</div></div>
+            <div><div style="font-size:11px; color:#8A8A90;">EST. DURATION</div><div style="font-size:14px; font-weight:700;">45–55 min</div></div>
+            <div><div style="font-size:11px; color:#8A8A90;">TOTAL SETS</div><div style="font-size:14px; font-weight:700;">14 sets</div></div>
+          </div>
+
+          <div style="font-size:13px; font-weight:700; color:#8A8A90; margin-bottom:8px;">5 EXERCISES INCLUDED:</div>
+          <div style="background:#161618; border-radius:12px; padding:12px; margin-bottom:8px; font-size:13px;">1. Barbell Bench Press · 3 sets</div>
+          <div style="background:#161618; border-radius:12px; padding:12px; margin-bottom:8px; font-size:13px;">2. Incline Dumbbell Press · 3 sets</div>
+          <div style="background:#161618; border-radius:12px; padding:12px; margin-bottom:8px; font-size:13px;">3. Cable Fly · 3 sets</div>
+          <div style="background:#161618; border-radius:12px; padding:12px; margin-bottom:8px; font-size:13px;">4. Triceps Pushdown · 3 sets</div>
+          <div style="background:#161618; border-radius:12px; padding:12px; margin-bottom:8px; font-size:13px;">5. Lateral Raise · 2 sets</div>
+
+          <button class="primary-action-btn" onclick="showStep('s13')">Start Push Day Workout</button>
+        </div>
+      </div>
+
+      <!-- STAGE 2: S-13 Active Grid with Overload & Set Tagging -->
+      <div class="stage-view" id="view-s13">
+        <div class="status-header"><span>13:42</span><span>📶 🔋 87%</span></div>
+        <div class="app-header">
+          <h1 class="app-title">Push Day</h1>
+          <div class="timer-badge">⏱ 00:42:18</div>
+        </div>
+        <div class="content-pad">
+          <div class="exercise-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div>
+                <div style="font-size:16px; font-weight:800;">Barbell Bench Press</div>
+                <div style="font-size:12px; color:#8A8A90;">Chest · 90s rest</div>
+              </div>
+              <button style="background:#202023; border:none; color:#C6FF3D; border-radius:8px; padding:6px 10px; font-size:11px; font-weight:700; cursor:pointer;" onclick="showStep('plate')">
+                🏋️ Plates
+              </button>
+            </div>
+
+            <!-- Overload Prompt Chip -->
+            <div style="background:rgba(198,255,61,0.08); border:1px dashed rgba(198,255,61,0.3); border-radius:8px; padding:6px 10px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; color:#C6FF3D;">Target Overload: +2.5 kg from last session</span>
+              <span style="font-size:11px; font-weight:800; background:#C6FF3D; color:#0B0B0C; padding:2px 6px; border-radius:4px; cursor:pointer;" onclick="applyOverload()">+2.5 KG</span>
+            </div>
+
+            <div class="set-grid-head">
+              <span>TYPE</span><span>PREV</span><span>KG</span><span>REPS</span><span></span>
+            </div>
+
+            <!-- Set 1: Warmup -->
+            <div class="set-row-item">
+              <div class="set-tag-badge warmup" title="Tap to toggle Warmup/Drop">W</div>
+              <div style="font-size:12px; color:#8A8A90;">60 × 10</div>
+              <div class="set-input-box">60.0</div>
+              <div class="set-input-box">10</div>
+              <div class="check-button done">✓</div>
+            </div>
+
+            <!-- Set 2: Done -->
+            <div class="set-row-item">
+              <div class="set-tag-badge">1</div>
+              <div style="font-size:12px; color:#8A8A90;">80 × 8</div>
+              <div class="set-input-box">82.5</div>
+              <div class="set-input-box">8</div>
+              <div class="check-button done">✓</div>
+            </div>
+
+            <!-- Set 3: Focused Set with 1-Tap Complete -->
+            <div class="set-row-item" style="background:rgba(198,255,61,0.06); border-radius:10px; padding:6px 4px;">
+              <div class="set-tag-badge" style="color:#C6FF3D; font-weight:900;">2</div>
+              <div style="font-size:12px; color:#8A8A90;">80 × 8</div>
+              <div class="set-input-box" id="gridKgBox" style="border-color:#C6FF3D;">82.5</div>
+              <div class="set-input-box" style="border-color:#C6FF3D;">8</div>
+              <div class="check-button" style="border:2px solid #C6FF3D; color:#C6FF3D;" onclick="showStep('s14')">✓</div>
+            </div>
+          </div>
+
+          <button class="primary-action-btn" onclick="showStep('s17')">Finish workout</button>
+        </div>
+      </div>
+
+      <!-- STAGE 3: High-Leverage Barbell Plate Calculator -->
+      <div class="stage-view" id="view-plate">
+        <div class="status-header"><span>13:42</span><span>📶 🔋 87%</span></div>
+        <div class="content-pad" style="display:flex; flex-direction:column; height:100%;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="font-size:20px; font-weight:800;">Barbell Plate Calculator</h2>
+            <span style="font-size:12px; color:#8A8A90; cursor:pointer;" onclick="showStep('s13')">✕ Close</span>
+          </div>
+          <p style="font-size:12px; color:#8A8A90; margin-top:2px;">Target weight on 20 kg standard Olympic barbell:</p>
+
+          <div style="text-align:center; margin:16px 0 8px;">
+            <span style="font-size:42px; font-weight:900; color:#C6FF3D;">82.5</span>
+            <span style="font-size:16px; color:#8A8A90;">kg total</span>
+          </div>
+
+          <!-- Barbell Graphic -->
+          <div class="barbell-visualizer">
+            <div class="bar-steel"></div>
+            <div class="plate-stack">
+              <div class="plate-disc p-20" title="20 kg">20</div>
+              <div class="plate-disc p-10" title="10 kg">10</div>
+              <div class="plate-disc p-1quarter" title="1.25 kg">1.25</div>
+            </div>
+          </div>
+
+          <div style="background:#161618; border-radius:12px; padding:16px;">
+            <div style="font-size:12px; font-weight:700; color:#8A8A90; margin-bottom:8px;">EACH SIDE LOADS (31.25 kg):</div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; padding:4px 0;">
+              <span>🔵 1 × 20 kg plate</span><span>20.0 kg</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; padding:4px 0;">
+              <span>🟢 1 × 10 kg plate</span><span>10.0 kg</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; padding:4px 0;">
+              <span>⚪ 1 × 1.25 kg plate</span><span>1.25 kg</span>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; display:flex; justify-content:space-between; font-size:13px; font-weight:800;">
+              <span>Bar Weight</span><span>20.0 kg</span>
+            </div>
+          </div>
+
+          <button class="primary-action-btn" onclick="showStep('s13')">Return to Workout</button>
+        </div>
+      </div>
+
+      <!-- STAGE 4: S-14 Rest Timer -->
+      <div class="stage-view" id="view-s14">
+        <div class="status-header"><span>13:42</span><span>📶 🔋 87%</span></div>
+        <div style="padding:16px; opacity:0.3;">
+          <h1 class="app-title">Push Day</h1>
+          <div class="exercise-card"><div style="font-size:16px; font-weight:bold;">Barbell Bench Press</div></div>
+        </div>
+
+        <div class="plate-calc-sheet">
+          <div style="width:40px; height:4px; background:#3f3f46; border-radius:2px; margin:0 auto 16px;"></div>
+          <div style="text-align:center; font-size:12px; font-weight:700; color:#8A8A90; text-transform:uppercase;">Rest Interval</div>
+          <div style="text-align:center; font-size:72px; font-weight:900; color:#C6FF3D; line-height:1; margin:8px 0;">01:12</div>
+          <div style="height:6px; background:#202023; border-radius:3px; overflow:hidden; margin-bottom:20px;">
+            <div style="height:100%; width:80%; background:#C6FF3D;"></div>
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:12px; margin-bottom:20px;">
+            <button style="padding:12px 20px; border-radius:999px; background:#202023; color:#fff; border:none; font-weight:700; cursor:pointer;">−15s</button>
+            <button style="padding:12px 30px; border-radius:999px; background:#C6FF3D; color:#0B0B0C; border:none; font-weight:800; cursor:pointer;" onclick="showStep('s16')">Skip</button>
+            <button style="padding:12px 20px; border-radius:999px; background:#202023; color:#fff; border:none; font-weight:700; cursor:pointer;">+30s</button>
+          </div>
+
+          <div style="background:#202023; border-radius:12px; padding:12px; font-size:12px;">
+            <span style="color:#8A8A90;">Next up:</span> <strong>Barbell Bench Press · Set 3</strong> (Target: 82.5 × 8)
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 5: S-16 PR Moment -->
+      <div class="stage-view" id="view-s16">
+        <div class="status-header"><span>13:42</span><span>📶 🔋 87%</span></div>
+        <div class="app-header"><h1 class="app-title">Push Day</h1></div>
+        <div class="content-pad">
+          <!-- PR Announcement -->
+          <div class="pr-gold-card">
+            <div style="font-size:32px;">🏆</div>
+            <div>
+              <div style="font-size:15px; font-weight:800; color:#FFD24A;">New Personal Record!</div>
+              <div style="font-size:12px; color:#8A8A90;">82.5 kg × 8 reps · Est. 1RM: 104.5 kg</div>
+              <div style="font-size:11px; color:#FFD24A; font-weight:700; margin-top:2px;">+3.2 kg above previous best (101.3 kg)</div>
+            </div>
+          </div>
+
+          <div class="exercise-card">
+            <div style="font-size:16px; font-weight:800; margin-bottom:8px;">Barbell Bench Press</div>
+            <div class="set-grid-head"><span>SET</span><span>PREV</span><span>KG</span><span>REPS</span><span></span></div>
+            <div class="set-row-item">
+              <div class="set-tag-badge">1</div><div>80 × 8</div>
+              <div class="set-input-box">82.5</div><div class="set-input-box">8</div>
+              <div class="check-button done">✓</div>
+            </div>
+            <div class="set-row-item" style="background:rgba(255,210,74,0.12); border-radius:8px;">
+              <div class="set-tag-badge" style="color:#FFD24A; font-weight:900;">2</div><div>80 × 8</div>
+              <div class="set-input-box" style="border-color:#FFD24A;">82.5</div>
+              <div class="set-input-box" style="border-color:#FFD24A;">8</div>
+              <div class="check-button pr">🏆</div>
+            </div>
+          </div>
+
+          <button class="primary-action-btn" onclick="showStep('s17')">Continue to Summary</button>
+        </div>
+      </div>
+
+      <!-- STAGE 6: S-17 Workout Summary -->
+      <div class="stage-view" id="view-s17">
+        <div class="status-header"><span>13:42</span><span>📶 🔋 87%</span></div>
+        <div class="content-pad" style="padding-top:10px;">
+          <div style="text-align:center; margin-bottom:18px;">
+            <div style="font-size:36px; margin-bottom:4px;">💪</div>
+            <h2 style="font-size:22px; font-weight:900;">Workout Complete!</h2>
+            <div style="font-size:13px; color:#8A8A90;">Push Day logged to Drift database</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+            <div style="background:#161618; border-radius:12px; padding:14px;">
+              <div style="font-size:20px; font-weight:900; color:#C6FF3D;">00:46:12</div>
+              <div style="font-size:11px; color:#8A8A90;">Duration</div>
+            </div>
+            <div style="background:#161618; border-radius:12px; padding:14px;">
+              <div style="font-size:20px; font-weight:900;">18,450 kg</div>
+              <div style="font-size:11px; color:#8A8A90;">Total Volume</div>
+            </div>
+            <div style="background:#161618; border-radius:12px; padding:14px;">
+              <div style="font-size:20px; font-weight:900;">14 sets</div>
+              <div style="font-size:11px; color:#8A8A90;">Sets Completed</div>
+            </div>
+            <div style="background:#161618; border-radius:12px; padding:14px;">
+              <div style="font-size:20px; font-weight:900; color:#FFD24A;">1 PR 🏆</div>
+              <div style="font-size:11px; color:#8A8A90;">Records Broken</div>
+            </div>
+          </div>
+
+          <div style="background:#161618; border-radius:12px; padding:14px; margin-bottom:16px;">
+            <div style="font-size:12px; font-weight:700; color:#8A8A90; margin-bottom:6px;">SESSION NOTES</div>
+            <div style="font-size:13px; color:#f4f4f5;">Bench press felt smooth. Smashed 82.5 kg for 8 clean reps. Left shoulder stable.</div>
+          </div>
+
+          <button class="primary-action-btn" onclick="showStep('s11')">Save & Return to Home</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Explainer & High-Leverage Deck -->
+  <aside class="side-deck">
+    <div class="info-box">
+      <div class="info-title">
+        <span>🔍 Stage Breakdown: <span id="stageLabel">S-11 Routine Start</span></span>
+      </div>
+      <div class="info-desc" id="stageExplanation">
+        The routine preview confirms exercise lineup and targets before the timer starts. 1 tap launches directly into the live grid.
+      </div>
+
+      <div style="font-size:12px; font-weight:800; color:#C6FF3D; margin-bottom:6px;">DATA LIFECYCLE EVENT:</div>
+      <div style="font-family:monospace; font-size:11px; background:#0B0B0C; padding:10px; border-radius:8px; color:#38bdf8;" id="dataEventCode">
+        WorkoutSession.start(routineId: "push_day", startedAt: UTC.now())
+      </div>
+    </div>
+
+    <!-- High-Leverage Features to Supercharge Sprint 1 -->
+    <div class="info-box">
+      <div class="info-title">
+        <span>🚀 High-Leverage Features for Sprint 1</span>
+      </div>
+      <p class="info-desc">
+        Small engineering effort, massive user delight & retention:
+      </p>
+
+      <!-- 1. Barbell Plate Calculator -->
+      <div class="leverage-card" onclick="showStep('plate')">
+        <div class="leverage-head">
+          <span>1. Barbell Plate Calculator</span>
+          <span class="leverage-tag">HIGH RETENTION</span>
+        </div>
+        <div class="leverage-detail">
+          Eliminates gym mental math. Lifters instantly see exact plate counts (e.g. 20kg bar + 20kg + 10kg + 1.25kg discs per side).
+        </div>
+      </div>
+
+      <!-- 2. Set Tagging (Warmup / Working / Drop) -->
+      <div class="leverage-card" style="border-left-color:#38bdf8;" onclick="showStep('s13')">
+        <div class="leverage-head">
+          <span>2. Set Type Tagging (W / Normal / D)</span>
+          <span class="leverage-tag" style="background:rgba(56,189,248,0.15); color:#38bdf8;">INTEGRITY</span>
+        </div>
+        <div class="leverage-detail">
+          Allows tagging warmups (<code>W</code>) so low warmup weights don't contaminate 1RM and PR tracking calculations.
+        </div>
+      </div>
+
+      <!-- 3. Smart Progressive Overload Chips -->
+      <div class="leverage-card" style="border-left-color:#FFD24A;" onclick="showStep('s13')">
+        <div class="leverage-head">
+          <span>3. 1-Tap Overload Chip (+2.5 kg)</span>
+          <span class="leverage-tag" style="background:rgba(255,210,74,0.15); color:#FFD24A;">MOTIVATION</span>
+        </div>
+        <div class="leverage-detail">
+          Subtly prompts lifters to beat last session by +2.5 kg or +1 rep with a single tap instead of manual typing.
+        </div>
+      </div>
+
+      <!-- 4. Screen WakeLock & Haptic Feedback -->
+      <div class="leverage-card" style="border-left-color:#a855f7;">
+        <div class="leverage-head">
+          <span>4. Gym WakeLock & Haptics</span>
+          <span class="leverage-tag" style="background:rgba(168,85,247,0.15); color:#c084fc;">ERGONOMICS</span>
+        </div>
+        <div class="leverage-detail">
+          Keeps screen awake during active sets; fires crisp haptic buzz on set completion and a distinct double-pulse on new PRs.
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<script>
+  const stageExplanations = {
+    's11': {
+      title: 'S-11 Routine Start',
+      desc: 'The routine preview confirms exercise lineup, estimated duration, and target sets before the clock begins. 1 tap launches into the live workout.',
+      code: 'Drift: INSERT INTO workouts (id, title, started_at) VALUES (uuid(), "Push Day", utc_now());'
+    },
+    's13': {
+      title: 'S-13 Active Set Grid',
+      desc: 'The core workout grid. Shows Set number, Previous session performance, Weight in kg, and Reps. 1 tap on the checkmark logs the set.',
+      code: 'Drift: INSERT INTO workout_sets (id, workout_id, weight_kg, reps, is_completed) VALUES (...);'
+    },
+    'plate': {
+      title: 'Plate Calculator (High-Leverage)',
+      desc: 'Instant visual breakdown of plates needed per side on a 20 kg barbell. Solves gym math fatigue in 1 second.',
+      code: 'Pure Dart: PlateCalculator.calculate(targetWeightKg: 82.5, barWeightKg: 20.0)'
+    },
+    's14': {
+      title: 'S-14 Rest Timer Drawer',
+      desc: 'Auto-triggers on set completion. Persistent bottom sheet with -15s / +30s / Skip pills, backed by an Android background notification.',
+      code: 'NotificationService.schedule(duration: Duration(seconds: 90), title: "Rest Finished!");'
+    },
+    's16': {
+      title: 'S-16 PR Moment',
+      desc: 'Real-time Epley 1RM calculation: 82.5 kg x 8 = 104.5 kg. Exceeds previous best of 101.3 kg -> triggers gold badge celebration.',
+      code: 'Drift: UPDATE personal_records SET best_weight_kg = 82.5, best_est_1rm = 104.5 WHERE exercise_id = "bench";'
+    },
+    's17': {
+      title: 'S-17 Workout Finish Summary',
+      desc: 'Aggregates total volume (18,450 kg), duration, set count, and PRs. Commits session to Drift and updates streak.',
+      code: 'Drift: UPDATE workouts SET is_completed = true, total_volume_kg = 18450, ended_at = utc_now();'
+    }
+  };
+
+  function showStep(stepId) {
+    document.querySelectorAll('.step-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.stage-view').forEach(v => v.classList.remove('active'));
+
+    const pill = document.getElementById('pill-' + stepId);
+    if (pill) pill.classList.add('active');
+
+    const view = document.getElementById('view-' + stepId);
+    if (view) view.classList.add('active');
+
+    const info = stageExplanations[stepId];
+    if (info) {
+      document.getElementById('stageLabel').textContent = info.title;
+      document.getElementById('stageExplanation').textContent = info.desc;
+      document.getElementById('dataEventCode').textContent = info.code;
+    }
+  }
+
+  function applyOverload() {
+    document.getElementById('gridKgBox').textContent = '85.0';
+    document.getElementById('gridKgBox').style.color = '#C6FF3D';
+    alert('Progressive overload applied! Set 2 bumped to 85.0 kg (+2.5 kg).');
+  }
+</script>
+</body>
+</html>

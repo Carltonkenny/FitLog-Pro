@@ -1,0 +1,66 @@
+import React from 'react';
+import { Award } from 'lucide-react';
+
+export default function FinishModal({
+  isOpen,
+  workout,
+  formatTimer,
+  onClose,
+}) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-[#12141a] border border-emerald-500/30 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-150">
+        <div className="text-center space-y-1">
+          <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400 shadow-lg shadow-emerald-500/20">
+            <Award className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-bold text-white tracking-tight">Workout Complete!</h3>
+          <p className="text-xs text-zinc-400">
+            Outstanding effort! Your workout volume and personal records are saved.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 text-center text-xs">
+          <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">
+            <span className="text-zinc-400">Total Volume</span>
+            <div className="text-base font-bold font-mono text-emerald-400 mt-0.5">
+              {workout?.volumeKg.toLocaleString()} kg
+            </div>
+          </div>
+          <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">
+            <span className="text-zinc-400">Duration</span>
+            <div className="text-base font-bold font-mono text-zinc-200 mt-0.5">
+              {formatTimer(workout?.durationSeconds || 1800)}
+            </div>
+          </div>
+        </div>
+
+        {workout?.newPRs && workout.newPRs.length > 0 && (
+          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-1.5">
+            <span className="text-xs font-bold text-amber-300 flex items-center gap-1">
+              <Award className="w-4 h-4" />
+              <span>New Personal Records Broken:</span>
+            </span>
+            {workout.newPRs.map((pr, idx) => (
+              <div key={idx} className="text-xs text-zinc-200 flex justify-between">
+                <span>{pr.exerciseName}</span>
+                <strong className="text-amber-400 font-mono">
+                  {pr.weight} kg × {pr.reps} reps (1RM: {pr.oneRepMax} kg)
+                </strong>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button
+          onClick={onClose}
+          className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs transition active:scale-95 shadow-md shadow-emerald-500/20"
+        >
+          View in Workout History
+        </button>
+      </div>
+    </div>
+  );
+}

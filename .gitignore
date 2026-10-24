@@ -1,0 +1,29 @@
+# Node / Web dependencies & builds
+web/node_modules/
+web/dist/
+web/.turbo/
+.npm/
+
+# Flutter / Mobile artifacts
+fitlog_pro/build/
+fitlog_pro/.dart_tool/
+fitlog_pro/.flutter-plugins
+fitlog_pro/.flutter-plugins-dependencies
+
+# Deployment & Scratch Bundles (Exclude bulky zips and temporary exports)
+*.zip
+netlify_deploy/
+saas_spec_extracted.txt
+test_paths.js
+*.log
+
+# Automated test captures & MCP cache
+.playwright-mcp/
+demo_videos/
+
+# IDE & OS files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
