@@ -7,7 +7,7 @@ import {
 import { WorkoutStore } from '../../../../lib/workoutStore';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 export default function GeminiHistoryCoach() {
   const history = WorkoutStore.getHistory();
@@ -34,10 +34,13 @@ export default function GeminiHistoryCoach() {
 
     // Build context summary from real workout history
     const recentSessions = history.slice(0, 5).map((w) => ({
-      date: w.completedAt || w.startedAt,
+      date: w.timestamp ? new Date(w.timestamp).toISOString().slice(0, 10) : w.date,
       title: w.title,
       volumeKg: w.volumeKg,
-      sets: w.totalSets,
+      completedSets: (w.exercises || []).reduce(
+        (n, ex) => n + (ex.sets || []).filter((x) => x.completed).length,
+        0
+      ),
     }));
     const prSummary = Object.entries(prs)
       .map(([ex, pr]) => `${ex}: ${pr.weight}kg × ${pr.reps} reps (1RM ~${pr.oneRepMax}kg)`)
@@ -53,6 +56,7 @@ Always tie recommendations to actual numbers from their history.`;
     try {
       if (GEMINI_API_KEY) {
         const res = await fetch(GEMINI_URL, {
+          signal: AbortSignal.timeout(60000),
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -61,8 +65,16 @@ Always tie recommendations to actual numbers from their history.`;
             ],
           }),
         });
-        const data = await res.json();
-        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini.';
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const reason =
+            res.status === 503 || res.status === 429
+              ? 'The AI coach is busy right now. Try again in a minute.'
+              : 'The AI coach is unavailable right now. Your workouts are not affected.';
+          console.error('Gemini request failed:', res.status, data?.error?.message);
+          throw new Error(reason);
+        }
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'The coach returned an empty answer. Try rephrasing.';
         setMessages((prev) => [...prev, { id: Date.now() + 1, sender: 'ai', text: reply }]);
       } else {
         // Fallback if API key is not configured
@@ -78,7 +90,7 @@ Always tie recommendations to actual numbers from their history.`;
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, sender: 'ai', text: `Error reaching Gemini: ${err.message}` },
+        { id: Date.now() + 1, sender: 'ai', text: err.name === 'TimeoutError' ? 'The AI coach took too long to answer. Try again in a minute.' : err.message.startsWith('The ') ? err.message : 'Cannot reach the AI coach. Check your connection and try again.' },
       ]);
     } finally {
       setIsTyping(false);
@@ -107,7 +119,7 @@ Always tie recommendations to actual numbers from their history.`;
         </div>
 
         <span className="hidden sm:inline-block text-[10px] text-zinc-500 font-mono">
-          {GEMINI_API_KEY ? 'Gemini 2.0 Flash • Live' : 'API Key Required'}
+          {GEMINI_API_KEY ? 'Gemini • Live' : 'API Key Required'}
         </span>
       </div>
 

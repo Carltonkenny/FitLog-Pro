@@ -120,7 +120,11 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
   const updateSet = (exIndex, setIndex, field, value) => {
     setExercises((prev) => {
       const copy = JSON.parse(JSON.stringify(prev));
-      copy[exIndex].sets[setIndex][field] = Number(value) || 0;
+      // Keep values inside the cloud column limits (weight < 10,000 kg) and sane for a human lift.
+      const limits = { weight: [0, 1000], reps: [0, 200] };
+      const [min, max] = limits[field] || [0, Infinity];
+      const n = Number(value);
+      copy[exIndex].sets[setIndex][field] = Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : 0;
       return copy;
     });
   };

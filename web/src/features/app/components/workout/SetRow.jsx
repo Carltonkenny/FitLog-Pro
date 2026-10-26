@@ -42,6 +42,8 @@ export default function SetRow({
             inputMode="decimal"
             aria-label={`Weight in kilograms, set ${setIndex + 1}`}
             step="0.5"
+            min="0"
+            max="1000"
             value={set.weight}
             onChange={(e) => onUpdateSet(exIndex, setIndex, 'weight', e.target.value)}
             className="w-16 h-9 px-2 rounded-lg bg-zinc-900 border border-white/[0.08] text-center font-mono font-semibold text-white focus:border-emerald-500 focus:outline-none tabular-nums"
@@ -50,7 +52,7 @@ export default function SetRow({
             aria-label="Increase weight"
             onClick={(e) => {
               e.stopPropagation();
-              onUpdateSet(exIndex, setIndex, 'weight', set.weight + 2.5);
+              onUpdateSet(exIndex, setIndex, 'weight', Math.min(1000, set.weight + 2.5));
             }}
             className="w-9 h-9 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 flex items-center justify-center active:scale-95 transition"
           >
@@ -75,6 +77,8 @@ export default function SetRow({
           <input
             type="number"
             inputMode="numeric"
+            min="0"
+            max="200"
             aria-label={`Reps, set ${setIndex + 1}`}
             value={set.reps}
             onChange={(e) => onUpdateSet(exIndex, setIndex, 'reps', e.target.value)}
