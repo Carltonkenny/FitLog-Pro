@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Check, Plus, Search, Star, X } from 'lucide-react';
+import { Check, Plus, Search, Star } from 'lucide-react';
 import EscapeClose from '../../../../components/EscapeClose';
 import ExerciseImage from '../../../../components/ExerciseImage';
 import { WorkoutStore } from '../../../../lib/workoutStore';
