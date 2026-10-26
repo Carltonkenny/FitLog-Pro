@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Dumbbell, Eye, EyeOff, Loader2, X } from 'lucide-react';
-import { AuthService, supabaseUrl, supabaseKey, isCloudConfigured } from '../../lib/supabaseClient';
+import { AuthService, googleEnabled } from '../../lib/neonClient';
 import EscapeClose from '../../components/EscapeClose';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -38,7 +38,7 @@ function Field({ id, label, error, hint, children }) {
 const inputClass =
   'w-full h-12 px-3.5 rounded-xl bg-[#0D0E13] border text-white text-sm placeholder:text-zinc-500 focus:border-[#00F59B]';
 
-export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onSuccess }) {
+export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onSuccess, resetToken }) {
   const [mode, setMode] = useState(initialMode);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -48,21 +48,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [googleEnabled, setGoogleEnabled] = useState(false);
   const firstField = useRef(null);
-
-  // Show Google only when the Supabase project has the provider switched on.
-  useEffect(() => {
-    if (!isCloudConfigured) return undefined;
-    let cancelled = false;
-    fetch(`${supabaseUrl}/auth/v1/settings`, { headers: { apikey: supabaseKey } })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((s) => !cancelled && setGoogleEnabled(!!s?.external?.google))
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useEffect(() => {
     if (isOpen) setMode(initialMode);
@@ -131,9 +117,9 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
         setNotice('If that email has an account, a reset link is on its way.');
         setMode('signin');
       } else {
-        await AuthService.updatePassword(password);
-        setNotice('Password updated.');
-        setTimeout(onClose, 900);
+        await AuthService.updatePassword(password, resetToken);
+        setNotice('Password updated. Sign in with your new password.');
+        setMode('signin');
       }
     } catch (err) {
       setError(err.message || 'Something went wrong. Try again.');

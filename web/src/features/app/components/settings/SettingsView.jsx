@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldCheck, User, Database, Download, LogOut, CloudOff } from 'lucide-react';
-import { isCloudConfigured } from '../../../../lib/supabaseClient';
+import { isCloudConfigured } from '../../../../lib/neonClient';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import { REST_OPTIONS, setSettings, useSettings } from '../../../../lib/settings';
 import { isIos, isStandalone, promptInstall, useCanInstall } from '../../../../lib/pwaInstall';

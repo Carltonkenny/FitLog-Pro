@@ -1,4 +1,5 @@
 import { calculate1RM, EXERCISE_LIBRARY } from './exercises.js';
+import { EQUIPMENT_OPTIONS } from './userData.js';
 
 const LIBRARY_NAMES = EXERCISE_LIBRARY.map((e) => e.name);
 
@@ -50,7 +51,7 @@ export const CHAT_SCHEMA = {
         type: 'OBJECT',
         properties: {
           type: { type: 'STRING', enum: ['add_exercise', 'favorite_exercise', 'avoid_exercise', 'open_tab', 'set_equipment'] },
-          equipment: { type: 'ARRAY', items: { type: 'STRING', enum: ['Barbell', 'Dumbbells', 'Cables', 'Machines', 'Bodyweight'] } },
+          equipment: { type: 'ARRAY', items: { type: 'STRING', enum: EQUIPMENT_OPTIONS } },
           name: { type: 'STRING' },
           sets: { type: 'INTEGER' },
           reps: { type: 'INTEGER' },
@@ -92,7 +93,7 @@ ${known}`,
           'remember: up to 3 lasting facts the athlete stated about themselves (equipment, schedule, goals, limitations, likes and dislikes), each under 120 characters, written as a plain fact. Leave empty if there is nothing new. Never invent facts.',
           'Always include both remember and actions, as empty lists when there is nothing to add. Never say you added, saved or changed anything unless the matching action or remember entry is in your reply, because the app only does what the lists say.',
           'remember must contain only facts the athlete said in their latest message. Never copy from the profile or earlier replies. Each entry is one short plain sentence.',
-          `actions: only when the athlete clearly asks. If they ask you to add an exercise you must include an add_exercise action. add_exercise puts an exercise in today's workout (use an exact name from this list: ${LIBRARY_NAMES.join('; ')}, with sets and reps). favorite_exercise or avoid_exercise records a like or a dislike or inability. open_tab shows a screen. set_equipment replaces the list of equipment the athlete has, using only Barbell, Dumbbells, Cables, Machines, Bodyweight, when they say what gear they have. Otherwise leave actions empty.`,
+          `actions: only when the athlete clearly asks. If they ask you to add an exercise you must include an add_exercise action. add_exercise puts an exercise in today's workout (use an exact name from this list: ${LIBRARY_NAMES.join('; ')}, with sets and reps). favorite_exercise or avoid_exercise records a like or a dislike or inability. open_tab shows a screen. set_equipment replaces the list of equipment the athlete has, using only ${EQUIPMENT_OPTIONS.join(', ')}, when they say what gear they have. Otherwise leave actions empty.`,
         ].join('\n'),
   ]
     .filter(Boolean)

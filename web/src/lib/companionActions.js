@@ -1,8 +1,9 @@
 import { EXERCISE_LIBRARY } from './exercises.js';
+import { EQUIPMENT_OPTIONS } from './userData.js';
 
 const TABS = ['workout', 'library', 'analytics', 'history', 'settings'];
 const ACTION_TYPES = ['add_exercise', 'favorite_exercise', 'avoid_exercise', 'open_tab', 'set_equipment'];
-const GEAR = ['Barbell', 'Dumbbells', 'Cables', 'Machines', 'Bodyweight'];
+const GEAR = EQUIPMENT_OPTIONS;
 const MAX_ACTIONS = 5;
 
 /** Finds a library exercise by name: exact match first, then a close match either way round. */
@@ -15,6 +16,15 @@ export function resolveExercise(name) {
     null
   );
 }
+
+/** A stand-in library entry for an exercise the library does not have (id is derived from the name). */
+export const customExercise = (name, cue) => ({
+  id: `custom_${String(name).toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 60)}`,
+  name: String(name),
+  targetMuscle: 'Custom',
+  equipment: 'Any',
+  cue,
+});
 
 /**
  * Turns the model's raw text into { reply, remember, actions }. The model is untrusted: unknown

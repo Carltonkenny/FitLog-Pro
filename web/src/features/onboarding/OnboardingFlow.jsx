@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Loader2 } from 'lucide-react';
-import { AuthService } from '../../lib/supabaseClient';
+import { AuthService } from '../../lib/neonClient';
 import { fromDisplay, setSettings, toDisplay, useSettings } from '../../lib/settings';
 
 const GOALS = [

@@ -1,4 +1,4 @@
-// Pure mapping between the local workout shape and Supabase rows. No network or browser APIs.
+// Pure mapping between the local workout shape and the API rows. No network or browser APIs.
 
 const toIso = (ts) => new Date(ts || Date.now()).toISOString();
 
@@ -49,7 +49,7 @@ export function toRows(record, userId) {
 }
 
 
-/** Rebuilds the local workout shape from a Supabase workouts row with embedded workout_sets. */
+/** Rebuilds the local workout shape from an API workout row with its workout_sets. */
 export function fromRow(row) {
   const groups = new Map();
   [...(row.workout_sets || [])]

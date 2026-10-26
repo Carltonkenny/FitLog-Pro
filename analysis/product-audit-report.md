@@ -1,5 +1,7 @@
 # FitLog Pro: Product, Market and Security Audit
 
+> Written while the backend was Supabase. The backend has since moved to Neon (see `launch-guide.md` and `technical-recommendations.md`). Product, market and competitor sections are unaffected; the security findings SEC-02, SEC-05..08 and SEC-09 are replaced by the Neon design (API-side checks, no browser-visible secrets).
+
 Date: 2026-10-26 · Branch: `chore/web-publish-prep` · Scope: `web/` and `supabase/` (the Flutter app in `fitlog_pro/` was not audited).
 Legend: **[V]** verified in the repo or by a run, **[I]** inference, **[U]** unknown / not tested.
 

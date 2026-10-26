@@ -155,7 +155,7 @@ export const WorkoutStore = {
     };
   },
 
-  // Push the pending queue to Supabase (see cloudSync.js)
+  // Push the pending queue to the API (see cloudSync.js)
   flushSyncQueue() {
     return CloudSync.flush();
   },

@@ -67,7 +67,8 @@ test('weekly muscle sets: counts completed working sets in the last 7 days only'
   ];
   const result = Object.fromEntries(weeklyMuscleSets(h, now).map((r) => [r.muscle, r.sets]));
   assert.equal(result.Chest, 2);
-  assert.equal(result.Back, 1, 'zero-weight set is not a working set');
+  // Changed on purpose: a 0 kg set is a real set for bodyweight work (pull-ups, push-ups, planks).
+  assert.equal(result.Back, 2, 'a completed bodyweight set counts');
   assert.equal(result.Legs, 0);
   assert.equal(Object.keys(result).length, 6);
 });

@@ -4,7 +4,7 @@ import { WorkoutStore } from '../../lib/workoutStore';
 import { EXERCISE_LIBRARY } from '../../lib/exercises.js';
 import { askCoach, CoachError } from '../../lib/coachApi';
 import { CHAT_SCHEMA, PLAN_SCHEMA, buildContext, buildSystem } from '../../lib/coachPrompt';
-import { parseChatReply, parsePlan, petMood, resolveExercise } from '../../lib/companionActions.js';
+import { customExercise, parseChatReply, parsePlan, petMood, resolveExercise } from '../../lib/companionActions.js';
 import { ACCEPTED_TYPES, prepareImage } from '../../lib/imageUtils';
 import { addNotes, getUserData, setEquipment, toggleAvoided, toggleFavorite, useUserData } from '../../lib/userData.js';
 import CoachPlanCard from '../app/components/history/CoachPlanCard';
@@ -76,7 +76,7 @@ export default function Companion({ open, setOpen, blueprint, onUseDay, onAddExe
       return `Set your equipment to ${a.equipment.join(', ')}`;
     }
     if (a.type === 'add_exercise') {
-      const item = match || { id: `custom_${a.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 60)}`, name: a.name, targetMuscle: 'Custom', equipment: 'Any' };
+      const item = match || customExercise(a.name);
       onAddExercise(item, { sets: a.sets, reps: a.reps });
       return `Added ${item.name} to today's workout`;
     }

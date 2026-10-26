@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { WorkoutStore } from '../../../lib/workoutStore';
 import { buzz, getSettings } from '../../../lib/settings';
+import { workoutStats } from '../../../lib/stats';
 
 // Starter session. Weights and reps are replaced by the user's last logged session when one exists.
 const STARTER_TEMPLATE = [
@@ -46,6 +47,9 @@ const STARTER_TEMPLATE = [
       ],
     },
   ];
+
+// Bodyweight exercises start at 0 kg; everything else at the empty bar.
+const startingWeight = (item) => (/bodyweight|pull-up/i.test(item.equipment || '') ? 0 : 20);
 
 function buildStarterWorkout() {
   return STARTER_TEMPLATE.map((ex) => {
@@ -187,7 +191,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
   /** Adds an exercise. `opts.sets` / `opts.reps` override the defaults; weights come from the last session. */
   const addExercise = (exerciseItem, opts = {}) => {
     const last = WorkoutStore.getLastSessionForExercise(exerciseItem.id);
-    const weight = last ? last.bestSet.weight : 20;
+    const weight = last ? last.bestSet.weight : startingWeight(exerciseItem);
     const reps = opts.reps || (last ? last.bestSet.reps : 10);
     setExercises((prev) => [
       ...prev,
@@ -238,7 +242,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     setExercises(
       items.map(({ item, sets, reps }) => {
         const last = WorkoutStore.getLastSessionForExercise(item.id);
-        const weight = last ? last.bestSet.weight : 20;
+        const weight = last ? last.bestSet.weight : startingWeight(item);
         return {
           exerciseId: item.id,
           exerciseName: item.name,
@@ -272,28 +276,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     });
   };
 
-  const stats = useMemo(() => {
-    let volume = 0;
-    let completedSetsCount = 0;
-    let totalSetsCount = 0;
-
-    exercises.forEach((ex) => {
-      ex.sets.forEach((s) => {
-        totalSetsCount++;
-        if (s.completed && s.weight > 0 && s.reps > 0) {
-          volume += s.weight * s.reps;
-          completedSetsCount++;
-        }
-      });
-    });
-
-    return {
-      volume,
-      completedSetsCount,
-      totalSetsCount,
-      progressPercent: totalSetsCount > 0 ? Math.round((completedSetsCount / totalSetsCount) * 100) : 0,
-    };
-  }, [exercises]);
+  const stats = useMemo(() => workoutStats(exercises), [exercises]);
 
   return {
     workoutTitle,

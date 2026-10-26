@@ -13,7 +13,7 @@ FitLog Pro is a local-first, progressive overload workout tracker and AI biomech
 3. **History-Aware Gemini AI Coach**: Deeply integrated into the Workout History tab; analyzes logged training sessions, volume deltas, and personal records to detect plateaus and prescribe micro-loading overload targets.
 4. **Cascading 3-Step Movement Library (333+ Exercises)**: Body Part $\rightarrow$ Target Anatomy $\rightarrow$ Movements ranked by Growth-to-Fatigue efficiency score with equipment filters.
 5. **Plain-English Copywriting**: Zero intimidating medical jargon (e.g. "Hypertrophy" $\rightarrow$ "Muscle Growth", "SFR" $\rightarrow$ "Growth vs. Fatigue Score").
-6. **Local-First Offline Continuity**: Instant writes to client cache with automatic background synchronization to Supabase PostgreSQL upon reconnection.
+6. **Local-First Offline Continuity**: Instant writes to client cache with automatic background synchronization to Neon Postgres upon reconnection.
 
 ---
 

@@ -7,21 +7,33 @@
     "dev": "vite --port 5173 --host",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --import ./test/register.mjs --test \"test/*.test.js\""
+    "test": "node --env-file-if-exists=.env --import ./test/register.mjs --test \"test/*.test.js\"",
+    "db:migrate": "node --env-file=.env scripts/db-migrate.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.1",
+    "@neon/config": "^1.9.4",
+    "@neon/env": "^1.6.5",
+    "@neon/functions": "^0.11.0",
+    "@neon/realtime": "^0.1.2",
+    "@neondatabase/neon-js": "^0.9.0-beta",
     "canvas-confetti": "^1.9.4",
+    "hono": "^4.13.14",
+    "jose": "^6.2.13",
     "lucide-react": "^1.61.0",
+    "pg": "^8.23.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "@types/pg": "^8.23.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "tailwindcss": "^4.3.3",
     "vite": "^6.2.0"
+  },
+  "overrides": {
+    "zod": "4.6.7"
   }
 }

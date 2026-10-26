@@ -1,7 +1,7 @@
 import { CATALOG, NEW_SUBREGIONS } from './exerciseCatalog.js';
 
 // Pure data and math: the exercise library and the Epley estimated-max formula.
-// No browser, React or Supabase imports, so it runs unchanged in Node tests.
+// No browser, React or network imports, so it runs unchanged in Node tests.
 
 // Helper for 1RM calculation (Epley formula)
 export const calculate1RM = (weight, reps) => {

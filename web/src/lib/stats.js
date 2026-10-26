@@ -56,7 +56,7 @@ export function weeklyMuscleSets(history, now = Date.now()) {
       (w.exercises || []).forEach((ex) => {
         const muscle = lookup(ex)?.muscle;
         if (!muscle || !(muscle in counts)) return;
-        counts[muscle] += (ex.sets || []).filter((s) => s.completed && s.weight > 0 && s.reps > 0).length;
+        counts[muscle] += (ex.sets || []).filter((s) => s.completed && s.reps > 0).length;
       })
     );
   return MUSCLE_GROUPS.map((muscle) => ({ muscle, sets: counts[muscle] }));
@@ -100,4 +100,29 @@ export function topLifts(history, limit = 3) {
     })
     .sort((a, b) => b.sessions - a.sessions || b.oneRm - a.oneRm)
     .slice(0, limit);
+}
+
+/**
+ * Totals for the workout on screen. A set counts when it is completed with reps above 0, including
+ * bodyweight sets at 0 kg. Volume (weight x reps) only grows from sets that have a weight.
+ */
+export function workoutStats(exercises) {
+  let volume = 0;
+  let completedSetsCount = 0;
+  let totalSetsCount = 0;
+  exercises.forEach((ex) =>
+    ex.sets.forEach((s) => {
+      totalSetsCount += 1;
+      if (s.completed && s.reps > 0) {
+        volume += s.weight * s.reps;
+        completedSetsCount += 1;
+      }
+    })
+  );
+  return {
+    volume,
+    completedSetsCount,
+    totalSetsCount,
+    progressPercent: totalSetsCount > 0 ? Math.round((completedSetsCount / totalSetsCount) * 100) : 0,
+  };
 }

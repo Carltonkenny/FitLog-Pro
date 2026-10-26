@@ -1,45 +1,35 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { createClock } from '../../../lib/sessionClock';
 
-/**
- * Workout session clock shared by every tab.
- * Elapsed time comes from timestamps, not from counting ticks, so it stays correct when the phone
- * locks or the browser throttles a background tab.
- */
+/** Workout session clock shared by every tab. The timekeeping lives in lib/sessionClock.js. */
 export function useSessionControls() {
   const [sessionState, setSessionState] = useState('idle'); // 'idle' | 'running' | 'paused'
   const [sessionSeconds, setSessionSeconds] = useState(0);
   const [isRestartConfirmOpen, setIsRestartConfirmOpen] = useState(false);
-  const bankedMs = useRef(0); // time from earlier running stretches
-  const runningSince = useRef(null); // start of the current stretch, or null
+  const clock = useRef(createClock()).current;
 
-  const getElapsedSeconds = useCallback(
-    () => Math.floor((bankedMs.current + (runningSince.current ? Date.now() - runningSince.current : 0)) / 1000),
-    []
-  );
+  const getElapsedSeconds = useCallback(() => clock.seconds(), [clock]);
 
   useEffect(() => {
     if (sessionState !== 'running') return undefined;
-    const tick = () => setSessionSeconds(getElapsedSeconds());
+    const tick = () => setSessionSeconds(clock.seconds());
     const interval = setInterval(tick, 1000);
     document.addEventListener('visibilitychange', tick);
     return () => {
       clearInterval(interval);
       document.removeEventListener('visibilitychange', tick);
     };
-  }, [sessionState, getElapsedSeconds]);
+  }, [sessionState, clock]);
 
   const startSession = () => {
-    if (runningSince.current) return;
-    runningSince.current = Date.now();
+    if (clock.isRunning()) return;
+    clock.start();
     setSessionState('running');
   };
 
   const pauseSession = () => {
-    if (runningSince.current) {
-      bankedMs.current += Date.now() - runningSince.current;
-      runningSince.current = null;
-    }
-    setSessionSeconds(getElapsedSeconds());
+    clock.pause();
+    setSessionSeconds(clock.seconds());
     setSessionState('paused');
   };
 
@@ -47,15 +37,13 @@ export function useSessionControls() {
 
   /** Back to a blank, stopped clock (used after a workout is saved). */
   const resetSession = () => {
-    bankedMs.current = 0;
-    runningSince.current = null;
+    clock.reset();
     setSessionSeconds(0);
     setSessionState('idle');
   };
 
   const confirmRestart = (onRestartSuccess) => {
-    bankedMs.current = 0;
-    runningSince.current = Date.now();
+    clock.restart();
     setSessionSeconds(0);
     setSessionState('running');
     if (onRestartSuccess) onRestartSuccess();

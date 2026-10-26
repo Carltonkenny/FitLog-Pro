@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { CloudSync } from '../../lib/cloudSync';
 import { pullUserData, startUserDataSync } from '../../lib/userDataSync';
+import { startRealtime } from '../../lib/realtime';
 import Companion from '../companion/Companion';
 import { WorkoutStore } from '../../lib/workoutStore';
-import { resolveExercise } from '../../lib/companionActions.js';
+import { customExercise, resolveExercise } from '../../lib/companionActions.js';
 import { toPlanItems } from './components/workout/RoutinesBar';
 
 // Custom Hooks
@@ -75,7 +76,12 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
     WorkoutStore.flushSyncQueue().then(() => CloudSync.pull()).finally(refresh);
     startUserDataSync();
     pullUserData();
+    const stopRealtime = startRealtime({
+      onWorkouts: () => CloudSync.pull().finally(refresh),
+      onProfile: pullUserData,
+    });
     return () => {
+      stopRealtime();
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', refresh);
       window.removeEventListener('fitlog:sync', refresh);
@@ -102,7 +108,7 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
         day.exercises.map((ex) => {
           const lib = resolveExercise(ex.name);
           return {
-            exerciseId: lib?.id || `custom_${ex.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 60)}`,
+            exerciseId: lib?.id || customExercise(ex.name).id,
             exerciseName: lib?.name || ex.name,
             sets: ex.sets,
             reps: parseInt(ex.reps, 10) || 10,

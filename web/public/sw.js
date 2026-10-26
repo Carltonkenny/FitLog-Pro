@@ -1,5 +1,5 @@
 // FitLog Pro service worker: lets the app open and log workouts with no connection.
-// It only handles same-origin GET requests. Supabase and Google calls are never cached or touched.
+// It only handles same-origin GET requests. API, auth and Google calls are never cached or touched.
 const CACHE = 'fitlog-v1';
 
 self.addEventListener('install', (event) => {

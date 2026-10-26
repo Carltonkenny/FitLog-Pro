@@ -1,5 +1,5 @@
 import React from 'react';
-import { isCloudConfigured } from '../../../../lib/supabaseClient';
+import { isCloudConfigured } from '../../../../lib/neonClient';
 import {
   Dumbbell,
   ArrowLeft,

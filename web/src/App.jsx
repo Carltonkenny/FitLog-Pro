@@ -3,7 +3,7 @@ import LandingPage from './features/landing/LandingPage';
 import AuthModal from './features/auth/AuthModal';
 import OnboardingFlow from './features/onboarding/OnboardingFlow';
 import ProApp from './features/app/ProApp';
-import { AuthService, authRequired } from './lib/supabaseClient';
+import { AuthService, authRequired } from './lib/neonClient';
 import { CloudSync } from './lib/cloudSync';
 import { resetUserData } from './lib/userData';
 
@@ -23,6 +23,8 @@ export default function App() {
   const [session, setSession] = useState(null);
   const [authReady, setAuthReady] = useState(!authRequired);
   const [blueprint, setBlueprint] = useState(null);
+  // Set when the user arrives from a password-reset email: /reset-password?token=...
+  const [resetToken, setResetToken] = useState(null);
 
   const updateView = (newView) => {
     setView(newView);
@@ -46,11 +48,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Restore existing session and cached blueprint if present
-    const existing = AuthService.getSession();
-    if (existing) {
-      setSession(existing);
-    }
+    // Restore the signed-in user (Neon Auth session cookie) and the cached plan if present.
+    AuthService.restoreSession().then((existing) => {
+      if (existing) setSession(existing);
+      setAuthReady(true);
+    });
     const cachedProfile = localStorage.getItem('fitlog_profile');
     if (cachedProfile) {
       try {
@@ -70,18 +72,16 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Pick up real Supabase sessions (e.g. after the Google OAuth redirect back to /app)
-    const { data } = AuthService.onAuthStateChange((newSession, event) => {
-      if (newSession) setSession(newSession);
-      else if (event === 'SIGNED_OUT') setSession(null);
-      if (event === 'PASSWORD_RECOVERY') {
-        // The reset link signs the user in; ask for the new password before anything else.
+    // Arriving from a password-reset email: open the "choose a new password" dialog.
+    if (window.location.pathname === '/reset-password') {
+      const token = new URLSearchParams(window.location.search).get('token');
+      if (token) {
+        setResetToken(token);
         setAuthMode('reset');
         setAuthModalOpen(true);
       }
-      setAuthReady(true);
-    });
-    return () => data?.subscription?.unsubscribe();
+      window.history.replaceState({}, '', '/');
+    }
   }, []);
 
   // Cloud mode: the app and onboarding screens require a signed-in user.
@@ -187,6 +187,7 @@ export default function App() {
       <AuthModal
         isOpen={authModalOpen}
         initialMode={authMode}
+        resetToken={resetToken}
         onClose={() => setAuthModalOpen(false)}
         onSuccess={handleAuthSuccess}
       />
