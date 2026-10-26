@@ -10,6 +10,16 @@ export const isCloudConfigured = !supabaseKey.includes('placeholder');
 // Dev-only escape hatch: VITE_SKIP_AUTH=true lets you open /app without signing in. Ignored in production builds.
 export const authRequired = isCloudConfigured && !(import.meta.env.DEV && import.meta.env.VITE_SKIP_AUTH === 'true');
 
+// Older builds mirrored the whole session (including the refresh token) into a second key.
+// Supabase already keeps the session; remove the duplicate so a stale copy can never grant access.
+if (isCloudConfigured) {
+  try {
+    localStorage.removeItem('fitlog_session');
+  } catch {
+    // Storage unavailable (private mode): nothing to clean up.
+  }
+}
+
 // Real client instance
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
@@ -140,6 +150,8 @@ export const AuthService = {
 
   // Get current active session
   getSession() {
+    // Cloud mode: the Supabase client is the only source of truth (see onAuthStateChange).
+    if (isCloudConfigured) return null;
     const cached = localStorage.getItem('fitlog_session');
     if (cached) {
       try {
@@ -180,11 +192,6 @@ export const AuthService = {
   // Subscribe to Supabase real auth state changes (call once in App.jsx)
   onAuthStateChange(callback) {
     return supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        localStorage.setItem('fitlog_session', JSON.stringify(session));
-      } else if (event === 'SIGNED_OUT') {
-        localStorage.removeItem('fitlog_session');
-      }
       callback(session, event);
     });
   },

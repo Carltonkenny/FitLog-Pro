@@ -4,21 +4,10 @@
 // 1. 1RM calculations & boundary edge cases
 // 2. Cascading exercise library depth & metadata
 // 3. Progressive overload delta recommendations
-// 4. Mock vs. Real data flow transitions
+// 4. New users start with empty, real data
 // ==============================================================================
 
 import assert from 'node:assert';
-
-// Mock localStorage for Node test runner
-if (typeof globalThis.localStorage === 'undefined') {
-  const store = {};
-  globalThis.localStorage = {
-    getItem: (key) => store[key] || null,
-    setItem: (key, val) => { store[key] = String(val); },
-    removeItem: (key) => { delete store[key]; },
-    clear: () => { Object.keys(store).forEach((k) => delete store[k]); },
-  };
-}
 
 import {
   calculate1RM,
@@ -72,14 +61,14 @@ assert(targetOver12.includes('+2.5 kg'), 'Reps >= 12 should suggest micro-loadin
 console.log('   ✅ Progressive overload target engine passed.\n');
 
 // ------------------------------------------------------------------------------
-// TEST 4: Mock Data vs Real Data Continuity
+// TEST 4: New users start with real (empty) data
+// Changed deliberately: earlier builds seeded a fake "3 days ago" workout and fake records for every
+// new user. That data polluted analytics and the AI coach, so a new account must start empty.
 // ------------------------------------------------------------------------------
-console.log('👉 [Test 4] Mock Data vs Real Cloud Data Architecture:');
-// Mock simulation: Mock storage provides baseline so user isn't faced with blank screens
-const initialHist = WorkoutStore.getHistory();
-assert(Array.isArray(initialHist), 'History must be an array');
-assert(initialHist.length >= 1, 'Initial history seeded for immediate progress delta comparison');
-
-console.log('   ✅ Seeded history verified. Ready for live PostgreSQL sync.\n');
+console.log('👉 [Test 4] New users start with empty, real data:');
+localStorage.clear();
+assert.deepStrictEqual(WorkoutStore.getHistory(), [], 'A new user has no workouts');
+assert.deepStrictEqual(WorkoutStore.getPersonalRecords(), {}, 'A new user has no personal records');
+console.log('   ✅ Empty-state verified. No fake data is injected.\n');
 
 console.log('🎉 ALL DOMAIN TESTS PASSED WITH 0 FAILURES!');

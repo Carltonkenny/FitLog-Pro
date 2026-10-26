@@ -1,4 +1,4 @@
-import { EXERCISE_LIBRARY, calculate1RM } from './workoutStore';
+import { EXERCISE_LIBRARY, calculate1RM } from './exercises.js';
 
 const DAY_MS = 86400000;
 const MUSCLE_GROUPS = ['Chest', 'Back', 'Legs', 'Shoulders', 'Arms', 'Core'];

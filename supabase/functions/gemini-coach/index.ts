@@ -9,7 +9,9 @@
 
 const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
 const MODEL = Deno.env.get('GEMINI_MODEL') ?? 'gemini-3.6-flash';
-const ALLOWED_ORIGIN = Deno.env.get('ALLOWED_ORIGIN') ?? '*';
+const ALLOWED_ORIGIN = Deno.env.get('ALLOWED_ORIGIN') ?? '*'; // tokens travel in a header, not cookies
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL'); // provided automatically by Supabase
+const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY'); // provided automatically by Supabase
 
 const MAX_BODY_BYTES = 6_000_000;
 const MAX_TEXT_CHARS = 20_000;
@@ -32,15 +34,19 @@ const cors = {
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
 
-function userIdFromJwt(req: Request): string | null {
-  const token = req.headers.get('Authorization')?.replace('Bearer ', '');
-  if (!token) return null;
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return typeof payload.sub === 'string' ? payload.sub : null;
-  } catch {
-    return null;
-  }
+// Defense in depth: do not trust the token's contents. Ask Supabase Auth who the caller is, so the
+// function stays safe even if "Verify JWT" is switched off at deploy time. Anonymous (anon key) tokens
+// have no user and are rejected.
+async function verifiedUserId(req: Request): Promise<string | null> {
+  const authorization = req.headers.get('Authorization');
+  if (!authorization || !SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+    headers: { Authorization: authorization, apikey: SUPABASE_ANON_KEY },
+    signal: AbortSignal.timeout(8_000),
+  }).catch(() => null);
+  if (!res?.ok) return null;
+  const user = await res.json().catch(() => null);
+  return typeof user?.id === 'string' ? user.id : null;
 }
 
 function limited(userId: string): boolean {
@@ -99,7 +105,7 @@ Deno.serve(async (req) => {
   if (req.method !== 'POST') return json({ error: 'method-not-allowed' }, 405);
   if (!GEMINI_API_KEY) return json({ error: 'not-configured' }, 500);
 
-  const userId = userIdFromJwt(req);
+  const userId = await verifiedUserId(req);
   if (!userId) return json({ error: 'unauthorized' }, 401);
   if (limited(userId)) return json({ error: 'rate-limited' }, 429);
 
