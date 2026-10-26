@@ -76,13 +76,13 @@ export default function PlateCalculator() {
                 <div className="flex items-center gap-2 mb-2">
                   <button
                     onClick={() => adjustWeight(-5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     -5
                   </button>
                   <button
                     onClick={() => adjustWeight(-2.5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     -2.5
                   </button>
@@ -93,17 +93,17 @@ export default function PlateCalculator() {
                     step="2.5"
                     value={weight}
                     onChange={(e) => setWeight(parseFloat(e.target.value))}
-                    className="flex-1 accent-[#00F59B] h-2 bg-[#242836] rounded-lg cursor-pointer"
+                    aria-label="Total weight in kilograms" className="flex-1 accent-[#00F59B] h-6 cursor-pointer"
                   />
                   <button
                     onClick={() => adjustWeight(2.5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     +2.5
                   </button>
                   <button
                     onClick={() => adjustWeight(5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     +5
                   </button>
@@ -123,7 +123,7 @@ export default function PlateCalculator() {
                   step="1"
                   value={reps}
                   onChange={(e) => setReps(parseInt(e.target.value))}
-                  className="w-full accent-[#00F59B] h-2 bg-[#242836] rounded-lg cursor-pointer"
+                  aria-label="Reps" className="w-full accent-[#00F59B] h-6 cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
                   <span>1 (Max)</span>
@@ -139,7 +139,7 @@ export default function PlateCalculator() {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setBarWeight(20)}
-                    className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                    className={`min-h-11 px-4 rounded-lg text-xs font-semibold border transition-all ${
                       barWeight === 20
                         ? 'bg-[#00F59B]/10 border-[#00F59B] text-[#00F59B]'
                         : 'bg-[#181B24] border-[#282C3B] text-slate-400'
@@ -149,7 +149,7 @@ export default function PlateCalculator() {
                   </button>
                   <button
                     onClick={() => setBarWeight(15)}
-                    className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                    className={`min-h-11 px-4 rounded-lg text-xs font-semibold border transition-all ${
                       barWeight === 15
                         ? 'bg-[#00F59B]/10 border-[#00F59B] text-[#00F59B]'
                         : 'bg-[#181B24] border-[#282C3B] text-slate-400'

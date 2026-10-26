@@ -8,7 +8,7 @@
 // Optional secrets: GEMINI_MODEL (default below), ALLOWED_ORIGIN (default "*")
 
 const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
-const MODEL = Deno.env.get('GEMINI_MODEL') ?? 'gemini-3.8-flash';
+const MODEL = Deno.env.get('GEMINI_MODEL') ?? 'gemini-3.6-flash';
 const ALLOWED_ORIGIN = Deno.env.get('ALLOWED_ORIGIN') ?? '*';
 
 const MAX_BODY_BYTES = 6_000_000;

@@ -24,6 +24,7 @@ function friendlyAuthError(err) {
   if (msg.includes('invalid login')) return 'Email or password is incorrect.';
   if (msg.includes('already registered')) return 'That email already has an account. Sign in instead.';
   if (msg.includes('password should be')) return 'Password must be at least 6 characters.';
+  if (msg.includes('same password')) return 'Choose a password you have not used before.';
   if (msg.includes('rate limit')) return 'Too many attempts. Wait a minute and try again.';
   if (msg.includes('failed to fetch') || msg.includes('network')) return 'Cannot reach the server. Check your connection and try again.';
   return err?.message || 'Authentication failed. Try again.';
@@ -148,6 +149,21 @@ export const AuthService = {
       }
     }
     return null;
+  },
+
+  // Email a password-reset link. The link returns to /app and fires PASSWORD_RECOVERY.
+  async resetPassword(email) {
+    if (!isCloudConfigured) throw new Error('Password reset needs a cloud account.');
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/app`,
+    });
+    if (error) throw new Error(friendlyAuthError(error));
+  },
+
+  // Set a new password for the signed-in (recovery) session.
+  async updatePassword(password) {
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) throw new Error(friendlyAuthError(error));
   },
 
   // Google OAuth — redirects to Google; session is restored via onAuthStateChange

@@ -1,7 +1,7 @@
 import { supabase, isCloudConfigured } from './supabaseClient';
 
 const DEV_KEY = import.meta.env.DEV ? import.meta.env.VITE_GEMINI_API_KEY : undefined;
-const DEV_MODEL = 'gemini-3.8-flash';
+const DEV_MODEL = 'gemini-3.6-flash';
 const TIMEOUT_MS = 100_000;
 
 /** Error whose message is already safe and plain enough to show to the user. */

@@ -1,345 +1,262 @@
-import React, { useState } from 'react';
-import { Target, Dumbbell, Calendar, Activity, ArrowRight, ArrowLeft, Check, Sparkles } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Check, Loader2 } from 'lucide-react';
 import { AuthService } from '../../lib/supabaseClient';
+import { fromDisplay, setSettings, toDisplay, useSettings } from '../../lib/settings';
 
-export default function OnboardingFlow({ session, onComplete, onCancel }) {
-  const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
+const GOALS = [
+  { id: 'Muscle Growth', title: 'Build muscle', desc: 'Gain visible size, shape and definition.' },
+  { id: 'Raw Strength', title: 'Get stronger', desc: 'Lift heavier on squat, bench and deadlift.' },
+  { id: 'Lean & Toned', title: 'Lean out', desc: 'Lose body fat while keeping and building muscle.' },
+  { id: 'Endurance', title: 'Improve fitness', desc: 'Boost stamina, conditioning and energy.' },
+];
 
-  // Onboarding State (Plain English First)
-  const [goal, setGoal] = useState('Muscle Growth');
-  const [experience, setExperience] = useState('Intermediate');
-  const [split, setSplit] = useState('PPL');
-  const [bodyWeight, setBodyWeight] = useState(76.5);
-  const [targetWeight, setTargetWeight] = useState(80.0);
-  const [benchEstimate, setBenchEstimate] = useState(85.0);
+const LEVELS = [
+  { id: 'Novice', title: 'Beginner', desc: 'Under 1 year. Learning form and making fast early gains.' },
+  { id: 'Intermediate', title: 'Intermediate', desc: '1 to 3 years. Ready for structured progressive overload.' },
+  { id: 'Advanced', title: 'Advanced', desc: '3+ years. Managing high volume and fatigue.' },
+];
 
-  const totalSteps = 4;
+const SPLITS = [
+  { id: 'PPL', title: 'Push / pull / legs', desc: '4 to 6 days a week. The most popular split.' },
+  { id: 'UpperLower', title: 'Upper / lower', desc: '4 days a week. Plenty of recovery time.' },
+  { id: 'FullBody', title: 'Full body', desc: '3 days a week. Efficient when time is short.' },
+  { id: 'Arnold', title: 'Arnold split', desc: '5 to 6 days a week. High volume.' },
+];
 
-  const handleNext = async () => {
-    if (step < totalSteps) {
-      setStep(step + 1);
-    } else {
-      // Finalize and save to Supabase
-      setLoading(true);
-      const blueprint = {
-        fitness_goal: goal,
-        goal: goal === 'Raw Strength' ? 'strength' : 'muscle_growth',
-        experience_level: experience,
-        split_preference: split,
-        body_weight_kg: parseFloat(bodyWeight),
-        target_weight_kg: parseFloat(targetWeight),
-        bench_1rm_kg: parseFloat(benchEstimate),
-        daily_calorie_target: goal === 'Muscle Growth' ? 2850 : 2500,
-        weekly_volume_target_sets: experience === 'Advanced' ? 18 : 14,
-      };
+const STEPS = [
+  { key: 'goal', title: 'What is your main goal?', sub: 'We use this to shape your training suggestions.', options: GOALS },
+  { key: 'experience', title: 'How long have you been lifting?', sub: 'Be honest. It sets how fast we suggest you progress.', options: LEVELS },
+  { key: 'split', title: 'How do you like to train?', sub: 'Pick the split closest to your week. You can change it later.', options: SPLITS },
+  { key: 'body', title: 'A few numbers', sub: 'These help the coach set realistic weights. All optional.' },
+];
 
-      const userId = session?.user?.id || 'guest';
-      try {
-        await AuthService.saveOnboardingProfile(userId, blueprint);
-      } catch (err) {
-        // The blueprint is already cached locally, so the user can continue; cloud save retries on next profile update.
-        console.error('Onboarding profile cloud save failed:', err.message);
-      }
-      setLoading(false);
-      onComplete(blueprint);
+function OptionGroup({ label, options, value, onChange }) {
+  return (
+    <div role="radiogroup" aria-label={label} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {options.map((o) => {
+        const on = value === o.id;
+        return (
+          <button
+            key={o.id}
+            type="button"
+            role="radio"
+            aria-checked={on}
+            onClick={() => onChange(o.id)}
+            className={`text-left rounded-xl border p-4 min-h-24 transition-colors ${
+              on ? 'bg-[#00F59B]/10 border-[#00F59B] text-white' : 'bg-[#0D0F14] border-white/[0.1] text-zinc-200 hover:border-white/[0.25]'
+            }`}
+          >
+            <span className="flex items-center justify-between gap-2 font-semibold">
+              {o.title}
+              {on && <Check className="w-4 h-4 text-[#00F59B] stroke-[3]" aria-hidden="true" />}
+            </span>
+            <span className="block text-sm text-zinc-400 mt-1 leading-snug">{o.desc}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function NumberField({ id, label, unit, value, onChange, error, hint }) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-zinc-200 block mb-1.5">
+        {label}
+      </label>
+      <div className="relative">
+        <input
+          id={id}
+          type="number"
+          inputMode="decimal"
+          min="0"
+          step="0.5"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          aria-invalid={!!error}
+          aria-describedby={`${id}-msg`}
+          className={`w-full h-12 pl-3.5 pr-12 rounded-xl bg-[#0D0F14] border text-white font-mono tabular-nums focus:border-[#00F59B] ${
+            error ? 'border-red-400/60' : 'border-white/[0.1]'
+          }`}
+        />
+        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-sm text-zinc-400" aria-hidden="true">
+          {unit}
+        </span>
+      </div>
+      <p id={`${id}-msg`} role={error ? 'alert' : undefined} className={`mt-1.5 text-xs ${error ? 'text-red-300' : 'text-zinc-400'}`}>
+        {error || hint}
+      </p>
+    </div>
+  );
+}
+
+const inRange = (v, min, max) => v === '' || (Number(v) >= min && Number(v) <= max);
+
+export default function OnboardingFlow({ session, onComplete }) {
+  const { unit } = useSettings();
+  const [step, setStep] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [answers, setAnswers] = useState({ goal: 'Muscle Growth', experience: 'Intermediate', split: 'PPL' });
+  const [body, setBody] = useState({ weight: '', target: '', bench: '' });
+  const headingRef = useRef(null);
+
+  const last = step === STEPS.length - 1;
+  const current = STEPS[step];
+  const maxBody = toDisplay(300, unit);
+  const maxBench = toDisplay(500, unit);
+  const errors = {
+    weight: inRange(body.weight, 1, maxBody) ? '' : `Enter a value up to ${maxBody} ${unit}.`,
+    target: inRange(body.target, 1, maxBody) ? '' : `Enter a value up to ${maxBody} ${unit}.`,
+    bench: inRange(body.bench, 1, maxBench) ? '' : `Enter a value up to ${maxBench} ${unit}.`,
+  };
+  const bodyInvalid = last && Object.values(errors).some(Boolean);
+
+  // Move focus to the new heading so keyboard and screen-reader users land at the top of each step.
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, [step]);
+
+  const toKg = (v) => (v === '' ? undefined : fromDisplay(Number(v), unit));
+
+  const finish = async () => {
+    setSaving(true);
+    const blueprint = {
+      fitness_goal: answers.goal,
+      goal: answers.goal === 'Raw Strength' ? 'strength' : 'muscle_growth',
+      experience_level: answers.experience,
+      split_preference: answers.split,
+      body_weight_kg: toKg(body.weight),
+      target_weight_kg: toKg(body.target),
+      bench_1rm_kg: toKg(body.bench),
+      weekly_volume_target_sets: answers.experience === 'Advanced' ? 18 : 14,
+    };
+    try {
+      await AuthService.saveOnboardingProfile(session?.user?.id || 'guest', blueprint);
+    } catch (err) {
+      // The plan is cached on this device already, so the user can carry on; it re-uploads next time.
+      console.error('Onboarding profile cloud save failed:', err.message);
     }
+    setSaving(false);
+    onComplete(blueprint);
+  };
+
+  const next = () => {
+    if (bodyInvalid || saving) return;
+    if (last) finish();
+    else setStep((s) => s + 1);
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex flex-col justify-center items-center p-4 sm:p-6 relative font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-emerald-500/10 blur-[140px] pointer-events-none rounded-full" />
+    <div className="min-h-screen bg-[#0A0B0E] flex flex-col items-center justify-center p-4 sm:p-6 relative">
+      <div aria-hidden="true" className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[560px] h-[300px] bg-[#00F59B]/[0.06] blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="w-full max-w-xl rounded-2xl bg-[#0f1117] border border-white/[0.08] p-6 sm:p-10 shadow-2xl relative z-10">
-        {/* Progress Bar & Header */}
+      <form
+        className="relative w-full max-w-xl rounded-2xl bg-[#101218] border border-white/[0.09] p-6 sm:p-9 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.06),0_30px_80px_-20px_rgba(0,0,0,0.9)]"
+        onSubmit={(e) => {
+          e.preventDefault();
+          next();
+        }}
+        noValidate
+      >
         <div className="mb-8">
-          <div className="flex items-center justify-between text-xs font-mono text-zinc-400 mb-2">
-            <span className="tracking-wider">STEP 0{step} OF 0{totalSteps}</span>
-            <span className="text-emerald-400 font-bold tabular-nums">
-              {Math.round((step / totalSteps) * 100)}% COMPLETE
+          <div className="flex items-center justify-between text-xs text-zinc-400 mb-2">
+            <span>
+              Step {step + 1} of {STEPS.length}
             </span>
+            <button
+              type="button"
+              onClick={finish}
+              disabled={saving}
+              className="min-h-10 px-2 hover:text-white underline underline-offset-4"
+            >
+              Skip for now
+            </button>
           </div>
-          <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+          <div
+            role="progressbar"
+            aria-label="Onboarding progress"
+            aria-valuemin={1}
+            aria-valuemax={STEPS.length}
+            aria-valuenow={step + 1}
+            className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden"
+          >
             <div
-              className="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-300 rounded-full"
-              style={{ width: `${(step / totalSteps) * 100}%` }}
+              className="h-full bg-[#00F59B] rounded-full transition-[width] duration-300 ease-out"
+              style={{ width: `${((step + 1) / STEPS.length) * 100}%` }}
             />
           </div>
         </div>
 
-        {/* STEP 1: Primary Target (Plain English) */}
-        {step === 1 && (
-          <div className="space-y-6">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 mb-2">
-                <Target className="w-3.5 h-3.5" />
-                <span>PRIMARY GOAL</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                What is your main fitness goal?
-              </h3>
-              <p className="text-xs text-zinc-400 mt-1">
-                We'll tailor your routine, exercise selection, and weekly set targets around this objective.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {[
-                {
-                  id: 'Muscle Growth',
-                  title: 'Muscle Growth (Size & Tone)',
-                  desc: 'Build visible muscle, aesthetic shape, and full-body definition',
-                },
-                {
-                  id: 'Raw Strength',
-                  title: 'Raw Strength & Power',
-                  desc: 'Lift heavier weights on main compound movements like squat, bench, deadlift',
-                },
-                {
-                  id: 'Lean & Toned',
-                  title: 'Lean & Toned (Recomposition)',
-                  desc: 'Burn body fat while preserving and building lean muscle',
-                },
-                {
-                  id: 'Endurance',
-                  title: 'Athletic Endurance & Fitness',
-                  desc: 'Boost overall stamina, conditioning, and workout energy',
-                },
-              ].map((item) => (
-                <div
-                  key={item.id}
-                  id={`goal-option-${item.id.toLowerCase().replace(/[^a-z]/g, '')}`}
-                  onClick={() => setGoal(item.id)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all active:scale-[0.98] ${
-                    goal === item.id
-                      ? 'bg-emerald-500/10 border-emerald-500 text-white shadow-lg shadow-emerald-500/10'
-                      : 'bg-zinc-900/60 border-white/[0.06] text-zinc-300 hover:border-white/[0.15]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-sm tracking-tight">{item.title}</span>
-                    {goal === item.id && <Check className="w-4 h-4 text-emerald-400 stroke-[3]" />}
-                  </div>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
+        <div key={step} className="space-y-6 animate-popIn">
+          <div>
+            <h1 ref={headingRef} tabIndex={-1} className="font-['Outfit'] text-2xl sm:text-3xl font-extrabold text-white tracking-[-0.02em] focus:outline-none">
+              {current.title}
+            </h1>
+            <p className="text-sm text-zinc-400 mt-1.5">{current.sub}</p>
           </div>
-        )}
 
-        {/* STEP 2: Experience Level */}
-        {step === 2 && (
-          <div className="space-y-6">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-mono text-cyan-400 mb-2">
-                <Dumbbell className="w-3.5 h-3.5" />
-                <span>TRAINING EXPERIENCE</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                How long have you been lifting?
-              </h3>
-              <p className="text-xs text-zinc-400 mt-1">
-                Used to calibrate recovery intervals and recommend weekly weight progression jumps.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              {[
-                {
-                  id: 'Novice',
-                  title: 'Beginner (Under 1 Year)',
-                  desc: 'Learning proper form and making rapid early strength improvements (+1–2.5 kg/week)',
-                },
-                {
-                  id: 'Intermediate',
-                  title: 'Intermediate (1 to 3 Years)',
-                  desc: 'Consistent lifter ready for structured progressive overload and periodic deloads',
-                },
-                {
-                  id: 'Advanced',
-                  title: 'Advanced (3+ Years)',
-                  desc: 'Experienced lifter optimizing high volume, fatigue management, and biomechanics',
-                },
-              ].map((item) => (
-                <div
-                  key={item.id}
-                  id={`exp-option-${item.id.toLowerCase()}`}
-                  onClick={() => setExperience(item.id)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between active:scale-[0.98] ${
-                    experience === item.id
-                      ? 'bg-cyan-500/10 border-cyan-500 text-white shadow-lg shadow-cyan-500/10'
-                      : 'bg-zinc-900/60 border-white/[0.06] text-zinc-300 hover:border-white/[0.15]'
-                  }`}
-                >
-                  <div>
-                    <span className="font-bold text-sm tracking-tight block">{item.title}</span>
-                    <p className="text-[11px] text-zinc-400 mt-0.5">{item.desc}</p>
-                  </div>
-                  {experience === item.id && <Check className="w-4 h-4 text-cyan-400 stroke-[3]" />}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* STEP 3: Training Split */}
-        {step === 3 && (
-          <div className="space-y-6">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-mono text-amber-400 mb-2">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>WORKOUT SCHEDULE</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                Choose your weekly training cadence
-              </h3>
-              <p className="text-xs text-zinc-400 mt-1">
-                We'll pre-populate your routine with balanced muscle recovery intervals.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {[
-                { id: 'PPL', title: 'Push / Pull / Legs', days: '4 to 6 Days/Wk', tag: 'Most Popular' },
-                { id: 'UpperLower', title: 'Upper / Lower Split', days: '4 Days/Wk', tag: 'High Recovery' },
-                { id: 'FullBody', title: 'Full Body Compound', days: '3 Days/Wk', tag: 'Time Efficient' },
-                { id: 'Arnold', title: 'Arnold Split', days: '5 to 6 Days/Wk', tag: 'High Volume' },
-              ].map((item) => (
-                <div
-                  key={item.id}
-                  id={`split-option-${item.id.toLowerCase()}`}
-                  onClick={() => setSplit(item.id)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all active:scale-[0.98] ${
-                    split === item.id
-                      ? 'bg-amber-500/10 border-amber-500 text-white shadow-lg shadow-amber-500/10'
-                      : 'bg-zinc-900/60 border-white/[0.06] text-zinc-300 hover:border-white/[0.15]'
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="font-bold text-sm tracking-tight">{item.title}</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">
-                      {item.days}
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-amber-400 uppercase font-semibold">
-                    {item.tag}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* STEP 4: Body Metrics & Benchmark */}
-        {step === 4 && (
-          <div className="space-y-6">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 mb-2">
-                <Activity className="w-3.5 h-3.5" />
-                <span>BASELINE BENCHMARK</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                Current metrics & starting strength
-              </h3>
-              <p className="text-xs text-zinc-400 mt-1">
-                Used to calculate realistic starting weights, warmup sets, and estimated 1-rep maximums.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="text-xs font-mono uppercase text-zinc-400 block mb-1">
-                  Current Body Weight (kg)
-                </label>
-                <input
-                  id="onboarding-weight-input"
-                  type="number"
-                  step="0.1"
-                  value={bodyWeight}
-                  onChange={(e) => setBodyWeight(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-white/[0.08] focus:border-emerald-500 text-white text-sm font-mono outline-none tabular-nums"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-mono uppercase text-zinc-400 block mb-1">
-                  Target Weight Goal (kg)
-                </label>
-                <input
-                  id="onboarding-target-input"
-                  type="number"
-                  step="0.1"
-                  value={targetWeight}
-                  onChange={(e) => setTargetWeight(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-white/[0.08] focus:border-emerald-500 text-white text-sm font-mono outline-none tabular-nums"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-mono uppercase text-zinc-400 block mb-1">
-                  Estimated Bench Press Max Lift (kg)
-                </label>
-                <input
-                  id="onboarding-bench-input"
-                  type="number"
-                  step="2.5"
-                  value={benchEstimate}
-                  onChange={(e) => setBenchEstimate(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-white/[0.08] focus:border-emerald-500 text-white text-sm font-mono outline-none tabular-nums"
-                />
-                <span className="text-[11px] text-zinc-500 mt-1 block">
-                  Approximate 1-rep maximum; this configures starting warmup weight.
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Navigation Buttons */}
-        <div className="flex items-center justify-between pt-8 border-t border-white/[0.06] mt-8">
-          {step > 1 ? (
-            <button
-              onClick={() => setStep(step - 1)}
-              className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-3 py-2 rounded-lg hover:bg-white/[0.05] transition active:scale-95"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back</span>
-            </button>
+          {current.options ? (
+            <OptionGroup
+              label={current.title}
+              options={current.options}
+              value={answers[current.key]}
+              onChange={(v) => setAnswers((a) => ({ ...a, [current.key]: v }))}
+            />
           ) : (
-            <button
-              onClick={onCancel}
-              className="text-xs text-zinc-500 hover:text-zinc-300 px-3 py-2 transition"
-            >
-              Skip Onboarding
-            </button>
+            <div className="space-y-5">
+              <div role="radiogroup" aria-label="Weight unit" className="inline-flex p-1 rounded-xl bg-[#0D0F14] border border-white/[0.08]">
+                {['kg', 'lb'].map((u) => (
+                  <button
+                    key={u}
+                    type="button"
+                    role="radio"
+                    aria-checked={unit === u}
+                    onClick={() => {
+                      setBody({ weight: '', target: '', bench: '' });
+                      setSettings({ unit: u });
+                    }}
+                    className={`min-w-16 h-10 rounded-lg text-sm font-semibold ${unit === u ? 'bg-[#00F59B] text-black' : 'text-zinc-300 hover:text-white'}`}
+                  >
+                    {u}
+                  </button>
+                ))}
+              </div>
+              <NumberField id="ob-weight" label="Body weight" unit={unit} value={body.weight} error={errors.weight} onChange={(v) => setBody((b) => ({ ...b, weight: v }))} />
+              <NumberField id="ob-target" label="Target body weight" unit={unit} value={body.target} error={errors.target} hint="Leave blank if you are not aiming to change." onChange={(v) => setBody((b) => ({ ...b, target: v }))} />
+              <NumberField id="ob-bench" label="Best bench press (one rep)" unit={unit} value={body.bench} error={errors.bench} hint="An estimate is fine. We use it to suggest starting weights." onChange={(v) => setBody((b) => ({ ...b, bench: v }))} />
+            </div>
           )}
+        </div>
 
+        <div className="mt-9 flex items-center justify-between gap-3">
           <button
-            id="onboarding-next-btn"
-            onClick={handleNext}
-            disabled={loading}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold transition active:scale-95 shadow-md shadow-emerald-500/20"
+            type="button"
+            onClick={() => setStep((s) => s - 1)}
+            disabled={step === 0 || saving}
+            className="h-12 px-5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] flex items-center gap-2 disabled:opacity-0 disabled:pointer-events-none"
           >
-            {loading ? (
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            Back
+          </button>
+          <button
+            type="submit"
+            disabled={saving || bodyInvalid}
+            className="h-12 px-7 rounded-xl bg-[#00F59B] hover:bg-[#00D485] text-black font-bold flex items-center gap-2"
+          >
+            {saving ? (
               <>
-                <Sparkles className="w-3.5 h-3.5 animate-spin" />
-                <span>Configuring Cloud Blueprint...</span>
-              </>
-            ) : step < totalSteps ? (
-              <>
-                <span>Continue</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                Saving…
               </>
             ) : (
               <>
-                <span>Generate My Blueprint & Enter App</span>
-                <Sparkles className="w-3.5 h-3.5" />
+                {last ? 'Finish and start' : 'Continue'}
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </>
             )}
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

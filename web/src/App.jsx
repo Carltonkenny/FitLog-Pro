@@ -73,6 +73,11 @@ export default function App() {
     const { data } = AuthService.onAuthStateChange((newSession, event) => {
       if (newSession) setSession(newSession);
       else if (event === 'SIGNED_OUT') setSession(null);
+      if (event === 'PASSWORD_RECOVERY') {
+        // The reset link signs the user in; ask for the new password before anything else.
+        setAuthMode('reset');
+        setAuthModalOpen(true);
+      }
       setAuthReady(true);
     });
     return () => data?.subscription?.unsubscribe();
