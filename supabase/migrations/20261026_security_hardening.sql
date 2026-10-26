@@ -38,16 +38,24 @@ $$;
 REVOKE EXECUTE ON FUNCTION public.handle_new_user() FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.set_updated_at() FROM PUBLIC, anon, authenticated;
 
+-- 1b. Saved routines and companion memory live on the profile row as small, size-limited JSON.
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS routines JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS coach_memory JSONB NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE public.profiles DROP CONSTRAINT IF EXISTS profiles_json_sane;
+ALTER TABLE public.profiles ADD CONSTRAINT profiles_json_sane
+    CHECK (jsonb_typeof(routines) = 'array' AND jsonb_typeof(coach_memory) = 'object'
+           AND pg_column_size(routines) < 100000 AND pg_column_size(coach_memory) < 20000);
+
 -- 2. Users must not be able to grant themselves paid status (or touch any column the app does not edit).
 --    Row-level security decides WHICH rows; column privileges decide WHICH columns.
 REVOKE INSERT, UPDATE ON public.profiles FROM anon, authenticated;
 GRANT INSERT (id, email, full_name, fitness_goal, experience_level, split_preference,
               body_weight_kg, target_weight_kg, body_fat_pct, daily_calorie_target,
-              onboarding_completed, bench_1rm_kg, weekly_volume_target_sets)
+              onboarding_completed, bench_1rm_kg, weekly_volume_target_sets, routines, coach_memory)
     ON public.profiles TO authenticated;
 GRANT UPDATE (id, email, full_name, fitness_goal, experience_level, split_preference,
               body_weight_kg, target_weight_kg, body_fat_pct, daily_calorie_target,
-              onboarding_completed, bench_1rm_kg, weekly_volume_target_sets)
+              onboarding_completed, bench_1rm_kg, weekly_volume_target_sets, routines, coach_memory)
     ON public.profiles TO authenticated;
 -- is_pro_member is now writable only by the service role (for example a billing webhook).
 

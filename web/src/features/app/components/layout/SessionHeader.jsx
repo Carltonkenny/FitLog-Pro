@@ -22,6 +22,7 @@ export default function SessionHeader({
   layoutMode,
   setLayoutMode,
   onFinishWorkout,
+  finishDisabled,
 }) {
   return (
     <header className="sticky top-0 z-40 bg-[#0d0f14]/90 backdrop-blur-md border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
@@ -129,7 +130,10 @@ export default function SessionHeader({
         </div>
 
         <button
+          type="button"
           onClick={onFinishWorkout}
+          disabled={finishDisabled}
+          title={finishDisabled ? 'Complete a set to finish your workout' : undefined}
           className="flex items-center gap-1.5 text-xs font-semibold px-4 h-10 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 transition active:scale-95 shadow-md shadow-emerald-500/20"
         >
           <CheckCircle2 className="w-4 h-4" />

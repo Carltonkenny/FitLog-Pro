@@ -10,7 +10,8 @@ export function toRows(record, userId) {
     title: String(record.title || 'Logged Workout').slice(0, 100),
     started_at: toIso(started),
     completed_at: toIso(record.timestamp),
-    duration_seconds: Math.round(record.durationSeconds || 0),
+    // The database rejects anything over 24 h; a clock left running overnight must not block sync forever.
+    duration_seconds: Math.min(86400, Math.max(0, Math.round(record.durationSeconds || 0))),
     volume_kg: Math.round((record.volumeKg || 0) * 100) / 100,
     total_sets: (record.exercises || []).reduce(
       (n, ex) => n + (ex.sets || []).filter((s) => s.completed).length,

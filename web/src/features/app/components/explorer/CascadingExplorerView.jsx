@@ -72,7 +72,7 @@ export default function CascadingExplorerView({ onAddExercise }) {
           <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
             <span>Cascading Movement Library</span>
             <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              333+ Movements
+              {EXERCISE_LIBRARY.length} movements
             </span>
           </h2>
           <p className="text-xs text-zinc-400 mt-0.5">

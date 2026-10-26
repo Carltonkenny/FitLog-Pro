@@ -203,7 +203,7 @@ export const AuthService = {
     } catch (e) {
       // ignore
     }
-    ['fitlog_session', 'fitlog_profile', 'fitlog_workout_history', 'fitlog_prs', 'fitlog_sync_queue'].forEach((k) =>
+    ['fitlog_session', 'fitlog_profile', 'fitlog_workout_history', 'fitlog_prs', 'fitlog_sync_queue', 'fitlog_userdata'].forEach((k) =>
       localStorage.removeItem(k)
     );
   }

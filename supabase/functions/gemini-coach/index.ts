@@ -17,7 +17,7 @@ const MAX_BODY_BYTES = 6_000_000;
 const MAX_TEXT_CHARS = 20_000;
 const MAX_IMAGES = 3;
 const MAX_IMAGE_B64_CHARS = 2_000_000;
-const MAX_OUTPUT_TOKENS = 4096;
+const MAX_OUTPUT_TOKENS = 8192;
 const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 // Best-effort per-user rate limit (resets when the function instance recycles).
@@ -132,5 +132,5 @@ Deno.serve(async (req) => {
   if (!res.ok) return json({ error: res.status === 429 || res.status === 503 ? 'busy' : 'upstream-error' }, 502);
 
   const text = data?.candidates?.[0]?.content?.parts?.map((p: { text?: string }) => p.text ?? '').join('') ?? '';
-  return json({ text });
+  return json({ text, truncated: data?.candidates?.[0]?.finishReason === 'MAX_TOKENS' });
 });

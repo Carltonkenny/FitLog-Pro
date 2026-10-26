@@ -3,6 +3,7 @@ import { ShieldCheck, User, Database, Download, LogOut, CloudOff } from 'lucide-
 import { isCloudConfigured } from '../../../../lib/supabaseClient';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import { REST_OPTIONS, setSettings, useSettings } from '../../../../lib/settings';
+import { isIos, isStandalone, promptInstall, useCanInstall } from '../../../../lib/pwaInstall';
 
 const GOAL_LABELS = { strength: 'Raw strength', muscle_growth: 'Muscle growth' };
 
@@ -46,6 +47,7 @@ function exportData() {
 export default function SettingsView({ blueprint, session, syncStatus, onSignOut }) {
   const settings = useSettings();
   const email = session?.user?.email;
+  const canInstall = useCanInstall();
 
   return (
     <div className="space-y-6">
@@ -83,6 +85,25 @@ export default function SettingsView({ blueprint, session, syncStatus, onSignOut
           </div>
         </div>
       </section>
+
+      {/* Install */}
+      {!isStandalone() && (canInstall || isIos()) && (
+        <section aria-label="Install the app" className="p-4 rounded-2xl bg-zinc-900/70 border border-white/[0.08] space-y-2">
+          <h3 className="text-sm font-bold text-white">Install on your phone</h3>
+          {canInstall ? (
+            <>
+              <p className="text-xs text-zinc-400">Add FitLog Pro to your home screen. It opens full screen and works offline.</p>
+              <button type="button" onClick={promptInstall} className="w-full h-11 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm">
+                Install app
+              </button>
+            </>
+          ) : (
+            <p className="text-xs text-zinc-400">
+              In Safari, tap the Share button, then <strong className="text-zinc-200">Add to Home Screen</strong>.
+            </p>
+          )}
+        </section>
+      )}
 
       {/* Preferences */}
       <section aria-label="Lifting preferences" className="p-4 rounded-2xl bg-zinc-900/70 border border-white/[0.08] space-y-4">

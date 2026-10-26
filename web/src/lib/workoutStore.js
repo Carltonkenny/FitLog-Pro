@@ -12,12 +12,19 @@ export { calculate1RM, CASCADING_CATEGORIES, EXERCISE_LIBRARY } from './exercise
 // ------------------------------------------------------------------------------
 // WORKOUT STORE WITH OFFLINE QUEUE & AUTO-SYNC
 // ------------------------------------------------------------------------------
+let historyRaw = null;
+let historyParsed = [];
+
 export const WorkoutStore = {
   // Get all completed workouts, newest first. Empty for a new user.
   getHistory() {
+    // Parsing the whole history on every call was the main render cost (about 6 ms at 500 workouts,
+    // once per exercise card). Reuse the parsed copy while the stored text is unchanged.
+    const raw = localStorage.getItem('fitlog_workout_history') || '[]';
+    if (raw === historyRaw) return historyParsed;
     let list = [];
     try {
-      const parsed = JSON.parse(localStorage.getItem('fitlog_workout_history') || '[]');
+      const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) list = parsed;
     } catch {
       return [];
@@ -27,6 +34,8 @@ export const WorkoutStore = {
     if (cleaned.length !== list.length) {
       localStorage.setItem('fitlog_workout_history', JSON.stringify(cleaned));
     }
+    historyRaw = localStorage.getItem('fitlog_workout_history') || '[]';
+    historyParsed = cleaned;
     return cleaned;
   },
 

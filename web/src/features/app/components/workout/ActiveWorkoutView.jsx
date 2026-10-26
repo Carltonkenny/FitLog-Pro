@@ -8,6 +8,8 @@ import {
   Plus,
 } from 'lucide-react';
 import ExerciseCard from './ExerciseCard';
+import RoutinesBar from './RoutinesBar';
+import { EXERCISE_LIBRARY } from '../../../../lib/exercises.js';
 import { formatWeight, useSettings } from '../../../../lib/settings';
 
 export default function ActiveWorkoutView({
@@ -24,6 +26,7 @@ export default function ActiveWorkoutView({
   layoutMode,
   setMobileDrawerOpen,
   onOpenCoach,
+  onLoadRoutine,
   isRestActive,
   restSeconds,
   setRestSeconds,
@@ -84,6 +87,8 @@ export default function ActiveWorkoutView({
         </div>
       )}
 
+      <RoutinesBar exercises={exercises} onLoad={onLoadRoutine} />
+
       {/* Workout Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
         <div className="flex-1 min-w-0">
@@ -91,7 +96,7 @@ export default function ActiveWorkoutView({
             type="text"
             value={workoutTitle}
             onChange={(e) => setWorkoutTitle(e.target.value)}
-            className="w-full text-base sm:text-lg md:text-xl font-bold text-white bg-transparent border-b border-transparent hover:border-zinc-700 focus:border-emerald-500 focus:outline-none transition"
+            aria-label="Workout name" className="w-full min-h-11 text-base sm:text-lg md:text-xl font-bold text-white bg-transparent border-b border-transparent hover:border-zinc-700 focus:border-emerald-500 transition"
           />
           <div className="flex items-center gap-4 text-xs text-zinc-400 mt-1">
             <span className="flex items-center gap-1 font-mono tabular-nums">
@@ -169,7 +174,7 @@ export default function ActiveWorkoutView({
           className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-zinc-900 to-cyan-500/10 border border-dashed border-emerald-500/30 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 font-semibold text-sm flex items-center justify-center gap-2 transition active:scale-98 shadow-sm"
         >
           <Plus className="w-4 h-4" />
-          <span>Add Exercise from 333+ Movement Library</span>
+          <span>Add exercise ({EXERCISE_LIBRARY.length} to choose from)</span>
         </button>
       </div>
     </div>

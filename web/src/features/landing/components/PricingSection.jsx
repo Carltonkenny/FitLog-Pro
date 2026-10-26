@@ -6,7 +6,7 @@ const INCLUDED = [
   'Unlimited workout logging',
   'Personal-record detection and estimated max lifts',
   'Progress charts: streak, volume and sets per muscle',
-  'Library of 333+ exercises with form cues',
+  'Library of 100+ exercises with form cues and a recommender',
   'AI coach with photo input and weekly plans',
   'Cloud sync across your devices',
   'Works offline, export your data anytime',

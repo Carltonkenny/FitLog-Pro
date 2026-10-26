@@ -6,7 +6,7 @@ export default function MobileBottomNav({ activeTab, setActiveTab }) {
     { id: 'workout', label: 'Workout', icon: Dumbbell },
     { id: 'library', label: 'Explorer', icon: Layers },
     { id: 'analytics', label: 'Analytics', icon: LineChart },
-    { id: 'history', label: 'History & AI', icon: History },
+    { id: 'history', label: 'History', icon: History },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 

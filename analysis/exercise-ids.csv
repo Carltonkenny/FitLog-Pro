@@ -1,0 +1,107 @@
+id,name,muscle,equipment,filename
+incline_db_press,"Incline Dumbbell Press",Chest,"Dumbbells",incline_db_press.webp
+incline_smith_press,"Incline Smith Machine Press",Chest,"Smith Machine",incline_smith_press.webp
+low_to_high_cable_fly,"Low-to-High Cable Fly",Chest,"Cables",low_to_high_cable_fly.webp
+incline_barbell_press,"Incline Barbell Press",Chest,"Barbell",incline_barbell_press.webp
+incline_machine_press,"Incline Machine Press",Chest,"Machine",incline_machine_press.webp
+incline_pushup,"Incline Push-Up",Chest,"Bodyweight",incline_pushup.webp
+bench_press,"Barbell Flat Bench Press",Chest,"Barbell",bench_press.webp
+seated_chest_press,"Machine Chest Press",Chest,"Machine",seated_chest_press.webp
+dips_weighted,"Parallel Bar Chest Dips",Chest,"Bodyweight / Belt",dips_weighted.webp
+db_bench_press,"Dumbbell Bench Press",Chest,"Dumbbells",db_bench_press.webp
+pec_deck_fly,"Pec Deck Fly",Chest,"Machine",pec_deck_fly.webp
+cable_crossover,"Cable Crossover",Chest,"Cable",cable_crossover.webp
+pushup,"Push-Up",Chest,"Bodyweight",pushup.webp
+decline_bench_press,"Decline Bench Press",Chest,"Barbell",decline_bench_press.webp
+lat_pulldown,"Lat Pulldown (Neutral or Wide Grip)",Back,"Cable Machine",lat_pulldown.webp
+chest_supported_row,"Chest-Supported T-Bar Row",Back,"Machine",chest_supported_row.webp
+single_arm_cable_lat_row,"Single-Arm Cable Lat Row",Back,"Cable",single_arm_cable_lat_row.webp
+pullup,"Pull-Up",Back,"Pull-up Bar",pullup.webp
+chinup,"Chin-Up",Back,"Pull-up Bar",chinup.webp
+assisted_pullup,"Assisted Pull-Up",Back,"Machine",assisted_pullup.webp
+straight_arm_pulldown,"Straight-Arm Pulldown",Back,"Cable",straight_arm_pulldown.webp
+db_row,"One-Arm Dumbbell Row",Back,"Dumbbells",db_row.webp
+machine_pulldown,"Machine Pulldown",Back,"Machine",machine_pulldown.webp
+cable_face_pull,"Cable Face Pull with Rope",Back,"Cable",cable_face_pull.webp
+seated_cable_row,"Seated Cable Row (Wide Grip)",Back,"Cable",seated_cable_row.webp
+barbell_row,"Barbell Row",Back,"Barbell",barbell_row.webp
+inverted_row,"Inverted Row",Back,"Bodyweight",inverted_row.webp
+db_shrug,"Dumbbell Shrug",Back,"Dumbbells",db_shrug.webp
+machine_row,"Machine Row",Back,"Machine",machine_row.webp
+deadlift,"Conventional Deadlift",Back,"Barbell",deadlift.webp
+rack_pull,"Rack Pull",Back,"Barbell",rack_pull.webp
+hyperextension,"Back Extension",Back,"Bodyweight",hyperextension.webp
+good_morning,"Good Morning",Back,"Barbell",good_morning.webp
+barbell_squat,"Barbell Back Squat",Legs,"Barbell",barbell_squat.webp
+leg_press,"45° Incline Leg Press",Legs,"Machine",leg_press.webp
+leg_extension,"Seated Leg Extension",Legs,"Machine",leg_extension.webp
+front_squat,"Front Squat",Legs,"Barbell",front_squat.webp
+goblet_squat,"Goblet Squat",Legs,"Dumbbells",goblet_squat.webp
+hack_squat,"Hack Squat",Legs,"Machine",hack_squat.webp
+bulgarian_split_squat,"Bulgarian Split Squat",Legs,"Dumbbells",bulgarian_split_squat.webp
+walking_lunge,"Walking Lunge",Legs,"Dumbbells",walking_lunge.webp
+step_up,"Dumbbell Step-Up",Legs,"Dumbbells",step_up.webp
+smith_squat,"Smith Machine Squat",Legs,"Smith Machine",smith_squat.webp
+bodyweight_squat,"Bodyweight Squat",Legs,"Bodyweight",bodyweight_squat.webp
+sissy_squat,"Sissy Squat",Legs,"Bodyweight",sissy_squat.webp
+romanian_deadlift,"Dumbbell / Barbell Romanian Deadlift (RDL)",Legs,"Barbell or Dumbbells",romanian_deadlift.webp
+seated_leg_curl,"Seated Hamstring Leg Curl",Legs,"Machine",seated_leg_curl.webp
+hip_thrust,"Barbell / Machine Hip Thrust",Legs,"Barbell or Machine",hip_thrust.webp
+lying_leg_curl,"Lying Leg Curl",Legs,"Machine",lying_leg_curl.webp
+db_rdl,"Dumbbell Romanian Deadlift",Legs,"Dumbbells",db_rdl.webp
+glute_bridge,"Glute Bridge",Legs,"Bodyweight",glute_bridge.webp
+cable_pull_through,"Cable Pull-Through",Legs,"Cable",cable_pull_through.webp
+nordic_curl,"Nordic Curl",Legs,"Bodyweight",nordic_curl.webp
+cable_kickback,"Cable Glute Kickback",Legs,"Cable",cable_kickback.webp
+hip_abductor,"Hip Abductor Machine",Legs,"Machine",hip_abductor.webp
+hip_adductor,"Hip Adductor Machine",Legs,"Machine",hip_adductor.webp
+standing_calf_raise,"Standing Calf Raise",Legs,"Machine",standing_calf_raise.webp
+seated_calf_raise,"Seated Calf Raise",Legs,"Machine",seated_calf_raise.webp
+smith_calf_raise,"Smith Machine Calf Raise",Legs,"Smith Machine",smith_calf_raise.webp
+lateral_raise,"Dumbbell Lateral Raise",Shoulders,"Dumbbells",lateral_raise.webp
+cable_lateral_raise,"Cross-Body Cable Lateral Raise",Shoulders,"Cable",cable_lateral_raise.webp
+machine_lateral_raise,"Machine Lateral Raise",Shoulders,"Machine",machine_lateral_raise.webp
+overhead_press,"Standing Overhead Barbell Press",Shoulders,"Barbell",overhead_press.webp
+reverse_pec_deck,"Reverse Pec Deck (Rear Delt Fly)",Shoulders,"Machine",reverse_pec_deck.webp
+db_shoulder_press,"Dumbbell Shoulder Press",Shoulders,"Dumbbells",db_shoulder_press.webp
+machine_shoulder_press,"Machine Shoulder Press",Shoulders,"Machine",machine_shoulder_press.webp
+arnold_press,"Arnold Press",Shoulders,"Dumbbells",arnold_press.webp
+front_raise,"Dumbbell Front Raise",Shoulders,"Dumbbells",front_raise.webp
+rear_delt_fly,"Rear Delt Fly",Shoulders,"Dumbbells",rear_delt_fly.webp
+cable_rear_delt_fly,"Cable Rear Delt Fly",Shoulders,"Cable",cable_rear_delt_fly.webp
+pike_pushup,"Pike Push-Up",Shoulders,"Bodyweight",pike_pushup.webp
+landmine_press,"Landmine Press",Shoulders,"Barbell",landmine_press.webp
+bicep_curls,"Dumbbell Bicep Curl",Arms,"Dumbbells",bicep_curls.webp
+incline_db_curl,"Incline Bench Dumbbell Curl",Arms,"Dumbbells & 45° Bench",incline_db_curl.webp
+cable_hammer_curl,"Rope Cable Hammer Curl",Arms,"Cable with Rope",cable_hammer_curl.webp
+barbell_curl,"Barbell Curl",Arms,"Barbell",barbell_curl.webp
+ez_bar_curl,"EZ-Bar Curl",Arms,"Barbell",ez_bar_curl.webp
+preacher_curl,"Preacher Curl",Arms,"Machine",preacher_curl.webp
+hammer_curl,"Dumbbell Hammer Curl",Arms,"Dumbbells",hammer_curl.webp
+concentration_curl,"Concentration Curl",Arms,"Dumbbells",concentration_curl.webp
+spider_curl,"Spider Curl",Arms,"Dumbbells",spider_curl.webp
+cable_curl,"Cable Curl",Arms,"Cable",cable_curl.webp
+cable_triceps,"Cable Triceps Rope Pushdown",Arms,"Cable with Rope",cable_triceps.webp
+overhead_cable_extension,"Overhead Cable Triceps Extension",Arms,"Cable with Rope",overhead_cable_extension.webp
+skullcrusher,"Skullcrusher",Arms,"Barbell",skullcrusher.webp
+close_grip_bench,"Close-Grip Bench Press",Arms,"Barbell",close_grip_bench.webp
+triceps_pushdown,"Triceps Pushdown",Arms,"Cable",triceps_pushdown.webp
+overhead_db_extension,"Overhead Dumbbell Extension",Arms,"Dumbbells",overhead_db_extension.webp
+dip_machine,"Machine Dip",Arms,"Machine",dip_machine.webp
+bench_dip,"Bench Dip",Arms,"Bodyweight",bench_dip.webp
+db_kickback,"Dumbbell Kickback",Arms,"Dumbbells",db_kickback.webp
+diamond_pushup,"Diamond Push-Up",Arms,"Bodyweight",diamond_pushup.webp
+wrist_curl,"Dumbbell Wrist Curl",Arms,"Dumbbells",wrist_curl.webp
+reverse_curl,"Reverse Curl",Arms,"Barbell",reverse_curl.webp
+farmers_carry,"Farmer's Carry",Arms,"Dumbbells",farmers_carry.webp
+cable_crunch,"Kneeling Cable Crunch",Core,"Cable with Rope",cable_crunch.webp
+hanging_leg_raise,"Hanging Knee / Leg Raise",Core,"Pull-up Bar",hanging_leg_raise.webp
+plank,"Plank",Core,"Bodyweight",plank.webp
+ab_wheel,"Ab Wheel Rollout",Core,"Bodyweight",ab_wheel.webp
+crunch,"Crunch",Core,"Bodyweight",crunch.webp
+decline_situp,"Decline Sit-Up",Core,"Bodyweight",decline_situp.webp
+cable_woodchop,"Cable Woodchop",Core,"Cable",cable_woodchop.webp
+side_plank,"Side Plank",Core,"Bodyweight",side_plank.webp
+dead_bug,"Dead Bug",Core,"Bodyweight",dead_bug.webp
+machine_crunch,"Machine Crunch",Core,"Machine",machine_crunch.webp
+pallof_press,"Pallof Press",Core,"Cable",pallof_press.webp

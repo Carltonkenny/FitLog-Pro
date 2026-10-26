@@ -3,22 +3,35 @@ import { Calendar, Clock, History as HistoryIcon } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import { formatWeight, useSettings } from '../../../../lib/settings';
 import { formatWorkoutDate } from '../../../../lib/stats';
-import GeminiHistoryCoach from './GeminiHistoryCoach';
+import PetAvatar from '../../../companion/PetAvatar';
+import { petMood } from '../../../../lib/companionActions.js';
+import { useUserData } from '../../../../lib/userData.js';
 
-export default function HistoryView({ blueprint, onUseDay }) {
+export default function HistoryView({ onOpenCompanion }) {
   const { unit } = useSettings();
+  const { memory } = useUserData();
   const history = WorkoutStore.getHistory();
 
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h2 className="text-xl font-bold text-white tracking-tight">History and AI coach</h2>
+        <h2 className="text-xl font-bold text-white tracking-tight">History</h2>
         <p className="text-xs text-zinc-400">
-          Your past workouts, plus a coach that reads them and builds your next plan.
+          Everything you have logged.
         </p>
       </div>
 
-      <GeminiHistoryCoach blueprint={blueprint} onUseDay={onUseDay} />
+      <button
+        type="button"
+        onClick={onOpenCompanion}
+        className="w-full flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/70 border border-emerald-500/30 hover:border-emerald-400 text-left"
+      >
+        <PetAvatar mood={petMood(history)} size={44} />
+        <span className="flex-1">
+          <span className="block text-sm font-semibold text-white">Ask {memory.petName} about your training</span>
+          <span className="block text-xs text-zinc-400">It reads this history and builds your next plan.</span>
+        </span>
+      </button>
 
       <section aria-label="Past workouts" className="space-y-3 pt-2">
         <div className="flex items-center justify-between">

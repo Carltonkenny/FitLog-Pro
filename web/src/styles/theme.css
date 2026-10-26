@@ -144,3 +144,10 @@ input:focus-visible {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* Companion mascot idle motion (frozen for reduced-motion users by the global rule above) */
+@keyframes pet-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+.pet-bob { animation: pet-bob 2.6s ease-in-out infinite; }

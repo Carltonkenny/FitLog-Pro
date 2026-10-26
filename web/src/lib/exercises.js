@@ -1,3 +1,5 @@
+import { CATALOG, NEW_SUBREGIONS } from './exerciseCatalog.js';
+
 // Pure data and math: the exercise library and the Epley estimated-max formula.
 // No browser, React or Supabase imports, so it runs unchanged in Node tests.
 
@@ -424,6 +426,24 @@ export const CASCADING_CATEGORIES = [
     ],
   },
 ];
+
+// Merge the extended catalog (see exerciseCatalog.js) into the drill-down structure.
+const ratingFor = (score) =>
+  score >= 9.4 ? 'Exceptional growth / low joint strain'
+  : score >= 9.0 ? 'Very high growth for the effort'
+  : score >= 8.5 ? 'Strong growth'
+  : 'Good growth';
+
+NEW_SUBREGIONS.forEach(([categoryId, sub]) => {
+  CASCADING_CATEGORIES.find((c) => c.id === categoryId).subregions.push({ ...sub, exercises: [] });
+});
+CATALOG.forEach(([subregionId, id, name, equipment, score, targetMuscle, cue]) => {
+  const sub = CASCADING_CATEGORIES.flatMap((c) => c.subregions).find((s) => s.id === subregionId);
+  sub.exercises.push({
+    id, name, equipment, growthFatigueScore: score, plainRating: ratingFor(score),
+    targetMuscle, bestAngle: 'Standard setup', cue,
+  });
+});
 
 // Flat list helper for quick lookups
 export const EXERCISE_LIBRARY = CASCADING_CATEGORIES.flatMap((c) =>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Trash2, Plus } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import SetRow from './SetRow';
+import ExerciseImage from '../../../../components/ExerciseImage';
 import { formatWeight, useSettings } from '../../../../lib/settings';
 
 export default function ExerciseCard({
@@ -29,7 +30,8 @@ export default function ExerciseCard({
     >
       {/* Exercise Header */}
       <div className="flex items-start justify-between gap-3">
-        <div>
+        <ExerciseImage id={exercise.exerciseId} name={exercise.exerciseName} size={48} hideIfMissing />
+        <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <h3 className="font-bold text-white text-base tracking-tight">
               {exercise.exerciseName}

@@ -184,7 +184,11 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     }
   };
 
-  const addExercise = (exerciseItem) => {
+  /** Adds an exercise. `opts.sets` / `opts.reps` override the defaults; weights come from the last session. */
+  const addExercise = (exerciseItem, opts = {}) => {
+    const last = WorkoutStore.getLastSessionForExercise(exerciseItem.id);
+    const weight = last ? last.bestSet.weight : 20;
+    const reps = opts.reps || (last ? last.bestSet.reps : 10);
     setExercises((prev) => [
       ...prev,
       {
@@ -194,13 +198,37 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
         equipment: exerciseItem.equipment,
         notes: exerciseItem.cue || 'Controlled tempo, focus on mind-muscle connection',
         growthFatigueScore: exerciseItem.growthFatigueScore,
-        sets: [
-          { id: 1, type: '1', weight: 20.0, reps: 10, completed: false, isPR: false },
-          { id: 2, type: '2', weight: 20.0, reps: 10, completed: false, isPR: false },
-          { id: 3, type: '3', weight: 20.0, reps: 10, completed: false, isPR: false },
-        ],
+        sets: Array.from({ length: opts.sets || 3 }, (_, i) => ({
+          id: i + 1,
+          type: String(i + 1),
+          weight,
+          reps,
+          completed: false,
+          isPR: false,
+        })),
       },
     ]);
+  };
+
+  /** After saving: same exercises, fresh sets, weights pre-filled from the session just logged. */
+  const startFreshWorkout = () => {
+    setExercises((prev) =>
+      prev.map((ex) => {
+        const last = WorkoutStore.getLastSessionForExercise(ex.exerciseId);
+        return {
+          ...ex,
+          sets: ex.sets.map((s) => ({
+            ...s,
+            completed: false,
+            isPR: false,
+            ...(last ? { weight: last.bestSet.weight, reps: last.bestSet.reps } : {}),
+          })),
+        };
+      })
+    );
+    setActiveExerciseIndex(0);
+    setIsRestActive(false);
+    setRestSeconds(0);
   };
 
   /** Replaces the current workout with `items`: [{ item (library entry), sets, reps }]. */
@@ -286,6 +314,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     removeExercise,
     addExercise,
     loadPlan,
+    startFreshWorkout,
     resetAllSets,
   };
 }

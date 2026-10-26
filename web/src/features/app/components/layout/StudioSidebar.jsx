@@ -10,6 +10,7 @@ import {
   WifiOff,
 } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
+import { EXERCISE_LIBRARY } from '../../../../lib/exercises.js';
 import { computeStreak } from '../../../../lib/stats';
 
 export default function StudioSidebar({
@@ -27,9 +28,9 @@ export default function StudioSidebar({
       icon: Dumbbell,
       badge: `${workoutStats.completedSetsCount}/${workoutStats.totalSetsCount}`,
     },
-    { id: 'library', label: 'Exercise Explorer', icon: Layers, badge: '333+' },
+    { id: 'library', label: 'Exercise Explorer', icon: Layers, badge: String(EXERCISE_LIBRARY.length) },
     { id: 'analytics', label: 'Progress', icon: LineChart, badge: null },
-    { id: 'history', label: 'History & AI Coach', icon: History, badge: null },
+    { id: 'history', label: 'History', icon: History, badge: null },
     { id: 'settings', label: 'Settings', icon: Settings, badge: null },
   ];
 

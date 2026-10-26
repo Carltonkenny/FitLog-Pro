@@ -5,6 +5,7 @@ import OnboardingFlow from './features/onboarding/OnboardingFlow';
 import ProApp from './features/app/ProApp';
 import { AuthService, authRequired } from './lib/supabaseClient';
 import { CloudSync } from './lib/cloudSync';
+import { resetUserData } from './lib/userData';
 
 export default function App() {
   const getInitialView = () => {
@@ -110,6 +111,7 @@ export default function App() {
       if (!ok) return;
     }
     await AuthService.signOut();
+    resetUserData();
     setSession(null);
     setBlueprint(null);
     updateView('landing');

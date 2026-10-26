@@ -14,6 +14,7 @@ const FRIENDLY = {
   'bad-image': 'One of the photos could not be used. Use a JPEG, PNG or WebP image.',
   unauthorized: 'Sign in to use the AI coach.',
   'not-configured': 'The AI coach is not set up yet.',
+  truncated: 'The answer was cut off. Try again.',
 };
 
 /**
@@ -26,6 +27,19 @@ const FRIENDLY = {
  * directly so the coach can be tried before the function is deployed.
  */
 export async function askCoach(body) {
+  try {
+    return await askOnce(body);
+  } catch (err) {
+    // Gemini has short busy spells. One quiet retry hides most of them from the user.
+    if (err instanceof CoachError && err.message === FRIENDLY.busy) {
+      await new Promise((r) => setTimeout(r, 2500));
+      return askOnce(body);
+    }
+    throw err;
+  }
+}
+
+async function askOnce(body) {
   if (DEV_KEY) return askDirect(body);
   if (!isCloudConfigured) throw new CoachError('Connect the app to Supabase to use the AI coach.');
 
@@ -40,6 +54,7 @@ export async function askCoach(body) {
     if (error.context?.status === 404) throw new CoachError('The AI coach is not deployed yet.');
     throw new CoachError(FRIENDLY[code] || 'The AI coach is unavailable right now. Your workouts are not affected.');
   }
+  if (data?.truncated) throw new CoachError(FRIENDLY.truncated);
   return data?.text || '';
 }
 
@@ -70,5 +85,6 @@ async function askDirect(body) {
     console.error('Gemini dev call failed:', res.status, data?.error?.message);
     throw new CoachError(res.status === 429 || res.status === 503 ? FRIENDLY.busy : 'The AI coach is unavailable right now.');
   }
+  if (data?.candidates?.[0]?.finishReason === 'MAX_TOKENS') throw new CoachError(FRIENDLY.truncated);
   return data?.candidates?.[0]?.content?.parts?.map((p) => p.text || '').join('') || '';
 }
