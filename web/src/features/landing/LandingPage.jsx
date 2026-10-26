@@ -40,7 +40,7 @@ export default function LandingPage({ onOpenAuth, onStartOnboarding, onEnterApp,
           </div>
 
           <div className="text-xs text-slate-500 flex items-center gap-1 font-mono">
-            <span>Decoupled React Web + Supabase + Drift Mobile Engine</span>
+            <span>Fast workout logging with AI coaching</span>
           </div>
 
           <div className="text-xs text-slate-400">

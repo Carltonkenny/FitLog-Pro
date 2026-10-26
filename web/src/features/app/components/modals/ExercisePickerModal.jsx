@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EscapeClose from '../../../../components/EscapeClose';
 import { X, Search } from 'lucide-react';
 import { EXERCISE_LIBRARY } from '../../../../lib/workoutStore';
 
@@ -18,8 +19,9 @@ export default function ExercisePickerModal({
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#12141a] border border-white/[0.1] rounded-2xl max-w-xl w-full p-5 space-y-4 max-h-[85vh] flex flex-col shadow-2xl">
+    <div role="dialog" aria-modal="true" aria-label="Select exercise" className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
+      <EscapeClose onClose={onClose} />
+      <div className="bg-[#12141a] border border-white/[0.1] rounded-2xl max-w-xl w-full p-5 space-y-4 max-h-[85vh] flex flex-col shadow-2xl animate-popIn">
         <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
           <div>
             <h3 className="font-bold text-white text-base">Select Movement to Add</h3>
@@ -27,6 +29,7 @@ export default function ExercisePickerModal({
           </div>
           <button
             onClick={onClose}
+          aria-label="Close"
             className="p-1 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white"
           >
             <X className="w-4 h-4" />

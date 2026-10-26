@@ -57,9 +57,76 @@ body {
   box-shadow: 0 0 24px rgba(0, 212, 255, 0.2);
 }
 
-/* Smooth Interactive transitions */
+/* Motion tokens (150-240ms, fast ease-out) */
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+}
+
+/* Interactive transitions: animate only cheap properties, never layout */
 button, a, input, select {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: var(--dur-base);
+  transition-timing-function: var(--ease-out);
+}
+
+/* Tactile press feedback on every button */
+button:not(:disabled):active {
+  transform: scale(0.97);
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Visible keyboard focus (AA) */
+:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+input:focus-visible {
+  outline-offset: 0;
+}
+
+/* Entrance animations (used by modals, drawers and toasts) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.animate-fadeIn { animation: fadeIn var(--dur-base) var(--ease-out) both; }
+.animate-popIn { animation: popIn 220ms var(--ease-out) both; }
+.animate-slideUp { animation: slideUp 240ms var(--ease-snap) both; }
+
+/* Skeleton loader */
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #1a1d26 25%, #242836 50%, #1a1d26 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 8px;
+}
+
+/* Respect users who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom Scrollbars */

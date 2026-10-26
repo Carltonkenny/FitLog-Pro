@@ -1,3 +1,4 @@
+import { CloudSync } from './cloudSync';
 // ==============================================================================
 // FitLog Pro: Local-First Workout, Exercise Library & Progressive Overload Engine
 // Emil Kowalski Design Engineering & Plain-English Domain Architecture
@@ -578,6 +579,7 @@ export const WorkoutStore = {
               date: 'Today',
             };
             newPRsFound.push({
+              exerciseId: ex.exerciseId,
               exerciseName: ex.exerciseName,
               weight: set.weight,
               reps: set.reps,
@@ -588,10 +590,10 @@ export const WorkoutStore = {
       });
     });
 
-    const isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
+    const cloud = CloudSync.isEnabled();
 
     const savedRecord = {
-      id: 'wo_' + Date.now(),
+      id: crypto.randomUUID(),
       title: workoutData.title || 'Logged Workout',
       date: 'Today',
       timestamp: Date.now(),
@@ -599,19 +601,20 @@ export const WorkoutStore = {
       durationSeconds: workoutData.durationSeconds || 0,
       exercises: workoutData.exercises,
       newPRs: newPRsFound,
-      synced: isOnline,
-      pendingSync: !isOnline,
+      synced: !cloud,
+      pendingSync: cloud,
     };
 
     const updatedHistory = [savedRecord, ...history];
     localStorage.setItem('fitlog_workout_history', JSON.stringify(updatedHistory));
     localStorage.setItem('fitlog_prs', JSON.stringify(prs));
 
-    // If offline, add to pending queue
-    if (!isOnline) {
+    // Queue first, then flush: a closed tab or dropped connection never loses a workout.
+    if (cloud) {
       const queue = JSON.parse(localStorage.getItem('fitlog_sync_queue') || '[]');
       queue.push(savedRecord);
       localStorage.setItem('fitlog_sync_queue', JSON.stringify(queue));
+      CloudSync.flush();
     }
 
     return {
@@ -620,28 +623,9 @@ export const WorkoutStore = {
     };
   },
 
-  // Flush pending sync queue when reconnected
+  // Push the pending queue to Supabase (see cloudSync.js)
   flushSyncQueue() {
-    try {
-      const queue = JSON.parse(localStorage.getItem('fitlog_sync_queue') || '[]');
-      if (queue.length === 0) return 0;
-      
-      const history = this.getHistory();
-      const syncedIds = new Set(queue.map((q) => q.id));
-      
-      const updated = history.map((item) => {
-        if (syncedIds.has(item.id)) {
-          return { ...item, synced: true, pendingSync: false };
-        }
-        return item;
-      });
-
-      localStorage.setItem('fitlog_workout_history', JSON.stringify(updated));
-      localStorage.removeItem('fitlog_sync_queue');
-      return queue.length;
-    } catch (e) {
-      return 0;
-    }
+    return CloudSync.flush();
   },
 
   // Get active sync status
@@ -651,11 +635,13 @@ export const WorkoutStore = {
     return {
       isOnline,
       pendingCount: queue.length,
-      statusLabel: isOnline
-        ? queue.length > 0
-          ? `Syncing ${queue.length} workouts...`
-          : 'Cloud Brain Synced'
-        : 'Offline Mode (Local Storage Active)',
+      statusLabel: !CloudSync.isEnabled()
+        ? 'Saved on this device'
+        : !isOnline
+          ? `Offline. ${queue.length} workout${queue.length === 1 ? '' : 's'} waiting to sync`
+          : queue.length > 0
+            ? `Syncing ${queue.length} workout${queue.length === 1 ? '' : 's'}`
+            : 'All workouts synced',
     };
   },
 };

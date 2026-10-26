@@ -27,3 +27,11 @@ demo_videos/
 *.iml
 .DS_Store
 Thumbs.db
+
+# Secrets
+.env
+.env.*
+!.env.example
+web/.env
+web/.env.*
+!web/.env.example

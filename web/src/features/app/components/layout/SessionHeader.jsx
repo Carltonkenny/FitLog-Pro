@@ -1,4 +1,5 @@
 import React from 'react';
+import { isCloudConfigured } from '../../../../lib/supabaseClient';
 import {
   Dumbbell,
   ArrowLeft,
@@ -40,7 +41,7 @@ export default function SessionHeader({
           <div>
             <span className="font-bold tracking-tight text-white text-sm">FitLog Pro</span>
             <span className="hidden sm:inline-block ml-2 text-[10px] font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              Cloud Brain Active
+              {isCloudConfigured ? 'Cloud sync on' : 'Saved on this device'}
             </span>
           </div>
         </div>

@@ -105,7 +105,7 @@ export default function Hero({ onStartOnboarding, onEnterApp }) {
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#00F59B]" />
-                <span>100% Offline SQLite Backup</span>
+                <span>Works offline</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#00F59B]" />

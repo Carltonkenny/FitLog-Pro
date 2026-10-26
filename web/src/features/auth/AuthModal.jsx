@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import EscapeClose from '../../components/EscapeClose';
 import { X, Mail, Lock, User, ArrowRight, Sparkles } from 'lucide-react';
-import { AuthService } from '../../lib/supabaseClient';
+import { AuthService, supabaseUrl, supabaseKey, isCloudConfigured } from '../../lib/supabaseClient';
 
 export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onSuccess }) {
   const [mode, setMode] = useState(initialMode); // 'signup' or 'signin'
@@ -9,17 +10,45 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
+  // Show the Google button only when the Supabase project has the provider enabled.
+  const [googleEnabled, setGoogleEnabled] = useState(false);
+
+  useEffect(() => {
+    if (!isCloudConfigured) return;
+    let cancelled = false;
+    fetch(`${supabaseUrl}/auth/v1/settings`, { headers: { apikey: supabaseKey } })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((s) => {
+        if (!cancelled) setGoogleEnabled(!!s?.external?.google);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) setMode(initialMode);
+  }, [isOpen, initialMode]);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setNotice('');
     setLoading(true);
 
     try {
       if (mode === 'signup') {
         const { session } = await AuthService.signUp({ email, password, fullName });
+        if (!session) {
+          setError('');
+          setNotice('Check your inbox to confirm your email, then sign in.');
+          setMode('signin');
+          return;
+        }
         onSuccess(session);
       } else {
         const { session } = await AuthService.signIn({ email, password });
@@ -35,25 +64,27 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
-    // Instant mock/live Google OAuth token bridge
-    setTimeout(async () => {
-      const { session } = await AuthService.signIn({
-        email: 'alex.athlete@gmail.com',
-        password: 'GoogleOAuthPass!',
-      });
+    setError('');
+    try {
+      // Real Supabase Google OAuth — redirects browser to Google, then back to the app.
+      // The onAuthStateChange listener in App.jsx picks up the session on return.
+      await AuthService.signInWithGoogle();
+      // Note: page will redirect — code below this won't run on success
+    } catch (err) {
+      setError(err.message || 'Google sign-in failed. Please try email instead.');
       setLoading(false);
-      onSuccess(session);
-      onClose();
-    }, 600);
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-md rounded-2xl bg-[#12141A] border border-[#2B3040] p-6 sm:p-8 shadow-2xl">
+    <div role="dialog" aria-modal="true" aria-label="Account" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn animate-fadeIn">
+      <EscapeClose onClose={onClose} />
+      <div className="relative w-full max-w-md rounded-2xl bg-[#12141A] border border-[#2B3040] p-6 sm:p-8 shadow-2xl animate-popIn">
         
         {/* Close Button */}
         <button
           onClick={onClose}
+          aria-label="Close"
           className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#1A1D26] transition-colors"
         >
           <X className="w-5 h-5" />
@@ -63,17 +94,23 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1A1D26] border border-[#2B3040] text-xs font-mono text-[#00F59B] mb-2">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>SUPABASE CLOUD AUTH</span>
+            <span>SECURE SIGN-IN</span>
           </div>
           <h3 className="text-2xl font-bold text-white font-['Outfit']">
             {mode === 'signup' ? 'Create Your Athlete Account' : 'Welcome Back, Athlete'}
           </h3>
           <p className="text-xs text-slate-400 mt-1">
             {mode === 'signup'
-              ? 'Join 50,000+ lifters tracking progressive overload.'
-              : 'Log in to sync your routines and cloud blueprints.'}
+              ? 'Track every set and see your progress add up.'
+              : 'Sign in to sync your workouts across devices.'}
           </p>
         </div>
+
+        {notice && (
+          <div role="status" className="mb-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs">
+            {notice}
+          </div>
+        )}
 
         {error && (
           <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
@@ -81,6 +118,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
           </div>
         )}
 
+        {googleEnabled && (
+          <>
         {/* Google 1-Tap Button */}
         <button
           id="auth-google-btn"
@@ -107,7 +146,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
               d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.27 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.93 6.72-4.93z"
             />
           </svg>
-          <span>Continue with Google 1-Tap</span>
+          <span>Continue with Google</span>
         </button>
 
         {/* Divider */}
@@ -116,6 +155,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
           <span className="text-[10px] font-mono uppercase text-slate-500">Or with Email</span>
           <div className="flex-1 h-px bg-[#242836]" />
         </div>
+          </>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-3.5">

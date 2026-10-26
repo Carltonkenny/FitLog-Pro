@@ -47,7 +47,7 @@ export default function HistoryView() {
                   <span>•</span>
                   <span className="flex items-center gap-1 font-mono">
                     <Clock className="w-3 h-3 text-zinc-500" />
-                    {Math.round((wo.durationSeconds || 1800) / 60)} mins
+                    {Math.round((wo.durationSeconds || 0) / 60)} mins
                   </span>
                 </div>
               </div>

@@ -58,16 +58,19 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }
   // Cloud sync status hook
   const [syncStatus, setSyncStatus] = useState(WorkoutStore.getSyncStatus());
   useEffect(() => {
+    const refresh = () => setSyncStatus(WorkoutStore.getSyncStatus());
     const handleOnline = () => {
-      WorkoutStore.flushSyncQueue();
-      setSyncStatus(WorkoutStore.getSyncStatus());
+      WorkoutStore.flushSyncQueue().finally(refresh);
+      refresh();
     };
-    const handleOffline = () => setSyncStatus(WorkoutStore.getSyncStatus());
     window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener('offline', refresh);
+    window.addEventListener('fitlog:sync', refresh);
+    WorkoutStore.flushSyncQueue().finally(refresh);
     return () => {
       window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener('offline', refresh);
+      window.removeEventListener('fitlog:sync', refresh);
     };
   }, []);
 
@@ -77,9 +80,10 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }
     const result = WorkoutStore.saveWorkout({
       title: logger.workoutTitle,
       volumeKg: logger.stats.volume,
-      durationSeconds: sessionControls.sessionSeconds || 1800,
+      durationSeconds: sessionControls.sessionSeconds || 0,
       exercises: logger.exercises,
     });
+    setSyncStatus(WorkoutStore.getSyncStatus());
     setLastFinishedWorkout(result.savedRecord);
     setIsFinishedModalOpen(true);
     confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Bot, Send, Sparkles, TrendingUp, Award, Layers } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
 export default function GeminiHistoryCoach() {
   const history = WorkoutStore.getHistory();
   const prs = WorkoutStore.getPersonalRecords();
@@ -16,7 +19,7 @@ export default function GeminiHistoryCoach() {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSend = (customPrompt = null) => {
+  const handleSend = async (customPrompt = null) => {
     const textToSend = customPrompt || input;
     if (!textToSend.trim()) return;
 
@@ -25,27 +28,57 @@ export default function GeminiHistoryCoach() {
     if (!customPrompt) setInput('');
     setIsTyping(true);
 
-    setTimeout(() => {
-      let reply = '';
-      const lower = textToSend.toLowerCase();
+    // Build context summary from real workout history
+    const recentSessions = history.slice(0, 5).map((w) => ({
+      date: w.completedAt || w.startedAt,
+      title: w.title,
+      volumeKg: w.volumeKg,
+      sets: w.totalSets,
+    }));
+    const prSummary = Object.entries(prs)
+      .map(([ex, pr]) => `${ex}: ${pr.weight}kg × ${pr.reps} reps (1RM ~${pr.oneRepMax}kg)`)
+      .join('; ');
 
-      if (lower.includes('plateau') || lower.includes('analyze') || lower.includes('progress')) {
-        const lastWo = history[0];
-        const lastVol = lastWo ? `${lastWo.volumeKg.toLocaleString()} kg` : '12,450 kg';
-        reply = `📊 History Analysis: Your last session logged ${lastVol} of total volume across ${lastWo?.exercises?.length || 3} exercises. Your Barbell Bench Press reached ${prs.bench_press?.weight || 40} kg × ${prs.bench_press?.reps || 10} reps (Estimated Max: ${prs.bench_press?.oneRepMax || 54} kg). Recommendation: To prevent a plateau on chest, micro-load by +1.25kg next session or add 1 extra rep before increasing weight.`;
-      } else if (lower.includes('most') || lower.includes('pr') || lower.includes('improved')) {
-        reply = `🏆 Standout Movement: Your Lat Pulldown has seen the most consistent progressive overload, advancing to ${prs.lat_pulldown?.weight || 35} kg for ${prs.lat_pulldown?.reps || 12} reps with an estimated 1RM of ${prs.lat_pulldown?.oneRepMax || 49} kg. Your back volume is right on target for optimal V-taper growth!`;
-      } else if (lower.includes('next') || lower.includes('target') || lower.includes('suggest')) {
-        reply = `🎯 Next Session Blueprint: For your upcoming Push workout, aim for 42.5 kg on Flat Bench Press for 8–9 clean reps. Maintain a 2-second controlled eccentric and a 1-second chest pause. If you achieve 10 reps, that will register as a new all-time Personal Record!`;
-      } else if (lower.includes('swap') || lower.includes('busy')) {
-        reply = `🔄 Smart Swap: Since your history shows high proficiency in Dumbbell and Cable movements, swap Flat Barbell Bench with 30° Incline Dumbbell Press (20kg dumbbells) or Machine Chest Press. Both protect your shoulder capsule while matching the stimulus of the barbell!`;
+    const systemContext = `You are FitLog Pro's Gemini Biomechanics & History Coach.
+You have access to the athlete's real workout data:
+- Recent sessions (newest first): ${JSON.stringify(recentSessions)}
+- Personal Records: ${prSummary || 'No PRs yet'}
+Answer in 2–4 sentences max. Be specific, direct, and use plain English (no medical jargon).
+Always tie recommendations to actual numbers from their history.`;
+
+    try {
+      if (GEMINI_API_KEY) {
+        const res = await fetch(GEMINI_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              { role: 'user', parts: [{ text: systemContext + '\n\nAthlete asks: ' + textToSend }] },
+            ],
+          }),
+        });
+        const data = await res.json();
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini.';
+        setMessages((prev) => [...prev, { id: Date.now() + 1, sender: 'ai', text: reply }]);
       } else {
-        reply = `Great inquiry! Looking at your historical consistency (3+ sessions/week), your muscle recovery is well within the optimal window. Keep your rest pauses between 90s to 120s on compound movements to ensure full motor unit recruitment for every set.`;
+        // Fallback if API key is not configured
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            sender: 'ai',
+            text: '⚠️ Gemini API key not configured. Add VITE_GEMINI_API_KEY to your .env file to enable AI coaching.',
+          },
+        ]);
       }
-
-      setMessages((prev) => [...prev, { id: Date.now() + 1, sender: 'ai', text: reply }]);
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now() + 1, sender: 'ai', text: `Error reaching Gemini: ${err.message}` },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 700);
+    }
   };
 
   return (
@@ -70,7 +103,7 @@ export default function GeminiHistoryCoach() {
         </div>
 
         <span className="hidden sm:inline-block text-[10px] text-zinc-500 font-mono">
-          Flash 2.0 • 18 queries left
+          {GEMINI_API_KEY ? 'Gemini 2.0 Flash • Live' : 'API Key Required'}
         </span>
       </div>
 

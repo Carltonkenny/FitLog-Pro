@@ -45,7 +45,7 @@ export default function PricingSection({ onStartOnboarding }) {
                   'Unlimited workout logging',
                   'Instant sub-2s thumb zone entry',
                   'Epley 1RM PR calculations',
-                  'Offline local SQLite persistence',
+                  'Works offline, saves on your device',
                   'Basic plate calculator',
                   '50 essential compound exercises',
                 ].map((item, idx) => (
@@ -86,7 +86,7 @@ export default function PricingSection({ onStartOnboarding }) {
                 <span className="text-slate-400 text-sm ml-2">/ month ($9.99 global)</span>
               </div>
               <p className="text-xs text-slate-400 mb-6">
-                Full access to the Supabase Cloud Brain, Gemini AI coaching, and 333+ exercise library.
+                Cloud sync across devices, AI coaching, and 333+ exercise library.
               </p>
 
               <div className="space-y-3 mb-8">
@@ -94,7 +94,7 @@ export default function PricingSection({ onStartOnboarding }) {
                   'Everything in Free tier',
                   'Live Gemini 2.5 Biomechanics Gym Coach',
                   'Complete 333+ Exercise Anatomy Library',
-                  'Cross-device Supabase cloud sync',
+                  'Cross-device cloud sync',
                   'Visual 2D Barbell Plate Sleeve Engine',
                   'Annual GitHub-style consistency heatmap',
                   'Superset & dropset telemetry pairing',

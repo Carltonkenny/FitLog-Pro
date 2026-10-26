@@ -34,8 +34,13 @@ export default function OnboardingFlow({ session, onComplete, onCancel }) {
         weekly_volume_target_sets: experience === 'Advanced' ? 18 : 14,
       };
 
-      const userId = session?.user?.id || 'usr_carlton_kenny';
-      await AuthService.saveOnboardingProfile(userId, blueprint);
+      const userId = session?.user?.id || 'guest';
+      try {
+        await AuthService.saveOnboardingProfile(userId, blueprint);
+      } catch (err) {
+        // The blueprint is already cached locally, so the user can continue; cloud save retries on next profile update.
+        console.error('Onboarding profile cloud save failed:', err.message);
+      }
       setLoading(false);
       onComplete(blueprint);
     }

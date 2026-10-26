@@ -11,7 +11,7 @@ export default function ComparisonMatrix() {
       rp: false,
     },
     {
-      feature: '100% Offline SQLite Architecture (Zero Lag)',
+      feature: 'Works offline, zero lag',
       fitlog: true,
       hevy: true,
       strong: true,

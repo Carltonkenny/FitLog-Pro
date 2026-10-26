@@ -20,14 +20,14 @@ export default function SettingsTab({ blueprint, session, onSaveBlueprint }) {
       target_weight_kg: parseFloat(targetWeight),
       bench_1rm_kg: parseFloat(bench1RM),
     };
-    const userId = session?.user?.id || 'usr_carlton_kenny';
+    const userId = session?.user?.id || 'guest';
     await AuthService.saveOnboardingProfile(userId, updated);
     onSaveBlueprint(updated);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
 
-  const deepLink = `fitlogpro://auth/callback?token=${session?.access_token || 'fitlog_session'}&userId=${session?.user?.id || 'usr_carlton_kenny'}`;
+  const deepLink = `fitlogpro://auth/callback?token=${session?.access_token || 'fitlog_session'}&userId=${session?.user?.id || 'guest'}`;
 
   return (
     <div className="space-y-6 animate-fadeIn max-w-4xl">
@@ -148,7 +148,7 @@ export default function SettingsTab({ blueprint, session, onSaveBlueprint }) {
             </a>
 
             <div className="text-[11px] font-mono text-slate-500">
-              Session User ID: <code className="text-[#00D4FF]">{session?.user?.id || 'usr_carlton_kenny'}</code>
+              Session User ID: <code className="text-[#00D4FF]">{session?.user?.id || 'guest'}</code>
             </div>
           </div>
 

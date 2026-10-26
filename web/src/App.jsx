@@ -3,7 +3,7 @@ import LandingPage from './features/landing/LandingPage';
 import AuthModal from './features/auth/AuthModal';
 import OnboardingFlow from './features/onboarding/OnboardingFlow';
 import ProApp from './features/app/ProApp';
-import { AuthService } from './lib/supabaseClient';
+import { AuthService, authRequired } from './lib/supabaseClient';
 
 export default function App() {
   const getInitialView = () => {
@@ -19,6 +19,7 @@ export default function App() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState('signup');
   const [session, setSession] = useState(null);
+  const [authReady, setAuthReady] = useState(!authRequired);
   const [blueprint, setBlueprint] = useState(null);
 
   const updateView = (newView) => {
@@ -68,6 +69,25 @@ export default function App() {
     }
   }, []);
 
+  useEffect(() => {
+    // Pick up real Supabase sessions (e.g. after the Google OAuth redirect back to /app)
+    const { data } = AuthService.onAuthStateChange((newSession, event) => {
+      if (newSession) setSession(newSession);
+      else if (event === 'SIGNED_OUT') setSession(null);
+      setAuthReady(true);
+    });
+    return () => data?.subscription?.unsubscribe();
+  }, []);
+
+  // Cloud mode: the app and onboarding screens require a signed-in user.
+  useEffect(() => {
+    if (authReady && authRequired && !session && (view === 'app' || view === 'onboarding')) {
+      updateView('landing');
+      setAuthMode('signin');
+      setAuthModalOpen(true);
+    }
+  }, [authReady, session, view]);
+
   const handleOpenAuth = (mode = 'signup') => {
     setAuthMode(mode);
     setAuthModalOpen(true);
@@ -109,7 +129,7 @@ export default function App() {
         />
       )}
 
-      {view === 'onboarding' && (
+      {view === 'onboarding' && (!authRequired || session) && (
         <OnboardingFlow
           session={session}
           onComplete={handleOnboardingComplete}
@@ -117,7 +137,7 @@ export default function App() {
         />
       )}
 
-      {view === 'app' && (
+      {view === 'app' && (!authRequired || session) && (
         <ProApp
           blueprint={blueprint}
           session={session}

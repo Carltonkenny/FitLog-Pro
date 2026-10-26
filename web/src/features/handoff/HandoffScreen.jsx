@@ -13,7 +13,7 @@ export default function HandoffScreen({ blueprint, session, onReset, onOpenWebSi
     });
   }, []);
 
-  const deepLink = `fitlogpro://auth/callback?token=${session?.access_token || 'fitlog_session'}&userId=${session?.user?.id || 'usr_carlton_kenny'}`;
+  const deepLink = `fitlogpro://auth/callback?token=${session?.access_token || 'fitlog_session'}&userId=${session?.user?.id || 'guest'}`;
 
   return (
     <div className="min-h-screen bg-[#0A0B0E] flex flex-col justify-center items-center p-4 sm:p-6 relative">

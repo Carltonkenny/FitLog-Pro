@@ -129,7 +129,7 @@ export default function FullApp({ blueprint, session, onUpdateBlueprint, onBackT
             <WorkoutTab
               blueprint={blueprint}
               onWorkoutFinished={(summary) => {
-                showToast('Workout successfully saved to Cloud Brain!');
+                showToast('Workout saved');
                 setActiveTab('dashboard');
               }}
             />

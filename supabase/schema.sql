@@ -1,7 +1,7 @@
 -- ==============================================================================
 -- FitLog Pro Cloud Schema ("The Brain")
 -- Supabase PostgreSQL with Row Level Security (RLS)
--- Project Ref: fczhckzsynzfomytkgym
+-- Project Ref: witglwqwxcquvttyflir
 -- ==============================================================================
 
 -- 1. EXTENSIONS
@@ -93,67 +93,82 @@ ALTER TABLE public.personal_records ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.body_stats ENABLE ROW LEVEL SECURITY;
 
 -- Profiles Policies
-CREATE POLICY "Users can read own profile" 
+DROP POLICY IF EXISTS "Users can read own profile" ON public.profiles;
+CREATE POLICY "Users can read own profile"
     ON public.profiles FOR SELECT 
     USING (auth.uid() = id);
 
-CREATE POLICY "Users can update own profile" 
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
+CREATE POLICY "Users can update own profile"
     ON public.profiles FOR UPDATE 
     USING (auth.uid() = id);
 
-CREATE POLICY "Users can insert own profile" 
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
+CREATE POLICY "Users can insert own profile"
     ON public.profiles FOR INSERT 
     WITH CHECK (auth.uid() = id);
 
 -- Workouts Policies
-CREATE POLICY "Users can view own workouts" 
+DROP POLICY IF EXISTS "Users can view own workouts" ON public.workouts;
+CREATE POLICY "Users can view own workouts"
     ON public.workouts FOR SELECT 
     USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert own workouts" 
+DROP POLICY IF EXISTS "Users can insert own workouts" ON public.workouts;
+CREATE POLICY "Users can insert own workouts"
     ON public.workouts FOR INSERT 
     WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "Users can update own workouts" 
+DROP POLICY IF EXISTS "Users can update own workouts" ON public.workouts;
+CREATE POLICY "Users can update own workouts"
     ON public.workouts FOR UPDATE 
     USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can delete own workouts" 
+DROP POLICY IF EXISTS "Users can delete own workouts" ON public.workouts;
+CREATE POLICY "Users can delete own workouts"
     ON public.workouts FOR DELETE 
     USING (auth.uid() = user_id);
 
 -- Workout Sets Policies
-CREATE POLICY "Users can view own sets" 
+DROP POLICY IF EXISTS "Users can view own sets" ON public.workout_sets;
+CREATE POLICY "Users can view own sets"
     ON public.workout_sets FOR SELECT 
     USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert own sets" 
+DROP POLICY IF EXISTS "Users can insert own sets" ON public.workout_sets;
+CREATE POLICY "Users can insert own sets"
     ON public.workout_sets FOR INSERT 
     WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "Users can update own sets" 
+DROP POLICY IF EXISTS "Users can update own sets" ON public.workout_sets;
+CREATE POLICY "Users can update own sets"
     ON public.workout_sets FOR UPDATE 
     USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can delete own sets" 
+DROP POLICY IF EXISTS "Users can delete own sets" ON public.workout_sets;
+CREATE POLICY "Users can delete own sets"
     ON public.workout_sets FOR DELETE 
     USING (auth.uid() = user_id);
 
 -- Personal Records Policies
-CREATE POLICY "Users can view own PRs" 
+DROP POLICY IF EXISTS "Users can view own PRs" ON public.personal_records;
+CREATE POLICY "Users can view own PRs"
     ON public.personal_records FOR SELECT 
     USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert own PRs" 
+DROP POLICY IF EXISTS "Users can insert own PRs" ON public.personal_records;
+CREATE POLICY "Users can insert own PRs"
     ON public.personal_records FOR INSERT 
     WITH CHECK (auth.uid() = user_id);
 
 -- Body Stats Policies
-CREATE POLICY "Users can view own body stats" 
+DROP POLICY IF EXISTS "Users can view own body stats" ON public.body_stats;
+CREATE POLICY "Users can view own body stats"
     ON public.body_stats FOR SELECT 
     USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert own body stats" 
+DROP POLICY IF EXISTS "Users can insert own body stats" ON public.body_stats;
+CREATE POLICY "Users can insert own body stats"
     ON public.body_stats FOR INSERT 
     WITH CHECK (auth.uid() = user_id);
 
@@ -190,8 +205,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS update_profiles_timestamp ON public.profiles;
 CREATE TRIGGER update_profiles_timestamp BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+DROP TRIGGER IF EXISTS update_workouts_timestamp ON public.workouts;
 CREATE TRIGGER update_workouts_timestamp BEFORE UPDATE ON public.workouts FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+DROP TRIGGER IF EXISTS update_sets_timestamp ON public.workout_sets;
 CREATE TRIGGER update_sets_timestamp BEFORE UPDATE ON public.workout_sets FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
 -- ==============================================================================
@@ -201,3 +219,9 @@ CREATE INDEX IF NOT EXISTS idx_workouts_user_started ON public.workouts(user_id,
 CREATE INDEX IF NOT EXISTS idx_workout_sets_workout ON public.workout_sets(workout_id, set_order ASC);
 CREATE INDEX IF NOT EXISTS idx_prs_user_exercise ON public.personal_records(user_id, exercise_id);
 CREATE INDEX IF NOT EXISTS idx_body_stats_user_date ON public.body_stats(user_id, logged_at DESC);
+
+-- ==============================================================================
+-- ONBOARDING BLUEPRINT COLUMNS (used by the web app profile upsert)
+-- ==============================================================================
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS bench_1rm_kg NUMERIC(6, 2);
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS weekly_volume_target_sets INTEGER;
