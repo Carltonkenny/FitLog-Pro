@@ -1,5 +1,9 @@
 import React from 'react';
-import { Dumbbell, ShieldCheck, ArrowRight, User, Play } from 'lucide-react';
+import {
+  Dumbbell,
+  ArrowRight,
+  Play,
+} from 'lucide-react';
 
 export default function Navbar({ onOpenAuth, onStartOnboarding, onEnterApp, session }) {
   return (

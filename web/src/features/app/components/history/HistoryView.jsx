@@ -1,5 +1,9 @@
 import React from 'react';
-import { History, Calendar, Zap, Clock, Award, ChevronRight } from 'lucide-react';
+import {
+  History,
+  Calendar,
+  Clock,
+} from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import GeminiHistoryCoach from './GeminiHistoryCoach';
 

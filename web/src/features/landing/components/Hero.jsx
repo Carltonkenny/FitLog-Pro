@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Sparkles, CheckCircle2, Zap, ArrowRight, Flame } from 'lucide-react';
+import {
+  Play,
+  Sparkles,
+  CheckCircle2,
+  ArrowRight,
+  Flame,
+} from 'lucide-react';
 import gsap from 'gsap';
 
 export default function Hero({ onStartOnboarding, onEnterApp }) {

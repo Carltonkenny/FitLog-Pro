@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { ShieldCheck, User, Volume2, Smartphone, Database, Check } from 'lucide-react';
+import {
+  ShieldCheck,
+  User,
+  Database,
+} from 'lucide-react';
 
 export default function SettingsView({ blueprint, onUpdateBlueprint }) {
   const [unit, setUnit] = useState('kg');

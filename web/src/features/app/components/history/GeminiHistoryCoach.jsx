@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Bot, Send, Sparkles, TrendingUp, Award, Layers } from 'lucide-react';
+import {
+  Bot,
+  Send,
+  Sparkles,
+} from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;

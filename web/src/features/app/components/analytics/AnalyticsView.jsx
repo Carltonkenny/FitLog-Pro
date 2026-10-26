@@ -1,5 +1,7 @@
 import React from 'react';
-import { TrendingUp, Award, BarChart3, LineChart } from 'lucide-react';
+import {
+  TrendingUp,
+} from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 
 export default function AnalyticsView() {

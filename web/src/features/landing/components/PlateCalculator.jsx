@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { Calculator, Plus, Minus, Info, Sparkles } from 'lucide-react';
+import {
+  Calculator,
+} from 'lucide-react';
 
 export default function PlateCalculator() {
   const [weight, setWeight] = useState(100);

@@ -3,7 +3,14 @@ import {
   CASCADING_CATEGORIES,
   EXERCISE_LIBRARY,
 } from '../../../../lib/workoutStore';
-import { Search, Plus, Filter, Sparkles, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  Search,
+  Plus,
+  Filter,
+  Check,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
 
 export default function CascadingExplorerView({ onAddExercise }) {
   const [selectedCategory, setSelectedCategory] = useState('chest');

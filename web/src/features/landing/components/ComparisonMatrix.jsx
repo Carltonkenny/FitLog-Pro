@@ -1,5 +1,9 @@
 import React from 'react';
-import { Check, X, ShieldAlert, Sparkles } from 'lucide-react';
+import {
+  Check,
+  X,
+  Sparkles,
+} from 'lucide-react';
 
 export default function ComparisonMatrix() {
   const rows = [

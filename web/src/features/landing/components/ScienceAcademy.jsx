@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { BookOpen, Target, Activity, Cpu, Check, Layers, Sparkles } from 'lucide-react';
+import {
+  BookOpen,
+  Target,
+  Activity,
+  Cpu,
+  Check,
+} from 'lucide-react';
 
 export default function ScienceAcademy() {
   const [selectedMuscle, setSelectedMuscle] = useState('Chest');
