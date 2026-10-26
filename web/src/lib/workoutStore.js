@@ -1,4 +1,5 @@
 import { CloudSync } from './cloudSync';
+import { formatWeight, stepKg } from './settings';
 // ==============================================================================
 // FitLog Pro: Local-First Workout, Exercise Library & Progressive Overload Engine
 // Emil Kowalski Design Engineering & Plain-English Domain Architecture
@@ -440,65 +441,24 @@ export const EXERCISE_LIBRARY = CASCADING_CATEGORIES.flatMap((c) =>
 );
 
 // ------------------------------------------------------------------------------
-// INITIAL SAMPLE HISTORY (To verify session-to-session delta proof immediately)
-// ------------------------------------------------------------------------------
-const INITIAL_HISTORY = [
-  {
-    id: 'wo_hist_prev',
-    title: 'Chest & Back (Upper Focus)',
-    date: '3 days ago',
-    timestamp: Date.now() - 3 * 86400000,
-    volumeKg: 12450,
-    durationSeconds: 2700,
-    synced: true,
-    exercises: [
-      {
-        exerciseId: 'bench_press',
-        exerciseName: 'Barbell Flat Bench Press',
-        sets: [
-          { weight: 40.0, reps: 10, completed: true },
-          { weight: 40.0, reps: 10, completed: true },
-          { weight: 40.0, reps: 9, completed: true },
-        ],
-      },
-      {
-        exerciseId: 'lat_pulldown',
-        exerciseName: 'Lat Pulldown (Neutral or Wide Grip)',
-        sets: [
-          { weight: 35.0, reps: 12, completed: true },
-          { weight: 35.0, reps: 11, completed: true },
-          { weight: 35.0, reps: 10, completed: true },
-        ],
-      },
-      {
-        exerciseId: 'bicep_curls',
-        exerciseName: 'Dumbbell Bicep Curl',
-        sets: [
-          { weight: 8.0, reps: 10, completed: true },
-          { weight: 8.0, reps: 10, completed: true },
-          { weight: 8.0, reps: 9, completed: true },
-        ],
-      },
-    ],
-  },
-];
-
-// ------------------------------------------------------------------------------
 // WORKOUT STORE WITH OFFLINE QUEUE & AUTO-SYNC
 // ------------------------------------------------------------------------------
 export const WorkoutStore = {
-  // Get all completed workouts
+  // Get all completed workouts, newest first. Empty for a new user.
   getHistory() {
-    const raw = localStorage.getItem('fitlog_workout_history');
-    if (!raw) {
-      localStorage.setItem('fitlog_workout_history', JSON.stringify(INITIAL_HISTORY));
-      return INITIAL_HISTORY;
-    }
+    let list = [];
     try {
-      return JSON.parse(raw);
-    } catch (e) {
-      return INITIAL_HISTORY;
+      const parsed = JSON.parse(localStorage.getItem('fitlog_workout_history') || '[]');
+      if (Array.isArray(parsed)) list = parsed;
+    } catch {
+      return [];
     }
+    // One-time cleanup: earlier builds seeded a fake "3 days ago" workout into every new account.
+    const cleaned = list.filter((w) => w.id !== 'wo_hist_prev');
+    if (cleaned.length !== list.length) {
+      localStorage.setItem('fitlog_workout_history', JSON.stringify(cleaned));
+    }
+    return cleaned;
   },
 
   // Get previous session details for an exercise to display the comparison delta
@@ -509,7 +469,7 @@ export const WorkoutStore = {
       if (match && match.sets && match.sets.length > 0) {
         return {
           workoutTitle: wo.title,
-          date: wo.date,
+          timestamp: wo.timestamp,
           sets: match.sets,
           bestSet: match.sets.reduce((prev, curr) => (curr.weight > prev.weight ? curr : prev), match.sets[0]),
         };
@@ -519,34 +479,29 @@ export const WorkoutStore = {
   },
 
   // Compute progressive overload target in simple plain English
-  getNextSessionTarget(exerciseId, lastWeight, lastReps) {
+  getNextSessionTarget(exerciseId, lastWeight, lastReps, unit = 'kg') {
     if (!lastWeight || !lastReps) return 'Aim for 3 sets of 8–12 reps with good form';
     if (lastReps >= 12) {
-      const nextWeight = (Number(lastWeight) + 2.5).toFixed(1);
-      return `Target: ${nextWeight} kg for 8–10 reps (+2.5 kg weight progression)`;
-    } else {
-      const nextReps = Number(lastReps) + 1;
-      return `Target: ${lastWeight} kg for ${nextReps} reps (+1 rep progression)`;
+      const step = stepKg(unit);
+      return `Target: ${formatWeight(Number(lastWeight) + step, unit)} for 8–10 reps (+${formatWeight(step, unit)})`;
     }
+    return `Target: ${formatWeight(Number(lastWeight), unit)} for ${Number(lastReps) + 1} reps (+1 rep)`;
   },
 
-  // Get Personal Records
+  // Get Personal Records keyed by exerciseId. Empty for a new user.
   getPersonalRecords() {
-    const raw = localStorage.getItem('fitlog_prs');
-    if (!raw) {
-      const defaults = {
-        bench_press: { weight: 40.0, reps: 10, oneRepMax: calculate1RM(40.0, 10), date: '3 days ago' },
-        lat_pulldown: { weight: 35.0, reps: 12, oneRepMax: calculate1RM(35.0, 12), date: '3 days ago' },
-        bicep_curls: { weight: 8.0, reps: 10, oneRepMax: calculate1RM(8.0, 10), date: '3 days ago' },
-      };
-      localStorage.setItem('fitlog_prs', JSON.stringify(defaults));
-      return defaults;
-    }
+    let prs = {};
     try {
-      return JSON.parse(raw);
-    } catch (e) {
+      prs = JSON.parse(localStorage.getItem('fitlog_prs') || '{}') || {};
+    } catch {
       return {};
     }
+    // One-time cleanup of the fake records earlier builds seeded ("3 days ago").
+    const real = Object.fromEntries(Object.entries(prs).filter(([, pr]) => pr.date !== '3 days ago'));
+    if (Object.keys(real).length !== Object.keys(prs).length) {
+      localStorage.setItem('fitlog_prs', JSON.stringify(real));
+    }
+    return real;
   },
 
   // Check if a set qualifies as a new personal best
@@ -576,7 +531,7 @@ export const WorkoutStore = {
               weight: set.weight,
               reps: set.reps,
               oneRepMax: oneRepMax,
-              date: 'Today',
+              achievedAt: Date.now(),
             };
             newPRsFound.push({
               exerciseId: ex.exerciseId,
@@ -595,7 +550,6 @@ export const WorkoutStore = {
     const savedRecord = {
       id: crypto.randomUUID(),
       title: workoutData.title || 'Logged Workout',
-      date: 'Today',
       timestamp: Date.now(),
       volumeKg: workoutData.volumeKg || 0,
       durationSeconds: workoutData.durationSeconds || 0,

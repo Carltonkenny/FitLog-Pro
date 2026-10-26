@@ -1,6 +1,7 @@
 import React from 'react';
 import EscapeClose from '../../../../components/EscapeClose';
 import { Award } from 'lucide-react';
+import { formatWeight, useSettings } from '../../../../lib/settings';
 
 export default function FinishModal({
   isOpen,
@@ -8,6 +9,7 @@ export default function FinishModal({
   formatTimer,
   onClose,
 }) {
+  const { unit } = useSettings();
   if (!isOpen) return null;
 
   return (
@@ -28,7 +30,7 @@ export default function FinishModal({
           <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">
             <span className="text-zinc-400">Total Volume</span>
             <div className="text-base font-bold font-mono text-emerald-400 mt-0.5">
-              {workout?.volumeKg.toLocaleString()} kg
+              {formatWeight(workout?.volumeKg || 0, unit)}
             </div>
           </div>
           <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">
@@ -49,7 +51,7 @@ export default function FinishModal({
               <div key={idx} className="text-xs text-zinc-200 flex justify-between">
                 <span>{pr.exerciseName}</span>
                 <strong className="text-amber-400 font-mono">
-                  {pr.weight} kg × {pr.reps} reps (1RM: {pr.oneRepMax} kg)
+                  {formatWeight(pr.weight, unit)} × {pr.reps} reps (est. max {formatWeight(pr.oneRepMax, unit)})
                 </strong>
               </div>
             ))}

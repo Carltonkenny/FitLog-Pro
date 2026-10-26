@@ -4,6 +4,7 @@ import AuthModal from './features/auth/AuthModal';
 import OnboardingFlow from './features/onboarding/OnboardingFlow';
 import ProApp from './features/app/ProApp';
 import { AuthService, authRequired } from './lib/supabaseClient';
+import { CloudSync } from './lib/cloudSync';
 
 export default function App() {
   const getInitialView = () => {
@@ -56,15 +57,13 @@ export default function App() {
       } catch (e) {
         // ignore
       }
-    } else {
-      // Default initial blueprint
+    } else if (!authRequired) {
+      // Local-only mode (no cloud account): start with a neutral plan.
       setBlueprint({
-        fitness_goal: 'Hypertrophy',
+        fitness_goal: 'Muscle Growth',
+        goal: 'muscle_growth',
         experience_level: 'Intermediate',
         split_preference: 'PPL',
-        body_weight_kg: 76.5,
-        target_weight_kg: 80.0,
-        bench_1rm_kg: 85.0,
       });
     }
   }, []);
@@ -88,16 +87,46 @@ export default function App() {
     }
   }, [authReady, session, view]);
 
+  // Returning user on a new device: restore their saved plan instead of repeating onboarding.
+  useEffect(() => {
+    if (!session || !authRequired || localStorage.getItem('fitlog_profile')) return;
+    AuthService.fetchProfile().then((profile) => {
+      if (profile) setBlueprint(profile);
+      else if (window.location.pathname === '/app') updateView('onboarding');
+    });
+  }, [session]);
+
+  const handleSignOut = async () => {
+    const result = await CloudSync.flush();
+    if (result.pending > 0) {
+      const ok = window.confirm(
+        `${result.pending} workout${result.pending === 1 ? ' has' : 's have'} not synced yet and will be lost if you sign out. Sign out anyway?`
+      );
+      if (!ok) return;
+    }
+    await AuthService.signOut();
+    setSession(null);
+    setBlueprint(null);
+    updateView('landing');
+  };
+
   const handleOpenAuth = (mode = 'signup') => {
     setAuthMode(mode);
     setAuthModalOpen(true);
   };
 
-  const handleAuthSuccess = (newSession) => {
+  const handleAuthSuccess = async (newSession) => {
     setSession(newSession);
-    // If onboarding hasn't been completed, go to onboarding, else go directly into app
-    const cachedProfile = localStorage.getItem('fitlog_profile');
-    if (cachedProfile) {
+    // Finished onboarding before (here or on another device)? Go straight to the app.
+    let profile = null;
+    try {
+      const cached = localStorage.getItem('fitlog_profile');
+      profile = cached ? JSON.parse(cached) : await AuthService.fetchProfile();
+    } catch {
+      profile = null;
+    }
+    if (profile) {
+      setBlueprint(profile);
       updateView('app');
     } else {
       updateView('onboarding');
@@ -143,6 +172,7 @@ export default function App() {
           session={session}
           onUpdateBlueprint={(newBp) => setBlueprint(newBp)}
           onBack={() => updateView('landing')}
+          onSignOut={handleSignOut}
         />
       )}
 

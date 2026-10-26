@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { WorkoutStore } from '../../lib/workoutStore';
+import { CloudSync } from '../../lib/cloudSync';
+import { EXERCISE_LIBRARY, WorkoutStore } from '../../lib/workoutStore';
 
 // Custom Hooks
 import { useSessionControls } from './hooks/useSessionControls';
@@ -25,7 +26,7 @@ import FinishModal from './components/modals/FinishModal';
 import RestartModal from './components/modals/RestartModal';
 import ExercisePickerModal from './components/modals/ExercisePickerModal';
 
-export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }) {
+export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, onSignOut }) {
   // Navigation tabs: 'workout', 'library', 'analytics', 'history', 'settings'
   const [activeTab, setActiveTab] = useState('workout');
 
@@ -66,13 +67,37 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', refresh);
     window.addEventListener('fitlog:sync', refresh);
-    WorkoutStore.flushSyncQueue().finally(refresh);
+    WorkoutStore.flushSyncQueue().then(() => CloudSync.pull()).finally(refresh);
     return () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', refresh);
       window.removeEventListener('fitlog:sync', refresh);
     };
   }, []);
+
+  // Turn one day of a coach plan into today's workout.
+  const handleUseCoachDay = (day) => {
+    if (
+      logger.stats.completedSetsCount > 0 &&
+      !window.confirm('This replaces your current workout, including sets you already completed. Continue?')
+    ) {
+      return;
+    }
+    const lower = (s) => s.toLowerCase();
+    const items = day.exercises.map((ex) => {
+      const match =
+        EXERCISE_LIBRARY.find((e) => lower(e.name) === lower(ex.name)) ||
+        EXERCISE_LIBRARY.find((e) => lower(ex.name).includes(lower(e.name)) || lower(e.name).includes(lower(ex.name)));
+      const slug = lower(ex.name).replace(/[^a-z0-9]+/g, '_').slice(0, 60);
+      return {
+        item: match || { id: `custom_${slug}`, name: ex.name, targetMuscle: 'Custom', equipment: 'Any', cue: ex.note },
+        sets: ex.sets,
+        reps: parseInt(ex.reps, 10) || 10,
+      };
+    });
+    logger.loadPlan(day.name, items);
+    setActiveTab('workout');
+  };
 
   // Finish workout handler
   const handleFinishWorkout = () => {
@@ -91,6 +116,13 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-emerald-500 focus:text-zinc-950 focus:font-bold"
+      >
+        Skip to main content
+      </a>
+
       {/* 1. UNIVERSAL TOP HEADER */}
       <SessionHeader
         onBack={onBack}
@@ -123,7 +155,8 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }
         )}
 
         {/* CENTER COLUMN: Tab Views */}
-        <main className="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
+        <main id="main" tabIndex={-1} className="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto focus:outline-none">
+          <h1 className="sr-only">FitLog Pro</h1>
           {activeTab === 'workout' && (
             <ActiveWorkoutView
               workoutTitle={logger.workoutTitle}
@@ -150,6 +183,7 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }
                 logger.toggleSet(exIdx, setIdx, sessionControls.startSession)
               }
               onOpenPicker={() => setIsPickerOpen(true)}
+              onOpenCoach={() => setActiveTab('history')}
             />
           )}
 
@@ -157,15 +191,17 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint }
             <CascadingExplorerView onAddExercise={logger.addExercise} />
           )}
 
-          {activeTab === 'analytics' && <AnalyticsView />}
+          {activeTab === 'analytics' && <AnalyticsView onStartWorkout={() => setActiveTab('workout')} />}
 
           {/* Gemini History-Aware Coach is cleanly embedded inside HistoryView */}
-          {activeTab === 'history' && <HistoryView />}
+          {activeTab === 'history' && <HistoryView blueprint={blueprint} onUseDay={handleUseCoachDay} />}
 
           {activeTab === 'settings' && (
             <SettingsView
               blueprint={blueprint}
-              onUpdateBlueprint={onUpdateBlueprint}
+              session={session}
+              syncStatus={syncStatus}
+              onSignOut={onSignOut}
             />
           )}
         </main>

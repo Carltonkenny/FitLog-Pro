@@ -2,6 +2,7 @@ import React from 'react';
 import { Trash2, Plus } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import SetRow from './SetRow';
+import { formatWeight, useSettings } from '../../../../lib/settings';
 
 export default function ExerciseCard({
   exercise,
@@ -14,6 +15,7 @@ export default function ExerciseCard({
   onUpdateSet,
   onToggleSet,
 }) {
+  const { unit } = useSettings();
   const lastSession = WorkoutStore.getLastSessionForExercise(exercise.exerciseId);
 
   return (
@@ -51,7 +53,8 @@ export default function ExerciseCard({
             e.stopPropagation();
             onRemoveExercise(exIndex);
           }}
-          className="text-zinc-500 hover:text-red-400 p-1 transition"
+          aria-label={`Remove ${exercise.exerciseName}`}
+          className="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg text-zinc-400 hover:text-red-400 hover:bg-white/[0.05] transition"
           title="Remove Exercise"
         >
           <Trash2 className="w-4 h-4" />
@@ -62,13 +65,14 @@ export default function ExerciseCard({
       {lastSession && (
         <div className="px-3 py-1.5 rounded-lg bg-zinc-900/80 border border-white/[0.05] text-[11px] text-zinc-400 flex items-center justify-between">
           <span>
-            Last Session: <strong className="text-zinc-200">{lastSession.bestSet.weight} kg × {lastSession.bestSet.reps} reps</strong>
+            Last Session: <strong className="text-zinc-200">{formatWeight(lastSession.bestSet.weight, unit)} × {lastSession.bestSet.reps} reps</strong>
           </span>
           <span className="text-emerald-400 font-medium">
             {WorkoutStore.getNextSessionTarget(
               exercise.exerciseId,
               lastSession.bestSet.weight,
-              lastSession.bestSet.reps
+              lastSession.bestSet.reps,
+              unit
             )}
           </span>
         </div>
@@ -103,11 +107,13 @@ export default function ExerciseCard({
       {/* Bottom Bar: Add Set & Form Cue */}
       <div className="flex items-center justify-between pt-1">
         <button
+          type="button"
+          aria-label={`Add set to ${exercise.exerciseName}`}
           onClick={(e) => {
             e.stopPropagation();
             onAddSet(exIndex);
           }}
-          className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium py-1 px-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 transition active:scale-95"
+          className="flex items-center gap-1 text-xs text-emerald-300 hover:text-emerald-200 font-medium min-h-10 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 transition active:scale-95"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>Add Set</span>

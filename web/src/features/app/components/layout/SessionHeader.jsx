@@ -28,8 +28,10 @@ export default function SessionHeader({
       {/* Brand & Home */}
       <div className="flex items-center gap-3">
         <button
+          type="button"
+          aria-label="Back to home"
           onClick={onBack}
-          className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white transition active:scale-95 border border-white/[0.06]"
+          className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white transition active:scale-95 border border-white/[0.06]"
           title="Return to Home"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -69,7 +71,7 @@ export default function SessionHeader({
         {sessionState !== 'running' ? (
           <button
             onClick={onStart}
-            className="flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-emerald-500 text-zinc-950 hover:bg-emerald-400 transition active:scale-95 shadow-sm"
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 h-9 rounded-lg bg-emerald-500 text-zinc-950 hover:bg-emerald-400 transition active:scale-95 shadow-sm"
             title="Start or Resume Workout Clock"
           >
             <Play className="w-3 h-3 fill-current" />
@@ -78,7 +80,7 @@ export default function SessionHeader({
         ) : (
           <button
             onClick={onPause}
-            className="flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition active:scale-95 border border-amber-500/30"
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 h-9 rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition active:scale-95 border border-amber-500/30"
             title="Pause Workout Clock"
           >
             <Pause className="w-3 h-3" />
@@ -87,8 +89,10 @@ export default function SessionHeader({
         )}
 
         <button
+          type="button"
+          aria-label="Restart session timer"
           onClick={onRestartClick}
-          className="p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05] transition active:scale-95"
+          className="w-9 h-9 flex items-center justify-center rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05] transition active:scale-95"
           title="Restart Session"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -99,8 +103,9 @@ export default function SessionHeader({
       <div className="flex items-center gap-2">
         <div className="hidden md:flex items-center bg-zinc-900 p-0.5 rounded-lg border border-white/[0.08]">
           <button
+            aria-pressed={layoutMode === 'laptop'}
             onClick={() => setLayoutMode('laptop')}
-            className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-md transition ${
+            className={`flex items-center gap-1 text-xs px-3 h-9 rounded-lg transition ${
               layoutMode === 'laptop'
                 ? 'bg-zinc-800 text-white font-medium shadow-sm'
                 : 'text-zinc-400 hover:text-zinc-200'
@@ -110,8 +115,9 @@ export default function SessionHeader({
             <span>Studio</span>
           </button>
           <button
+            aria-pressed={layoutMode === 'mobile'}
             onClick={() => setLayoutMode('mobile')}
-            className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-md transition ${
+            className={`flex items-center gap-1 text-xs px-3 h-9 rounded-lg transition ${
               layoutMode === 'mobile'
                 ? 'bg-zinc-800 text-white font-medium shadow-sm'
                 : 'text-zinc-400 hover:text-zinc-200'
@@ -124,7 +130,7 @@ export default function SessionHeader({
 
         <button
           onClick={onFinishWorkout}
-          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 transition active:scale-95 shadow-md shadow-emerald-500/20"
+          className="flex items-center gap-1.5 text-xs font-semibold px-4 h-10 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 transition active:scale-95 shadow-md shadow-emerald-500/20"
         >
           <CheckCircle2 className="w-4 h-4" />
           <span className="hidden sm:inline">Finish Workout</span>

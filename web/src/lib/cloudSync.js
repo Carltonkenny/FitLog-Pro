@@ -2,8 +2,11 @@ import { supabase, isCloudConfigured } from './supabaseClient';
 
 const QUEUE_KEY = 'fitlog_sync_queue';
 const HISTORY_KEY = 'fitlog_workout_history';
+const PRS_KEY = 'fitlog_prs';
+const PULL_LIMIT = 200;
 
 let flushing = null;
+let pulling = null;
 
 const readJson = (key, fallback) => {
   try {
@@ -60,6 +63,37 @@ function toRows(record, userId) {
   return { workout, sets, prs };
 }
 
+
+/** Rebuilds the local workout shape from a Supabase workouts row with embedded workout_sets. */
+function fromRow(row) {
+  const groups = new Map();
+  [...(row.workout_sets || [])]
+    .sort((a, b) => a.set_order - b.set_order)
+    .forEach((s) => {
+      const g = groups.get(s.exercise_id) || { exerciseId: s.exercise_id, exerciseName: s.exercise_name, sets: [] };
+      g.sets.push({
+        id: g.sets.length + 1,
+        type: s.set_type === 'warmup' ? 'W' : String(g.sets.length + 1),
+        weight: Number(s.weight_kg),
+        reps: s.reps,
+        completed: s.is_completed,
+        isPR: false,
+      });
+      groups.set(s.exercise_id, g);
+    });
+  return {
+    id: row.id,
+    title: row.title,
+    timestamp: new Date(row.completed_at || row.started_at).getTime(),
+    volumeKg: Number(row.volume_kg),
+    durationSeconds: row.duration_seconds,
+    exercises: [...groups.values()],
+    newPRs: [],
+    synced: true,
+    pendingSync: false,
+  };
+}
+
 async function pushRecord(record, userId) {
   const { workout, sets, prs } = toRows(record, userId);
   // Workout + sets are replaced as a unit so a retry after a partial failure never duplicates sets.
@@ -80,6 +114,65 @@ async function pushRecord(record, userId) {
 export const CloudSync = {
   /** True when a real Supabase key is configured; local-only mode otherwise. */
   isEnabled: () => isCloudConfigured,
+
+
+  /**
+   * Downloads the signed-in user's workouts (newest 200) and personal records from Supabase and
+   * merges them into local storage. Local-only records are kept; cloud records the device does
+   * not have are added. Resolves with { added, error }.
+   */
+  pull() {
+    if (pulling) return pulling;
+    pulling = (async () => {
+      if (!isCloudConfigured || navigator.onLine === false) return { added: 0, error: null };
+      const { data: auth } = await supabase.auth.getSession();
+      if (!auth?.session) return { added: 0, error: 'not-signed-in' };
+
+      const { data: rows, error } = await supabase
+        .from('workouts')
+        .select('*, workout_sets(*)')
+        .is('deleted_at', null)
+        .eq('is_template', false)
+        .order('started_at', { ascending: false })
+        .limit(PULL_LIMIT);
+      if (error) return { added: 0, error: error.message };
+
+      const local = readJson(HISTORY_KEY, []);
+      const have = new Set(local.map((w) => w.id));
+      const incoming = rows.filter((r) => !have.has(r.id)).map(fromRow);
+      if (incoming.length) {
+        const merged = [...local, ...incoming].sort((a, b) => b.timestamp - a.timestamp);
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(merged));
+      }
+
+      const { data: prRows, error: prErr } = await supabase
+        .from('personal_records')
+        .select('exercise_id, weight_kg, reps, one_rep_max, achieved_at')
+        .order('one_rep_max', { ascending: false })
+        .limit(1000);
+      if (!prErr && prRows?.length) {
+        const prs = readJson(PRS_KEY, {});
+        prRows.forEach((r) => {
+          const best = Number(r.one_rep_max);
+          if (!prs[r.exercise_id] || best > prs[r.exercise_id].oneRepMax) {
+            prs[r.exercise_id] = {
+              weight: Number(r.weight_kg),
+              reps: r.reps,
+              oneRepMax: best,
+              achievedAt: new Date(r.achieved_at).getTime(),
+            };
+          }
+        });
+        localStorage.setItem(PRS_KEY, JSON.stringify(prs));
+      }
+
+      window.dispatchEvent(new CustomEvent('fitlog:sync', { detail: { pulled: incoming.length } }));
+      return { added: incoming.length, error: prErr ? prErr.message : null };
+    })().finally(() => {
+      pulling = null;
+    });
+    return pulling;
+  },
 
   /**
    * Pushes every queued workout to Supabase. Records that fail stay queued for the next

@@ -121,6 +121,22 @@ export const AuthService = {
     return profileData;
   },
 
+  // Download the signed-in user's onboarding profile. Returns null when they have not finished onboarding.
+  async fetchProfile() {
+    if (!isCloudConfigured) return null;
+    const { data: auth } = await supabase.auth.getSession();
+    if (!auth?.session) return null;
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', auth.session.user.id)
+      .maybeSingle();
+    if (error || !data || !data.onboarding_completed) return null;
+    const profile = { ...data, goal: data.fitness_goal === 'Raw Strength' ? 'strength' : 'muscle_growth' };
+    localStorage.setItem('fitlog_profile', JSON.stringify(profile));
+    return profile;
+  },
+
   // Get current active session
   getSession() {
     const cached = localStorage.getItem('fitlog_session');
@@ -164,7 +180,8 @@ export const AuthService = {
     } catch (e) {
       // ignore
     }
-    localStorage.removeItem('fitlog_session');
-    localStorage.removeItem('fitlog_profile');
+    ['fitlog_session', 'fitlog_profile', 'fitlog_workout_history', 'fitlog_prs', 'fitlog_sync_queue'].forEach((k) =>
+      localStorage.removeItem(k)
+    );
   }
 };

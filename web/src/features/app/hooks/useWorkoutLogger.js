@@ -1,15 +1,10 @@
 import { useState, useMemo, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { WorkoutStore } from '../../../lib/workoutStore';
+import { buzz, getSettings } from '../../../lib/settings';
 
-export function useWorkoutLogger(initialGoal = 'muscle_growth') {
-  const [workoutTitle, setWorkoutTitle] = useState(
-    initialGoal === 'strength'
-      ? 'Raw Strength & Power Session (Chest & Back)'
-      : 'Muscle Growth Session (Chest, Shoulders & Arms)'
-  );
-
-  const [exercises, setExercises] = useState([
+// Starter session. Weights and reps are replaced by the user's last logged session when one exists.
+const STARTER_TEMPLATE = [
     {
       exerciseId: 'bench_press',
       exerciseName: 'Barbell Flat Bench Press',
@@ -18,10 +13,10 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       notes: 'Pinch shoulder blades into bench, 1s controlled pause at mid-chest',
       growthFatigueScore: 8.8,
       sets: [
-        { id: 1, type: 'W', weight: 30.0, reps: 10, completed: true, isPR: false },
-        { id: 2, type: '1', weight: 40.0, reps: 10, completed: true, isPR: false },
-        { id: 3, type: '2', weight: 40.0, reps: 10, completed: true, isPR: false },
-        { id: 4, type: '3', weight: 42.5, reps: 8, completed: false, isPR: true },
+        { id: 1, type: 'W', weight: 30.0, reps: 10, completed: false, isPR: false },
+        { id: 2, type: '1', weight: 40.0, reps: 10, completed: false, isPR: false },
+        { id: 3, type: '2', weight: 40.0, reps: 10, completed: false, isPR: false },
+        { id: 4, type: '3', weight: 42.5, reps: 8, completed: false, isPR: false },
       ],
     },
     {
@@ -32,9 +27,9 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       notes: 'Drive elbows down toward back pockets, 2s slow lowering phase',
       growthFatigueScore: 9.3,
       sets: [
-        { id: 1, type: '1', weight: 35.0, reps: 12, completed: true, isPR: false },
-        { id: 2, type: '2', weight: 35.0, reps: 12, completed: true, isPR: false },
-        { id: 3, type: '3', weight: 37.5, reps: 10, completed: false, isPR: true },
+        { id: 1, type: '1', weight: 35.0, reps: 12, completed: false, isPR: false },
+        { id: 2, type: '2', weight: 35.0, reps: 12, completed: false, isPR: false },
+        { id: 3, type: '3', weight: 37.5, reps: 10, completed: false, isPR: false },
       ],
     },
     {
@@ -45,12 +40,32 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       notes: 'Rotate pinky upward at peak contraction, zero hip momentum',
       growthFatigueScore: 9.2,
       sets: [
-        { id: 1, type: '1', weight: 8.0, reps: 10, completed: true, isPR: false },
+        { id: 1, type: '1', weight: 8.0, reps: 10, completed: false, isPR: false },
         { id: 2, type: '2', weight: 8.0, reps: 10, completed: false, isPR: false },
-        { id: 3, type: '3', weight: 10.0, reps: 8, completed: false, isPR: true },
+        { id: 3, type: '3', weight: 10.0, reps: 8, completed: false, isPR: false },
       ],
     },
-  ]);
+  ];
+
+function buildStarterWorkout() {
+  return STARTER_TEMPLATE.map((ex) => {
+    const last = WorkoutStore.getLastSessionForExercise(ex.exerciseId);
+    if (!last) return ex;
+    return {
+      ...ex,
+      sets: ex.sets.map((s) => ({ ...s, weight: last.bestSet.weight, reps: last.bestSet.reps })),
+    };
+  });
+}
+
+export function useWorkoutLogger(initialGoal = 'muscle_growth') {
+  const [workoutTitle, setWorkoutTitle] = useState(
+    initialGoal === 'strength'
+      ? 'Raw Strength & Power Session (Chest & Back)'
+      : 'Muscle Growth Session (Chest, Shoulders & Arms)'
+  );
+
+  const [exercises, setExercises] = useState(buildStarterWorkout);
 
   const [activeExerciseIndex, setActiveExerciseIndex] = useState(0);
   const currentFocusedExercise = exercises[activeExerciseIndex] || exercises[0];
@@ -66,6 +81,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     } else if (restSeconds === 0 && isRestActive) {
       setIsRestActive(false);
       try {
+        if (!getSettings().sound) return;
         const audio = new AudioContext();
         const osc = audio.createOscillator();
         osc.connect(audio.destination);
@@ -81,7 +97,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     };
   }, [isRestActive, restSeconds]);
 
-  const triggerRestTimer = (sec = 90) => {
+  const triggerRestTimer = (sec = getSettings().restSeconds) => {
     setRestSeconds(sec);
     setIsRestActive(true);
   };
@@ -96,7 +112,8 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       targetSet.completed = !targetSet.completed;
 
       if (targetSet.completed) {
-        triggerRestTimer(90);
+        triggerRestTimer(getSettings().restSeconds);
+        buzz();
         const isPR = WorkoutStore.checkIsPR(
           copy[exIndex].exerciseId,
           targetSet.weight,
@@ -186,6 +203,34 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     ]);
   };
 
+  /** Replaces the current workout with `items`: [{ item (library entry), sets, reps }]. */
+  const loadPlan = (title, items) => {
+    setWorkoutTitle(title);
+    setActiveExerciseIndex(0);
+    setExercises(
+      items.map(({ item, sets, reps }) => {
+        const last = WorkoutStore.getLastSessionForExercise(item.id);
+        const weight = last ? last.bestSet.weight : 20;
+        return {
+          exerciseId: item.id,
+          exerciseName: item.name,
+          targetMuscle: item.targetMuscle,
+          equipment: item.equipment,
+          notes: item.cue || 'Controlled tempo, focus on the target muscle',
+          growthFatigueScore: item.growthFatigueScore,
+          sets: Array.from({ length: sets }, (_, i) => ({
+            id: i + 1,
+            type: String(i + 1),
+            weight,
+            reps,
+            completed: false,
+            isPR: false,
+          })),
+        };
+      })
+    );
+  };
+
   const resetAllSets = () => {
     setExercises((prev) => {
       const copy = JSON.parse(JSON.stringify(prev));
@@ -240,6 +285,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     removeSet,
     removeExercise,
     addExercise,
+    loadPlan,
     resetAllSets,
   };
 }

@@ -1,84 +1,87 @@
 import React from 'react';
-import {
-  History,
-  Calendar,
-  Clock,
-} from 'lucide-react';
+import { Calendar, Clock, History as HistoryIcon } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
+import { formatWeight, useSettings } from '../../../../lib/settings';
+import { formatWorkoutDate } from '../../../../lib/stats';
 import GeminiHistoryCoach from './GeminiHistoryCoach';
 
-export default function HistoryView() {
+export default function HistoryView({ blueprint, onUseDay }) {
+  const { unit } = useSettings();
   const history = WorkoutStore.getHistory();
 
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-          <span>Workout History & Gemini Intelligence</span>
-        </h2>
+        <h2 className="text-xl font-bold text-white tracking-tight">History and AI coach</h2>
         <p className="text-xs text-zinc-400">
-          Your historical sessions, volume logs, and PR achievements paired with real-time AI progression insights.
+          Your past workouts, plus a coach that reads them and builds your next plan.
         </p>
       </div>
 
-      {/* GEMINI HISTORY COACH (Shifted here to leverage real history) */}
-      <GeminiHistoryCoach />
+      <GeminiHistoryCoach blueprint={blueprint} onUseDay={onUseDay} />
 
-      {/* SESSION TIMELINE */}
-      <div className="space-y-3 pt-2">
+      <section aria-label="Past workouts" className="space-y-3 pt-2">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
-            Recorded Workout Sessions ({history.length})
-          </span>
-          <span className="text-[10px] font-mono text-emerald-400">
-            Local Database & Cloud Synced
-          </span>
+          <h3 className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
+            Past workouts ({history.length})
+          </h3>
         </div>
 
+        {history.length === 0 && (
+          <div className="p-8 rounded-2xl bg-zinc-900/60 border border-dashed border-white/[0.12] text-center space-y-2">
+            <HistoryIcon className="w-8 h-8 text-emerald-400 mx-auto" aria-hidden="true" />
+            <h4 className="text-base font-bold text-white">No workouts yet</h4>
+            <p className="text-sm text-zinc-400">Finish a workout and it will show up here.</p>
+          </div>
+        )}
+
         {history.map((wo) => (
-          <div
+          <article
             key={wo.id}
             className="p-4 rounded-2xl bg-zinc-900/70 border border-white/[0.08] hover:border-emerald-500/30 transition space-y-3"
           >
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
                 <h4 className="font-bold text-white text-sm">{wo.title}</h4>
                 <div className="flex items-center gap-2 text-xs text-zinc-400 mt-0.5">
                   <span className="flex items-center gap-1 font-mono">
-                    <Calendar className="w-3 h-3 text-zinc-500" />
-                    {wo.date}
+                    <Calendar className="w-3 h-3 text-zinc-400" aria-hidden="true" />
+                    {formatWorkoutDate(wo.timestamp)}
                   </span>
-                  <span>•</span>
+                  <span aria-hidden="true">•</span>
                   <span className="flex items-center gap-1 font-mono">
-                    <Clock className="w-3 h-3 text-zinc-500" />
-                    {Math.round((wo.durationSeconds || 0) / 60)} mins
+                    <Clock className="w-3 h-3 text-zinc-400" aria-hidden="true" />
+                    {Math.max(1, Math.round((wo.durationSeconds || 0) / 60))} min
                   </span>
                 </div>
               </div>
-
-              <div className="text-right">
+              <div className="text-right shrink-0">
                 <span className="text-sm font-mono font-bold text-emerald-400">
-                  {wo.volumeKg.toLocaleString()} kg
+                  {formatWeight(wo.volumeKg || 0, unit)}
                 </span>
-                <div className="text-[10px] text-zinc-500 font-mono">Total Volume</div>
+                <div className="text-[10px] text-zinc-400 font-mono">Total volume</div>
               </div>
             </div>
 
-            {/* Exercise Badges */}
             <div className="pt-2 border-t border-white/[0.04] flex flex-wrap gap-2">
               {wo.exercises?.map((e, idx) => (
                 <span
                   key={idx}
-                  className="text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 text-zinc-300 border border-white/[0.04] flex items-center gap-1.5"
+                  className="text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 text-zinc-300 border border-white/[0.04]"
                 >
                   <strong className="text-white font-medium">{e.exerciseName}</strong>
-                  <span className="text-zinc-500">({e.sets?.length || 3} sets)</span>
+                  <span className="text-zinc-400"> · {e.sets?.length || 0} sets</span>
                 </span>
               ))}
+              {wo.pendingSync && (
+                <span className="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                  Waiting to sync
+                </span>
+              )}
             </div>
-          </div>
+          </article>
         ))}
-      </div>
+      </section>
     </div>
   );
 }
