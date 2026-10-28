@@ -148,7 +148,8 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
         const isPR = WorkoutStore.checkIsPR(
           copy[exIndex].exerciseId,
           targetSet.weight,
-          targetSet.reps
+          targetSet.reps,
+          targetSet.type
         );
         targetSet.isPR = isPR;
 

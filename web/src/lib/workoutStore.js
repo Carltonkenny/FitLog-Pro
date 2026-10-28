@@ -18,8 +18,6 @@ let historyParsed = [];
 export const WorkoutStore = {
   // Get all completed workouts, newest first. Empty for a new user.
   getHistory() {
-    // Parsing the whole history on every call was the main render cost (about 6 ms at 500 workouts,
-    // once per exercise card). Reuse the parsed copy while the stored text is unchanged.
     const raw = localStorage.getItem('fitlog_workout_history') || '[]';
     if (raw === historyRaw) return historyParsed;
     let list = [];
@@ -29,7 +27,6 @@ export const WorkoutStore = {
     } catch {
       return [];
     }
-    // One-time cleanup: earlier builds seeded a fake "3 days ago" workout into every new account.
     const cleaned = list.filter((w) => w.id !== 'wo_hist_prev');
     if (cleaned.length !== list.length) {
       localStorage.setItem('fitlog_workout_history', JSON.stringify(cleaned));
@@ -44,7 +41,6 @@ export const WorkoutStore = {
     const history = this.getHistory();
     for (const wo of history) {
       const match = wo.exercises?.find((e) => e.exerciseId === exerciseId);
-      // Only sets that were actually done count; planned-but-skipped sets must not become "last session".
       const done = (match?.sets || []).filter((s) => s.completed !== false);
       if (done.length > 0) {
         return {
@@ -76,7 +72,6 @@ export const WorkoutStore = {
     } catch {
       return {};
     }
-    // One-time cleanup of the fake records earlier builds seeded ("3 days ago").
     const real = Object.fromEntries(Object.entries(prs).filter(([, pr]) => pr.date !== '3 days ago'));
     if (Object.keys(real).length !== Object.keys(prs).length) {
       localStorage.setItem('fitlog_prs', JSON.stringify(real));
@@ -85,13 +80,22 @@ export const WorkoutStore = {
   },
 
   // Check if a set qualifies as a new personal best
-  checkIsPR(exerciseId, weight, reps) {
-    if (!weight || !reps) return false;
-    const current1RM = calculate1RM(weight, reps);
+  checkIsPR(exerciseId, weight, reps, setType = 'normal') {
+    // Warmup sets ('W' or 'warmup') can NEVER be a personal record
+    if (setType === 'W' || setType === 'warmup') return false;
+    const numWeight = Number(weight);
+    const numReps = Number(reps);
+    if (isNaN(numWeight) || isNaN(numReps) || numWeight <= 0 || numReps <= 0) return false;
+
+    const current1RM = calculate1RM(numWeight, numReps);
+    if (current1RM <= 0) return false;
+
     const prs = this.getPersonalRecords();
     const existing = prs[exerciseId];
     if (!existing) return true;
-    return current1RM > existing.oneRepMax;
+
+    // Strict overload check: must strictly exceed existing 1RM to avoid false floating-point ties
+    return current1RM > (existing.oneRepMax + 0.05);
   },
 
   // Save workout locally (local-first) and mark as pending sync if offline
@@ -99,25 +103,26 @@ export const WorkoutStore = {
     const history = this.getHistory();
     const prs = this.getPersonalRecords();
 
-    // Check for new PRs
+    // Check for new PRs (excluding warmups)
     let newPRsFound = [];
     workoutData.exercises?.forEach((ex) => {
       ex.sets?.forEach((set) => {
-        if (set.completed && set.weight > 0 && set.reps > 0) {
+        const isWarmup = set.type === 'W' || set.type === 'warmup';
+        if (!isWarmup && set.completed && set.weight > 0 && set.reps > 0) {
           const oneRepMax = calculate1RM(set.weight, set.reps);
           const currentPR = prs[ex.exerciseId];
-          if (!currentPR || oneRepMax > currentPR.oneRepMax) {
+          if (!currentPR || oneRepMax > (currentPR.oneRepMax + 0.05)) {
             prs[ex.exerciseId] = {
-              weight: set.weight,
-              reps: set.reps,
+              weight: Number(set.weight),
+              reps: Number(set.reps),
               oneRepMax: oneRepMax,
               achievedAt: Date.now(),
             };
             newPRsFound.push({
               exerciseId: ex.exerciseId,
               exerciseName: ex.exerciseName,
-              weight: set.weight,
-              reps: set.reps,
+              weight: Number(set.weight),
+              reps: Number(set.reps),
               oneRepMax: oneRepMax,
             });
           }
@@ -131,9 +136,9 @@ export const WorkoutStore = {
       id: crypto.randomUUID(),
       title: workoutData.title || 'Logged Workout',
       timestamp: Date.now(),
-      volumeKg: workoutData.volumeKg || 0,
-      durationSeconds: workoutData.durationSeconds || 0,
-      exercises: workoutData.exercises,
+      volumeKg: Number(workoutData.volumeKg) || 0,
+      durationSeconds: Number(workoutData.durationSeconds) || 0,
+      exercises: workoutData.exercises || [],
       newPRs: newPRsFound,
       synced: !cloud,
       pendingSync: cloud,
@@ -155,6 +160,65 @@ export const WorkoutStore = {
       savedRecord,
       newPRsFound,
     };
+  },
+
+  // Calculate current active training streak in days
+  getStreak() {
+    const history = this.getHistory();
+    if (!history || history.length === 0) return 0;
+
+    const daySet = new Set();
+    for (const item of history) {
+      if (item.timestamp) {
+        const d = new Date(item.timestamp);
+        const dayKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        daySet.add(dayKey);
+      }
+    }
+
+    const today = new Date();
+    const toDayKey = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+    let streak = 0;
+    let checkDate = new Date(today);
+
+    // If not worked out today, check if yesterday was worked out to maintain active streak
+    let checkKey = toDayKey(checkDate);
+    if (!daySet.has(checkKey)) {
+      checkDate.setDate(checkDate.getDate() - 1);
+      checkKey = toDayKey(checkDate);
+      if (!daySet.has(checkKey)) return 0;
+    }
+
+    while (daySet.has(checkKey)) {
+      streak++;
+      checkDate.setDate(checkDate.getDate() - 1);
+      checkKey = toDayKey(checkDate);
+    }
+    return streak;
+  },
+
+  // User preferences persistence (unit, rest duration)
+  getPreferences() {
+    try {
+      const raw = localStorage.getItem('fitlog_preferences');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {
+      // fallback
+    }
+    return { unit: 'kg', restDuration: 90, sound: true, haptics: true };
+  },
+
+  savePreferences(prefs) {
+    try {
+      const current = this.getPreferences();
+      const updated = { ...current, ...prefs };
+      localStorage.setItem('fitlog_preferences', JSON.stringify(updated));
+      return updated;
+    } catch (e) {
+      return prefs;
+    }
   },
 
   // Push the pending queue to the API (see cloudSync.js)

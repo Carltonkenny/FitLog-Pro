@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/tokens.dart';
 
 class AuthScreen extends StatefulWidget {
-  final Function(String email, String name) onAuthSuccess;
+  final void Function(String email, String name) onAuthSuccess;
 
   const AuthScreen({
     super.key,

@@ -51,11 +51,12 @@ export default function ExerciseCard({
         </div>
 
         <button
+          type="button"
+          aria-label={`Remove ${exercise.exerciseName}`}
           onClick={(e) => {
             e.stopPropagation();
             onRemoveExercise(exIndex);
           }}
-          aria-label={`Remove ${exercise.exerciseName}`}
           className="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg text-zinc-400 hover:text-red-400 hover:bg-white/[0.05] transition"
           title="Remove Exercise"
         >
@@ -64,16 +65,16 @@ export default function ExerciseCard({
       </div>
 
       {/* Previous Session Delta Proof */}
-      {lastSession && (
+      {lastSession && lastSession.bestSet && (
         <div className="px-3 py-1.5 rounded-lg bg-zinc-900/80 border border-white/[0.05] text-[11px] text-zinc-400 flex items-center justify-between">
           <span>
-            Last Session: <strong className="text-zinc-200">{formatWeight(lastSession.bestSet.weight, unit)} × {lastSession.bestSet.reps} reps</strong>
+            Last Session: <strong className="text-zinc-200">{formatWeight(lastSession.bestSet.weight ?? 0, unit)} × {lastSession.bestSet.reps ?? 0} reps</strong>
           </span>
           <span className="text-emerald-400 font-medium">
             {WorkoutStore.getNextSessionTarget(
               exercise.exerciseId,
-              lastSession.bestSet.weight,
-              lastSession.bestSet.reps,
+              lastSession.bestSet.weight ?? 0,
+              lastSession.bestSet.reps ?? 0,
               unit
             )}
           </span>
@@ -82,13 +83,13 @@ export default function ExerciseCard({
 
       {/* Sets Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs">
+        <table className="w-full text-left text-xs min-w-[280px]">
           <thead>
             <tr className="text-zinc-400 uppercase tracking-wider font-mono text-[10px] border-b border-white/[0.06]">
               <th className="pb-2 w-12 text-center">Set</th>
               <th className="pb-2 w-28">Weight ({unit})</th>
               <th className="pb-2 w-24">Reps</th>
-              <th className="pb-2 text-right pr-2">Done</th>
+              <th className="pb-2 text-right pr-2 min-w-[3.5rem]">Done</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/[0.04]">

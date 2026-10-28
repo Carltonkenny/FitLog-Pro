@@ -3,12 +3,14 @@ import { CATALOG, NEW_SUBREGIONS } from './exerciseCatalog.js';
 // Pure data and math: the exercise library and the Epley estimated-max formula.
 // No browser, React or network imports, so it runs unchanged in Node tests.
 
-// Helper for 1RM calculation (Epley formula)
+// Helper for 1RM calculation (Epley formula with boundary guards)
 export const calculate1RM = (weight, reps) => {
-  if (!weight || weight <= 0) return 0;
-  if (reps <= 1) return Number(weight);
+  const numWeight = Number(weight);
+  const numReps = Number(reps);
+  if (isNaN(numWeight) || isNaN(numReps) || numWeight <= 0 || numReps < 0) return 0;
+  if (numReps <= 1) return Number(numWeight.toFixed(1));
   // Epley Formula: 1RM = weight * (1 + reps / 30)
-  return Math.round(weight * (1 + reps / 30) * 10) / 10;
+  return Math.round(numWeight * (1 + numReps / 30) * 10) / 10;
 };
 
 // ------------------------------------------------------------------------------
