@@ -44,15 +44,15 @@ The upload queue is browser logic (`cloudSync.js`). Playwright (mocked API) show
 ## Test execution summary
 | | Count |
 |---|---|
-| Database cases written | 39 |
-| Automated | 36 (some partial; see matrix) |
-| Executed and passed | 32 |
+| Database cases written | 40 |
+| Automated | 37 (some partial; see matrix) |
+| Executed and passed | 33 |
 | Failed | 0 |
 | Blocked | 4 (Neon branch, role check, concurrency, real timing) |
 | Real-database tests | all use a real Postgres engine (PGlite), **none** touch Neon |
 | Mocked | Playwright queue tests use a mocked API |
 
-Note on the earlier suite: `npm test` also runs `test/api.test.js`, which connects to your Neon project and works inside a throw-away schema that it drops afterwards. It ran several times across this work (every `npm test`). It did not touch your real tables, but it is still a connection to the project's only branch. I did not create a Neon branch, and I did not run the new tests against Neon.
+Note on the earlier suite: `npm test` also runs `tests/integration/api.neon.test.js`, which connects to your Neon project and works inside a throw-away schema that it drops afterwards. It ran several times across this work (every `npm test`). It did not touch your real tables, but it is still a connection to the project's only branch. I did not create a Neon branch, and I did not run the new tests against Neon.
 
 ## Neon-specific review (read-only, from the repo)
 One project, branch `production`; no separate test branch is configured. Migration = re-runnable `schema.sql`, no history table. Backups/PITR settings, role privileges and pooling mode were not inspected (Neon MCP not authorised). **Recommendation:** create a Neon branch for tests and CI (branches are copy-on-write and cheap), then re-run this suite with `DATABASE_URL` pointing at it.

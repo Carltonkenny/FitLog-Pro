@@ -15,7 +15,8 @@ Conditions to lift the conditions: (1) settle the `better-auth` advisory with Ne
 | ID | Severity | Finding | Status |
 |---|---|---|---|
 | DEF-S03 | **High (exposure unverified)** | `npm audit` reports `better-auth` 1.7.6 (pulled in by `@neondatabase/neon-js`) with **critical** GHSA-965c-763c-88jm (OAuth state usable as a magic link to sign in as another user) and **high** GHSA-r4xp-prcw-77qf (OAuth proxy). Both are fixed in 1.7.7. These flaws are in the **server** half of the library; our browser bundle contains only the client. The server that matters is the Neon-hosted one, whose version I cannot see. No upstream fix is available through the SDK today | **Open.** Ask Neon which better-auth version your auth tenant runs; keep Google sign-in off until confirmed. Do not "fix" by overriding the client version; it would not change the server |
-| DEF-S01 | Low | The coach 429 had no `Retry-After` header | **Fixed**, test SEC-RATE-003 |
+| DEF-S01 | Low | The coach 429 had no `Retry-After` header | **Fixed** with the real wait in seconds, tests SEC-RATE-003/007 |
+| DEF-S07 | Low | Error logs could print a connection string with its password if a driver put one in a message | **Fixed**: credentials are masked before logging; test SEC-ERR-001 now really checks it (it used to be unable to fail) |
 | DEF-S02 | Low | The coach limiter map grew with every distinct user and never shrank | **Fixed** (idle entries pruned), test SEC-RATE-006 |
 | DEF-D03 | Medium | A valid token for a deleted account gave a 500 instead of 401 | **Fixed**, test DB-WORKOUT-006 |
 | DEF-S04 | Low | Sign-up with an existing email says so (account enumeration). Common design, but note it | Documented (message comes from Neon Auth) |
@@ -46,9 +47,9 @@ Conditions to lift the conditions: (1) settle the `better-auth` advisory with Ne
 ## Test execution summary
 | | Count |
 |---|---|
-| Security cases written | 45 |
-| Automated | 37 |
-| Executed and passed | 36 (1 of them against a mocked auth server only) |
+| Security cases written | 46 |
+| Automated | 38 |
+| Executed and passed | 37 (1 of them against a mocked auth server only) |
 | Failed | 1 (`SEC-DEP-001`, the dependency advisory) |
 | Blocked (need a Neon test tenant, Google test app or deployed site) | 7 |
 | Reviewed manually | 1 (CSRF design) |

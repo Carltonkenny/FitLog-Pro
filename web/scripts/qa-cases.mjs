@@ -2,7 +2,7 @@
 // docs/qa/functional-test-cases.{json,md} and joins it with the Playwright results for the coverage matrix.
 // Row: [id, title, category, priority, businessRule, steps, expected, extras]
 //   steps/expected use " > " as a separator. extras: { role, route, pre, data, post, type, defect, auto, deps, ui }
-// `auto` defaults to 'automated' for IDs found in e2e/*.spec.ts; rows with auto:'manual' or 'blocked' are NOT automated.
+// `auto` defaults to 'automated' for IDs found in tests/e2e/*.spec.ts; rows with auto:'manual' or 'blocked' are NOT automated.
 
 export const MODULES = {
   LAND: { module: 'Landing page', route: '/', role: 'Anonymous visitor' },
@@ -134,6 +134,13 @@ export const CASES = [
 
   // ---------------------------------------------------------------- History / Progress
   ['TC-HIST-LIST-001', 'Workouts listed newest first with a pending-sync badge', 'positive', 'P1', '', 'Seed 2 workouts > Open History', 'Order Push A, Pull B; Waiting to sync badge'],
+  ['TC-HIST-PAGE-001', 'History shows 30 workouts at a time; Show more reveals the rest', 'boundary', 'P1', '', 'Seed 45 workouts > Open History > Click Show more', '30 cards, then 45; button gone', {}],
+  ['TC-WRK-DRAFT-001', 'An unfinished workout from an hour ago is restored', 'resilience', 'P1', 'BR-17', 'Seed a 1 h old draft > Open /app', 'Draft exercise shown', {}],
+  ['TC-WRK-DRAFT-002', 'A draft older than 12 hours is ignored', 'resilience', 'P1', 'BR-17', 'Seed a 13 h old draft > Open /app', 'Starter session shown', {}],
+  ['TC-WRK-DRAFT-003', 'A session clock older than 12 hours is ignored', 'resilience', 'P2', 'BR-17', 'Seed a 13 h old clock > Open /app', 'Clock reads 00:00', {}],
+  ['TC-WRK-DRAFT-004', 'Opening the app does not refresh the draft timestamp', 'resilience', 'P2', 'BR-17', 'Seed a draft > Open /app > Read savedAt', 'Unchanged', {}],
+  ['TC-NAV-CHUNK-001', 'A missing app file after a deploy reloads once, then the app loads', 'resilience', 'P0', '', 'Serve the home page for the app file once > Open /app', 'One reload; app loads; flag cleared', {}],
+  ['TC-NAV-CHUNK-002', 'Still missing after one retry: error screen with Reload, no loop', 'resilience', 'P1', '', 'Always serve the home page for the app file', 'Something went wrong screen; 2 requests only', {}],
   ['TC-HIST-XSS-001', 'Markup in a workout title is shown as text', 'security', 'P0', '', 'Seed a workout titled with <img onerror> > Open History', 'Title visible as text; no script'],
   ['TC-HIST-CORRUPT-001', 'Corrupt stored history does not crash the app', 'resilience', 'P1', '', 'Seed invalid JSON > Open History', 'Screen still renders'],
   ['TC-ANA-KPI-001', 'Progress totals come from logged workouts', 'positive', 'P1', 'BR-02', 'Seed 2 workouts > Open Progress', 'All-time volume 3,600 kg; est. max 53.3 kg (Epley)'],

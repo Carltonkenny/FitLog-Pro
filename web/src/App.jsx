@@ -1,9 +1,10 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { lazyWithRetry } from './lib/lazyWithRetry';
 import LandingPage from './features/landing/LandingPage';
 import AuthModal from './features/auth/AuthModal';
 // The signed-in app is a separate chunk, so landing visitors do not download it (and the reverse).
-const OnboardingFlow = lazy(() => import('./features/onboarding/OnboardingFlow'));
-const ProApp = lazy(() => import('./features/app/ProApp'));
+const OnboardingFlow = lazyWithRetry(() => import('./features/onboarding/OnboardingFlow'));
+const ProApp = lazyWithRetry(() => import('./features/app/ProApp'));
 import { AuthService, authRequired } from './lib/neonClient';
 import { CloudSync } from './lib/cloudSync';
 import { resetUserData } from './lib/userData';

@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { EXERCISE_LIBRARY } from '../src/lib/exercises.js';
-import { equipmentTags, fitsEquipment, recommendExercises } from '../src/lib/recommend.js';
-import { parseChatReply, parsePlan, petMood, resolveExercise } from '../src/lib/companionActions.js';
+import { EXERCISE_LIBRARY } from '../../src/lib/exercises.js';
+import { equipmentTags, fitsEquipment, recommendExercises } from '../../src/lib/recommend.js';
+import { parseChatReply, parsePlan, petMood, resolveExercise } from '../../src/lib/companionActions.js';
 import {
   LIMITS, addNotes, addRoutine, getUserData, normalize, resetUserData, toggleAvoided, toggleFavorite,
-} from '../src/lib/userData.js';
-import { toRows } from '../src/lib/syncRows.js';
-import { WorkoutStore } from '../src/lib/workoutStore.js';
+} from '../../src/lib/userData.js';
+import { toRows } from '../../src/lib/syncRows.js';
+import { WorkoutStore } from '../../src/lib/workoutStore.js';
 
 const DAY = 86400000;
 const chestEx = EXERCISE_LIBRARY.find((e) => e.muscle === 'Chest');

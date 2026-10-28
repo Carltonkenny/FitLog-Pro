@@ -14,7 +14,7 @@ import {
   CASCADING_CATEGORIES,
   EXERCISE_LIBRARY,
   WorkoutStore,
-} from '../src/lib/workoutStore.js';
+} from '../../src/lib/workoutStore.js';
 
 console.log('🧪 Starting FitLog Pro Domain & Verification Tests...\n');
 

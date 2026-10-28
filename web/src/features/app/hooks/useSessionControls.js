@@ -6,7 +6,7 @@ const CLOCK_KEY = 'fitlog_workout_clock';
 function readClock() {
   try {
     const c = JSON.parse(localStorage.getItem(CLOCK_KEY) || 'null');
-    return c && Number.isFinite(c.banked) && Number.isFinite(c.at) && (c.since === null || Number.isFinite(c.since)) ? c : undefined;
+    return c && Date.now() - c.at < 12 * 3_600_000 && Number.isFinite(c.banked) && Number.isFinite(c.at) && (c.since === null || Number.isFinite(c.since)) ? c : undefined;
   } catch {
     return undefined;
   }

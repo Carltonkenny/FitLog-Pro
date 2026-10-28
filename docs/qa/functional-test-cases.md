@@ -2,7 +2,7 @@
 
 Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved Playwright results. Do not edit by hand; run `npm run qa:docs` in `web`.
 
-145 cases. Machine-readable copy: `functional-test-cases.json`.
+152 cases. Machine-readable copy: `functional-test-cases.json`.
 
 **How to read it:** *Automation* says whether a Playwright test exists. *Baseline* is the observed result against the unmodified app. *After fixes* is the final full run after the defects were fixed. `defect-confirmed` means the test is written to expect the defect and the defect was observed.
 
@@ -377,6 +377,10 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 | TC-WRK-LOC-001 | Comma decimal "42,5" is read as 42.5 | boundary | P2 |  | manual (not automated) | not run (manual) |  |  |
 | TC-WRK-PERF-001 | Workout screen stays responsive with 500 saved workouts | resilience | P2 |  | manual (not automated) | not run (manual) |  |  |
 | TC-WRK-DST-001 | Streak and "day" at midnight and DST | boundary | P1 | BR-10 | manual (not automated) | not run (manual) |  |  |
+| TC-WRK-DRAFT-001 | An unfinished workout from an hour ago is restored | resilience | P1 | BR-17 | automated | not executed | passed |  |
+| TC-WRK-DRAFT-002 | A draft older than 12 hours is ignored | resilience | P1 | BR-17 | automated | not executed | passed |  |
+| TC-WRK-DRAFT-003 | A session clock older than 12 hours is ignored | resilience | P2 | BR-17 | automated | not executed | passed |  |
+| TC-WRK-DRAFT-004 | Opening the app does not refresh the draft timestamp | resilience | P2 | BR-17 | automated | not executed | passed |  |
 
 <details><summary>Steps and expected results</summary>
 
@@ -508,6 +512,26 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 - Expected: Streak counts calendar days correctly
 - Note: Covered at unit level in web/test/domain.test.js (run outside Playwright)
 
+**TC-WRK-DRAFT-001** (Guest (dev) / signed-in user; /app (Workout tab))
+- Steps: Seed a 1 h old draft → Open /app
+- Expected: Draft exercise shown
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
+**TC-WRK-DRAFT-002** (Guest (dev) / signed-in user; /app (Workout tab))
+- Steps: Seed a 13 h old draft → Open /app
+- Expected: Starter session shown
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
+**TC-WRK-DRAFT-003** (Guest (dev) / signed-in user; /app (Workout tab))
+- Steps: Seed a 13 h old clock → Open /app
+- Expected: Clock reads 00:00
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
+**TC-WRK-DRAFT-004** (Guest (dev) / signed-in user; /app (Workout tab))
+- Steps: Seed a draft → Open /app → Read savedAt
+- Expected: Unchanged
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
 </details>
 
 ## Routines
@@ -636,6 +660,7 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 | ID | Title | Cat | Pri | Rule | Automation | Baseline | After fixes | Defect |
 |---|---|---|---|---|---|---|---|---|
 | TC-HIST-LIST-001 | Workouts listed newest first with a pending-sync badge | positive | P1 |  | automated | passed | passed |  |
+| TC-HIST-PAGE-001 | History shows 30 workouts at a time; Show more reveals the rest | boundary | P1 |  | automated | not executed | passed |  |
 | TC-HIST-XSS-001 | Markup in a workout title is shown as text | security | P0 |  | automated | passed | passed |  |
 | TC-HIST-CORRUPT-001 | Corrupt stored history does not crash the app | resilience | P1 |  | automated | passed | passed |  |
 
@@ -646,6 +671,11 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 - Expected: Order Push A, Pull B; Waiting to sync badge
 - Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
 
+**TC-HIST-PAGE-001** (Guest (dev) / signed-in user; /app (History tab))
+- Steps: Seed 45 workouts → Open History → Click Show more
+- Expected: 30 cards, then 45; button gone
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
 **TC-HIST-XSS-001** (Guest (dev) / signed-in user; /app (History tab))
 - Steps: Seed a workout titled with <img onerror> → Open History
 - Expected: Title visible as text; no script
@@ -654,6 +684,27 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 **TC-HIST-CORRUPT-001** (Guest (dev) / signed-in user; /app (History tab))
 - Steps: Seed invalid JSON → Open History
 - Expected: Screen still renders
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
+</details>
+
+## NAV
+
+| ID | Title | Cat | Pri | Rule | Automation | Baseline | After fixes | Defect |
+|---|---|---|---|---|---|---|---|---|
+| TC-NAV-CHUNK-001 | A missing app file after a deploy reloads once, then the app loads | resilience | P0 |  | automated | not executed | passed |  |
+| TC-NAV-CHUNK-002 | Still missing after one retry: error screen with Reload, no loop | resilience | P1 |  | automated | not executed | passed |  |
+
+<details><summary>Steps and expected results</summary>
+
+**TC-NAV-CHUNK-001** (; )
+- Steps: Serve the home page for the app file once → Open /app
+- Expected: One reload; app loads; flag cleared
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
+**TC-NAV-CHUNK-002** (; )
+- Steps: Always serve the home page for the app file
+- Expected: Something went wrong screen; 2 requests only
 - Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
 
 </details>

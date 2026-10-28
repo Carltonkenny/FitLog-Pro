@@ -14,7 +14,7 @@ Source of truth: the code in `web/src` (read 2026-10-27) plus the running app. B
 | `/neon-auth/*` | Proxy to Neon Auth (dev: Vite, prod: Netlify rewrite) | n/a | Not a screen |
 | `/manifest.webmanifest`, `/sw.js`, `/icons/*` | PWA assets | Anyone | Service worker registers in production builds only |
 
-Backend (not screens, covered by `web/test/api.test.js` against a live database): `GET /health` (public), `GET|PUT /me`, `GET /workouts`, `PUT /workouts/:id`, `GET /records`, `POST /coach`, `POST /realtime/seal` (all need a Neon Auth JWT).
+Backend (not screens, covered by `web/tests/integration/api.neon.test.js` against a live database): `GET /health` (public), `GET|PUT /me`, `GET /workouts`, `PUT /workouts/:id`, `GET /records`, `POST /coach`, `POST /realtime/seal` (all need a Neon Auth JWT).
 
 ## 2. Screens, controls and states
 

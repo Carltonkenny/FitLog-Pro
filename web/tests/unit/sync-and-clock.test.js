@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mergeUserData, normalize } from '../src/lib/userData.js';
-import { createClock } from '../src/lib/sessionClock.js';
-import { weeklyMuscleSets, workoutStats } from '../src/lib/stats.js';
-import { EXERCISE_LIBRARY } from '../src/lib/exercises.js';
+import { mergeUserData, normalize } from '../../src/lib/userData.js';
+import { createClock } from '../../src/lib/sessionClock.js';
+import { weeklyMuscleSets, workoutStats } from '../../src/lib/stats.js';
+import { EXERCISE_LIBRARY } from '../../src/lib/exercises.js';
 
 const routine = (name, id = name) => ({ id, name, exercises: [{ exerciseId: 'x', exerciseName: 'X', sets: 3, reps: 10 }] });
 const data = (over = {}) => ({ updatedAt: 1, routines: [], memory: { petName: 'Buddy', equipment: [], favorites: [], avoided: [], notes: [] }, ...over });
@@ -109,7 +109,7 @@ test('clock restored from a snapshot comes back paused with the saved elapsed ti
 });
 
 test('workout dates from a wrong device clock are clamped into the range the server accepts', async () => {
-  const { toRows } = await import('../src/lib/syncRows.js');
+  const { toRows } = await import('../../src/lib/syncRows.js');
   const future = toRows({ id: 'w', timestamp: Date.now() + 400 * 86_400_000, durationSeconds: 60, exercises: [] }, null).workout;
   assert.ok(Date.parse(future.completed_at) <= Date.now());
   const ancient = toRows({ id: 'w', timestamp: 1000, durationSeconds: 0, exercises: [] }, null).workout;

@@ -7,12 +7,17 @@
     "dev": "vite --port 5173 --host",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --env-file-if-exists=.env --import ./test/register.mjs --test \"test/*.test.js\"",
+    "test": "node --import ./tests/runner/register.mjs --test \"tests/unit/*.test.js\" \"tests/security/*.test.js\" \"tests/database/*.test.js\"",
     "db:migrate": "node --env-file=.env scripts/db-migrate.mjs",
-    "e2e": "playwright test",
     "qa:docs": "node scripts/qa-docs.mjs",
     "build:perf": "vite build --outDir dist-perf",
-    "perf": "node --experimental-strip-types scripts/perf-measure.mjs"
+    "perf": "node --experimental-strip-types scripts/perf-measure.mjs",
+    "test:unit": "node --import ./tests/runner/register.mjs --test \"tests/unit/*.test.js\"",
+    "test:security": "node --import ./tests/runner/register.mjs --test \"tests/security/*.test.js\"",
+    "test:database": "node --import ./tests/runner/register.mjs --test \"tests/database/*.test.js\"",
+    "test:live": "node --env-file-if-exists=.env --import ./tests/runner/register.mjs --test \"tests/integration/*.test.js\"",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

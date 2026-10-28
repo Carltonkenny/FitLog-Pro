@@ -22,6 +22,8 @@ export type Deps = {
 
 type Env = { Variables: { user: AuthedUser } };
 
+class GhostAccount extends Error {}
+
 const PROFILE_COLUMNS =
   'id, email, full_name, fitness_goal, experience_level, split_preference, body_weight_kg, target_weight_kg, ' +
   'body_fat_pct, daily_calorie_target, bench_1rm_kg, weekly_volume_target_sets, onboarding_completed, routines, coach_memory, updated_at';
@@ -52,9 +54,9 @@ export function createApp(deps: Deps) {
 
   app.onError((err, c) => {
     if (err instanceof ValidationError) return c.json({ error: err.message }, 400);
-    // A valid token for an account that no longer exists (profiles.id references the auth user) is not a server error.
-    if ((err as { code?: string }).code === '23503') return c.json({ error: 'unauthorized' }, 401);
-    console.error('api error:', err instanceof Error ? err.message : 'unknown');
+    if (err instanceof GhostAccount) return c.json({ error: 'unauthorized' }, 401);
+    // Log the message with any user:password@ in a connection string hidden.
+    console.error('api error:', err instanceof Error ? err.message.replace(/:\/\/[^@\s]*@/g, '://***@').slice(0, 300) : 'unknown');
     return c.json({ error: 'server-error' }, 500);
   });
 
@@ -84,10 +86,16 @@ export function createApp(deps: Deps) {
   });
 
   async function ensureProfile(db: Db, user: AuthedUser) {
-    await db.query(
-      'INSERT INTO profiles (id, email, full_name) VALUES ($1, $2, $3) ON CONFLICT (id) DO NOTHING',
-      [user.id, user.email, user.name],
-    );
+    try {
+      await db.query(
+        'INSERT INTO profiles (id, email, full_name) VALUES ($1, $2, $3) ON CONFLICT (id) DO NOTHING',
+        [user.id, user.email, user.name],
+      );
+    } catch (err) {
+      // 23503 = the auth user was deleted but the token is still valid. Only this insert is mapped to 401.
+      if ((err as { code?: string }).code === '23503') throw new GhostAccount();
+      throw err;
+    }
   }
 
   app.get('/me', async (c) => {
@@ -203,7 +211,7 @@ export function createApp(deps: Deps) {
     const user = c.get('user');
     if (!deps.geminiKey) return c.json({ error: 'not-configured' }, 500);
     if (coachLimited(user.id)) {
-      c.header('Retry-After', '3600'); // the limit is per hour; the exact wait is at most this
+      c.header('Retry-After', String(coachLimited.retryAfter(user.id)));
       return c.json({ error: 'rate-limited' }, 429);
     }
     let payload;

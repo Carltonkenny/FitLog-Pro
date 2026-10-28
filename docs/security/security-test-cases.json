@@ -12,7 +12,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -24,7 +24,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -40,7 +40,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -52,7 +52,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -68,7 +68,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -80,7 +80,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -96,7 +96,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -108,7 +108,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -124,7 +124,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -136,7 +136,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -152,7 +152,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -164,7 +164,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -180,7 +180,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -192,7 +192,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -208,7 +208,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -220,7 +220,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -236,7 +236,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -248,7 +248,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -264,7 +264,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -276,7 +276,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -292,7 +292,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -304,7 +304,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -320,7 +320,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -332,231 +332,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-INJECT-001",
-    "area": "security",
-    "module": "INJECT",
-    "feature": "SQL metacharacters in text fields are stored literally and the schema survives",
-    "title": "SQL metacharacters in text fields are stored literally and the schema survives",
-    "category": "injection",
-    "priority": "P0",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "SQL metacharacters in text fields are stored literally and the schema survives"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "INJECT",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-INJECT-002",
-    "area": "security",
-    "module": "INJECT",
-    "feature": "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and c",
-    "title": "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and change nothing",
-    "category": "injection",
-    "priority": "P1",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and change nothing"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "INJECT",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-INJECT-003",
-    "area": "security",
-    "module": "INJECT",
-    "feature": "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to",
-    "title": "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to safe numbers",
-    "category": "injection",
-    "priority": "P1",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to safe numbers"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "INJECT",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-VALID-001",
-    "area": "security",
-    "module": "VALID",
-    "feature": "workout field boundaries: each bad value is a 400 and nothing is written",
-    "title": "workout field boundaries: each bad value is a 400 and nothing is written",
-    "category": "input validation",
-    "priority": "P1",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "workout field boundaries: each bad value is a 400 and nothing is written"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "VALID",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-VALID-002",
-    "area": "security",
-    "module": "VALID",
-    "feature": "invalid JSON, empty body, JSON null and an oversized body are 400",
-    "title": "invalid JSON, empty body, JSON null and an oversized body are 400",
-    "category": "input validation",
-    "priority": "P1",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "invalid JSON, empty body, JSON null and an oversized body are 400"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "VALID",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-VALID-003",
-    "area": "security",
-    "module": "VALID",
-    "feature": "decimal boundaries are rounded to 2 places and stay inside the column limits",
-    "title": "decimal boundaries are rounded to 2 places and stay inside the column limits",
-    "category": "input validation",
-    "priority": "P1",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "decimal boundaries are rounded to 2 places and stay inside the column limits"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "VALID",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-VALID-004",
-    "area": "security",
-    "module": "VALID",
-    "feature": "profile: wrong types, out-of-range numbers and oversized JSON are 400",
-    "title": "profile: wrong types, out-of-range numbers and oversized JSON are 400",
-    "category": "input validation",
-    "priority": "P1",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "profile: wrong types, out-of-range numbers and oversized JSON are 400"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "VALID",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
-    "dependencies": "PGlite; real jose for token cases"
-  },
-  {
-    "id": "SEC-VALID-005",
-    "area": "security",
-    "module": "VALID",
-    "feature": "stored XSS payloads are kept as inert text",
-    "title": "stored XSS payloads are kept as inert text (the API never renders HTML) and returned unchanged",
-    "category": "input validation",
-    "priority": "P1",
-    "endpoint": "functions/app.ts",
-    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
-    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
-    "testData": "Generated UUIDs; synthetic workouts; no real user data",
-    "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
-      "The test body is the executable specification of the steps and assertions"
-    ],
-    "expected": [
-      "stored XSS payloads are kept as inert text (the API never renders HTML) and returned unchanged"
-    ],
-    "expectedHttp": "see assertions in the test body",
-    "expectedDbState": "unchanged for rejected requests",
-    "expectedControl": "VALID",
-    "cleanup": "In-memory database discarded when the test process exits",
-    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
-    "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -572,7 +348,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -584,7 +360,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -600,7 +376,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -612,7 +388,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -628,7 +404,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -640,7 +416,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -656,7 +432,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -668,7 +444,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -684,7 +460,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -696,7 +472,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -712,7 +488,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -740,7 +516,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -752,7 +528,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -768,7 +544,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -780,7 +556,35 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-RATE-007",
+    "area": "security",
+    "module": "RATE",
+    "feature": "retryAfter reports the real wait: seconds until the oldest request leaves the window",
+    "title": "retryAfter reports the real wait: seconds until the oldest request leaves the window",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "retryAfter reports the real wait: seconds until the oldest request leaves the window"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "RATE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -796,7 +600,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -824,7 +628,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -836,7 +640,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -852,7 +656,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -864,7 +668,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -880,7 +684,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -892,15 +696,15 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
     "id": "SEC-CONFIG-004",
     "area": "security",
     "module": "CONFIG",
-    "feature": "the built bundle",
-    "title": "the built bundle (when present) has no source maps and none of the secret variable names",
+    "feature": "the built bundle has no source maps and none of the secret variable names",
+    "title": "the built bundle has no source maps and none of the secret variable names",
     "category": "configuration",
     "priority": "P1",
     "endpoint": "functions/app.ts",
@@ -908,11 +712,11 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
-      "the built bundle (when present) has no source maps and none of the secret variable names"
+      "the built bundle has no source maps and none of the secret variable names"
     ],
     "expectedHttp": "see assertions in the test body",
     "expectedDbState": "unchanged for rejected requests",
@@ -920,7 +724,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -936,7 +740,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -948,7 +752,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -964,7 +768,7 @@
     "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -976,7 +780,231 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-INJECT-001",
+    "area": "security",
+    "module": "INJECT",
+    "feature": "SQL metacharacters in text fields are stored literally and the schema survives",
+    "title": "SQL metacharacters in text fields are stored literally and the schema survives",
+    "category": "injection",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "SQL metacharacters in text fields are stored literally and the schema survives"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "INJECT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-INJECT-002",
+    "area": "security",
+    "module": "INJECT",
+    "feature": "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and c",
+    "title": "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and change nothing",
+    "category": "injection",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and change nothing"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "INJECT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-INJECT-003",
+    "area": "security",
+    "module": "INJECT",
+    "feature": "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to",
+    "title": "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to safe numbers",
+    "category": "injection",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to safe numbers"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "INJECT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-001",
+    "area": "security",
+    "module": "VALID",
+    "feature": "workout field boundaries: each bad value is a 400 and nothing is written",
+    "title": "workout field boundaries: each bad value is a 400 and nothing is written",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "workout field boundaries: each bad value is a 400 and nothing is written"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-002",
+    "area": "security",
+    "module": "VALID",
+    "feature": "invalid JSON, empty body, JSON null and an oversized body are 400",
+    "title": "invalid JSON, empty body, JSON null and an oversized body are 400",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "invalid JSON, empty body, JSON null and an oversized body are 400"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-003",
+    "area": "security",
+    "module": "VALID",
+    "feature": "decimal boundaries are rounded to 2 places and stay inside the column limits",
+    "title": "decimal boundaries are rounded to 2 places and stay inside the column limits",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "decimal boundaries are rounded to 2 places and stay inside the column limits"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-004",
+    "area": "security",
+    "module": "VALID",
+    "feature": "profile: wrong types, out-of-range numbers and oversized JSON are 400",
+    "title": "profile: wrong types, out-of-range numbers and oversized JSON are 400",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "profile: wrong types, out-of-range numbers and oversized JSON are 400"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-005",
+    "area": "security",
+    "module": "VALID",
+    "feature": "stored XSS payloads are kept as inert text",
+    "title": "stored XSS payloads are kept as inert text (the API never renders HTML) and returned unchanged",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "stored XSS payloads are kept as inert text (the API never renders HTML) and returned unchanged"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {

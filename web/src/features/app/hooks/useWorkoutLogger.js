@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { WorkoutStore } from '../../../lib/workoutStore';
 import { buzz, getSettings } from '../../../lib/settings';
@@ -63,12 +63,14 @@ function buildStarterWorkout() {
 }
 
 const DRAFT_KEY = 'fitlog_workout_draft';
+const DRAFT_MAX_AGE_MS = 12 * 3_600_000; // an abandoned session must not come back weeks later and be finished by mistake
 
 /** The unfinished workout saved on every change, so a refresh or a killed tab loses nothing. Null when absent or unusable. */
 function readDraft() {
   try {
     const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
-    const ok = d && Array.isArray(d.exercises) && d.exercises.length > 0 && d.exercises.every((e) => e && typeof e.exerciseId === 'string' && Array.isArray(e.sets));
+    const fresh = d && Date.now() - Number(d.savedAt) < DRAFT_MAX_AGE_MS;
+    const ok = fresh && Array.isArray(d.exercises) && d.exercises.length > 0 && d.exercises.every((e) => e && typeof e.exerciseId === 'string' && Array.isArray(e.sets));
     return ok ? d : null;
   } catch {
     return null;
@@ -85,9 +87,12 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
 
   const [exercises, setExercises] = useState(() => draft?.exercises ?? buildStarterWorkout());
 
+  const loaded = useRef({ title: workoutTitle, exercises });
   useEffect(() => {
+    // Opening the app must not refresh the timestamp, or an untouched old draft would never expire.
+    if (loaded.current.title === workoutTitle && loaded.current.exercises === exercises) return;
     try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({ title: workoutTitle, exercises }));
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ title: workoutTitle, exercises, savedAt: Date.now() }));
     } catch {
       // Storage full or blocked: the workout still works in memory.
     }

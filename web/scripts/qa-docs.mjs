@@ -9,7 +9,7 @@ import { CASES, MODULES } from './qa-cases.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const qa = join(root, 'docs', 'qa');
-const e2e = join(root, 'web', 'e2e');
+const e2e = join(root, 'web', 'tests', 'e2e');
 const strip = (s) => String(s || '').replace(/\x1b\[[0-9;]*m/g, '');
 const ID = /TC-[A-Z0-9]+-[A-Z0-9]+-\d{3}/g;
 
@@ -82,7 +82,7 @@ const cases = CASES.map(([id, title, category, priority, rule, steps, expected, 
     uiApiExpectations: x.ui || (automated ? 'Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)' : ''),
     postconditions: automated ? 'Context discarded; no shared state' : '',
     automationStatus: automation,
-    automationFile: automated ? `web/e2e/${specIds.get(id)}` : '',
+    automationFile: automated ? `web/tests/e2e/${specIds.get(id)}` : '',
     businessRule: rule,
     dependencies: x.deps || '',
     linkedDefect: x.defect || '',

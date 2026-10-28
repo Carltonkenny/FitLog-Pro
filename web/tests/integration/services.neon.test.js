@@ -7,7 +7,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import pg from 'pg';
 import { createRealtime, rawSql } from '@neon/realtime/server';
 import { createRealtimeClient } from '@neon/realtime/client';
-import { callGemini, sanitizeCoachRequest } from '../functions/lib/coach.ts';
+import { callGemini, sanitizeCoachRequest } from '../../functions/lib/coach.ts';
 
 const env = process.env;
 const haveRealtime = Boolean(env.NEON_REALTIME_SECRET && env.NEON_REALTIME_URL && env.DATABASE_URL_UNPOOLED);
@@ -15,7 +15,7 @@ const haveRealtime = Boolean(env.NEON_REALTIME_SECRET && env.NEON_REALTIME_URL &
 // Reads GEMINI_API_KEY from web/.env.production (git-ignored), the same file `neon deploy` uses.
 function geminiKey() {
   if (env.GEMINI_API_KEY) return env.GEMINI_API_KEY;
-  const file = new URL('../.env.production', import.meta.url);
+  const file = new URL('../../.env.production', import.meta.url);
   if (!existsSync(file)) return null;
   const line = readFileSync(file, 'utf8').split('\n').find((l) => l.startsWith('GEMINI_API_KEY='));
   return line ? line.slice('GEMINI_API_KEY='.length).trim() || null : null;

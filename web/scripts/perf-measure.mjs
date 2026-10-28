@@ -1,10 +1,10 @@
 // Lab performance measurements on the PRODUCTION build (dist-perf, built against mock hosts, served by `vite preview`).
-// The backend is mocked in the browser (e2e/fixtures/mockBackend.ts), so these are front-end numbers only.
+// The backend is mocked in the browser (tests/e2e/fixtures/mockBackend.ts), so these are front-end numbers only.
 //   npm run build:perf && npm run perf   ->  docs/performance/results/measurements.json
 import { chromium } from '@playwright/test';
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
-import { mockBackend } from '../e2e/fixtures/mockBackend.ts';
+import { mockBackend } from '../tests/e2e/fixtures/mockBackend.ts';
 
 const PORT = 5190;
 const BASE = `http://localhost:${PORT}`;

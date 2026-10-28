@@ -10,9 +10,9 @@ import { randomUUID, randomBytes } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { SignJWT, exportJWK, generateKeyPair } from 'jose';
 import pg from 'pg';
-import { createApp } from '../functions/app.ts';
-import { makeVerifier } from '../functions/lib/auth.ts';
-import { makeSealer } from '../functions/lib/seal.ts';
+import { createApp } from '../../functions/app.ts';
+import { makeVerifier } from '../../functions/lib/auth.ts';
+import { makeSealer } from '../../functions/lib/seal.ts';
 
 const DB_URL = process.env.DATABASE_URL_UNPOOLED;
 const haveDb = Boolean(DB_URL);
@@ -75,7 +75,7 @@ before(async () => {
     admin = new pg.Client({ connectionString: DB_URL });
     await admin.connect();
     // Same DDL as production, in a scratch schema, minus the foreign key to Neon Auth's user table.
-    const ddl = readFileSync(new URL('../../neon/schema.sql', import.meta.url), 'utf8')
+    const ddl = readFileSync(new URL('../../../neon/schema.sql', import.meta.url), 'utf8')
       .replaceAll('public.', `${schema}.`)
       .replace('REFERENCES neon_auth."user"(id) ON DELETE CASCADE', '');
     await admin.query(`CREATE SCHEMA ${schema}`);
@@ -321,7 +321,7 @@ test('realtime: sealing returns opaque capabilities for exactly the two live que
 
 // ---------------------------------------------------------------- Gemini fallback
 test('coach: falls back to the lighter model when the main one is limited, and gives up cleanly when both are', async () => {
-  const { callGemini } = await import('../functions/lib/coach.ts');
+  const { callGemini } = await import('../../functions/lib/coach.ts');
   const payload = { systemInstruction: { parts: [{ text: 's' }] }, contents: [{ role: 'user', parts: [{ text: 'hi' }] }], generationConfig: {} };
   const ok = JSON.stringify({ candidates: [{ content: { parts: [{ text: 'fallback answer' }] }, finishReason: 'STOP' }] });
   const urls = [];

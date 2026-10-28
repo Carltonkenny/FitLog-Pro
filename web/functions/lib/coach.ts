@@ -86,7 +86,7 @@ export async function callGemini(
 /** Best-effort per-user hourly limit. It resets when the function instance restarts. */
 export function makeRateLimiter(limit: number, windowMs = 3_600_000) {
   const hits = new Map<string, number[]>();
-  return (userId: string, now = Date.now()): boolean => {
+  const limited = (userId: string, now = Date.now()): boolean => {
     // Drop users who have gone quiet, so the map cannot grow with every user who ever called.
     if (hits.size > 5000) for (const [id, times] of hits) if (now - times[times.length - 1] >= windowMs) hits.delete(id);
     const recent = (hits.get(userId) ?? []).filter((t) => now - t < windowMs);
@@ -98,4 +98,10 @@ export function makeRateLimiter(limit: number, windowMs = 3_600_000) {
     hits.set(userId, recent);
     return false;
   };
+  /** Seconds until the oldest request in the window ages out, so a blocked caller is told the real wait. */
+  limited.retryAfter = (userId: string, now = Date.now()) => {
+    const oldest = hits.get(userId)?.[0];
+    return oldest === undefined ? 1 : Math.max(1, Math.ceil((oldest + windowMs - now) / 1000));
+  };
+  return limited;
 }

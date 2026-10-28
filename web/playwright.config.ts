@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 // Two dev servers, both pointed at unreachable *.invalid hosts so no test can touch the real backend:
 //  - GUEST (5180): VITE_SKIP_AUTH=true, /app opens without sign-in.
-//  - AUTH  (5181): sign-in required; the backend is faked per test in e2e/fixtures/mockBackend.ts.
+//  - AUTH  (5181): sign-in required; the backend is faked per test in tests/e2e/fixtures/mockBackend.ts.
 const fake = {
   NEON_AUTH_BASE_URL: 'https://auth.mock.invalid/neon-auth',
   NEON_FUNCTION_API_BASE_URL: 'https://api.mock.invalid',
@@ -11,8 +11,8 @@ const fake = {
 };
 
 export default defineConfig({
-  testDir: './e2e',
-  globalSetup: './e2e/global-setup.ts',
+  testDir: './tests/e2e',
+  globalSetup: './tests/e2e/global-setup.ts',
   timeout: 30_000,
   expect: { timeout: 7_000 },
   fullyParallel: true,

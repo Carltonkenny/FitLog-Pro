@@ -6,6 +6,7 @@ import { workout } from './fixtures/data';
 
 // WCAG 2.0/2.1 A and AA rules via axe-core. Automated checks find roughly a third of real issues; a screen-reader pass is still manual.
 const scan = async (page: Page) => {
+  await page.waitForLoadState('networkidle'); // a dev-server reload during the scan destroyed the page once in a full run
   const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
   return violations.map((v) => `${v.id} (${v.impact}) x${v.nodes.length}: ${v.nodes[0].target.join(' ')}`);
 };

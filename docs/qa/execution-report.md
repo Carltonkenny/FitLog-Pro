@@ -11,7 +11,7 @@ All numbers below were read from Playwright's JSON output (`docs/qa/results/base
 
 ## Final run: whole suite after the fixes
 - Command: `npx playwright test` (2 workers, no retries)
-- Expected 129, unexpected 0, flaky 0, skipped 0; duration 342 s
+- Expected 136, unexpected 0, flaky 0, skipped 0; duration 435 s
 
 ## Unexpected failures (baseline)
 None.

@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { EXERCISE_LIBRARY, calculate1RM } from '../src/lib/exercises.js';
-import { computeStreak, dayKey, formatWorkoutDate, topLifts, weeklyMuscleSets, workoutsInLastDays } from '../src/lib/stats.js';
-import { fromRow, toRows } from '../src/lib/syncRows.js';
-import { fromDisplay, toDisplay } from '../src/lib/settings.js';
-import { WorkoutStore } from '../src/lib/workoutStore.js';
+import { EXERCISE_LIBRARY, calculate1RM } from '../../src/lib/exercises.js';
+import { computeStreak, dayKey, formatWorkoutDate, topLifts, weeklyMuscleSets, workoutsInLastDays } from '../../src/lib/stats.js';
+import { fromRow, toRows } from '../../src/lib/syncRows.js';
+import { fromDisplay, toDisplay } from '../../src/lib/settings.js';
+import { WorkoutStore } from '../../src/lib/workoutStore.js';
 
 // Local-time helper so the tests behave the same in every timezone.
 const at = (y, m, d, h = 12, min = 0) => new Date(y, m - 1, d, h, min).getTime();

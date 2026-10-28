@@ -30,5 +30,5 @@ There is **no admin role and no role-based access control** in the web app. Acce
 
 ## How access is verified in these tests
 - **UI guard:** automated (`AUTH-GUARD-*`).
-- **Server enforcement:** automated against a live Postgres in `web/test/api.test.js` (forged, expired, wrong-issuer and non-UUID tokens; cross-user read and overwrite; protected fields). The Playwright suite does not re-test the server because it mocks it.
+- **Server enforcement:** automated against a live Postgres in `web/tests/integration/api.neon.test.js` (forged, expired, wrong-issuer and non-UUID tokens; cross-user read and overwrite; protected fields). The Playwright suite does not re-test the server because it mocks it.
 - **Not verified:** real token issuance and expiry from Neon Auth end to end, permission changes during a live session (the app has no permission changes), locked or disabled accounts (Neon Auth setting, not exposed in the app).

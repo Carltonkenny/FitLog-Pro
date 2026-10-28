@@ -1,7 +1,7 @@
 // Lists the font files each page actually downloads (production build in dist-perf).
 import { chromium } from '@playwright/test';
 import { spawn } from 'node:child_process';
-import { mockBackend } from '../e2e/fixtures/mockBackend.ts';
+import { mockBackend } from '../tests/e2e/fixtures/mockBackend.ts';
 const server = spawn('npx', ['vite', 'preview', '--outDir', 'dist-perf', '--port', '5191', '--strictPort'], { shell: true, stdio: 'ignore' });
 await new Promise((r) => setTimeout(r, 6000));
 const browser = await chromium.launch({ channel: 'msedge' });

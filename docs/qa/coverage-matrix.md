@@ -19,11 +19,12 @@ Every number below comes from `functional-test-cases.json` joined with Playwrigh
 | Landing page | 13 | 13 | 13 | 12 | 1 | 0 | 0 | 0 |
 | Authentication | 32 | 28 | 23 | 21 | 2 | 0 | 8 | 1 |
 | Onboarding | 7 | 7 | 7 | 7 | 0 | 0 | 0 | 0 |
-| Active workout | 26 | 22 | 21 | 18 | 3 | 0 | 0 | 4 |
+| Active workout | 30 | 26 | 21 | 18 | 3 | 0 | 0 | 4 |
 | Routines | 3 | 1 | 1 | 1 | 0 | 0 | 0 | 2 |
 | Exercise picker | 6 | 6 | 6 | 5 | 1 | 0 | 0 | 0 |
 | Exercise explorer | 7 | 7 | 7 | 7 | 0 | 0 | 0 | 0 |
-| History | 3 | 3 | 3 | 3 | 0 | 0 | 0 | 0 |
+| History | 4 | 4 | 3 | 3 | 0 | 0 | 0 | 0 |
+| NAV | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Progress | 3 | 3 | 3 | 3 | 0 | 0 | 0 | 0 |
 | Settings | 6 | 6 | 6 | 5 | 1 | 0 | 0 | 0 |
 | AI companion | 13 | 9 | 2 | 2 | 0 | 0 | 8 | 3 |
@@ -34,10 +35,10 @@ Every number below comes from `functional-test-cases.json` joined with Playwrigh
 | Accessibility | 4 | 2 | 0 | 0 | 0 | 0 | 0 | 2 |
 | BROWSER | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | Domain rules and data integrity | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-| **Total** | **145** | **120** | **99** | **87** | **12** | **0** | **25** | **17** |
+| **Total** | **152** | **127** | **99** | **87** | **12** | **0** | **25** | **17** |
 
 ## Final run after the fixes
-The whole suite was run again after the defects were fixed: 120 cases passed, 0 failed, 0 blocked. Auth is still a mocked server, so this does not prove the real Neon Auth.
+The whole suite was run again after the defects were fixed: 127 cases passed, 0 failed, 0 blocked. Auth is still a mocked server, so this does not prove the real Neon Auth.
 
 ## Business-rule traceability
 
@@ -59,7 +60,7 @@ The whole suite was run again after the defects were fixed: 120 cases passed, 0 
 | BR-14 | TC-RTN-SAVE-001, TC-RTN-LIMIT-001, TC-COMP-REPLY-001, TC-COMP-MEM-001 | passed |
 | BR-15 | TC-SYNC-UP-001, TC-SYNC-PULL-001, TC-SYNC-MERGE-001 | blocked |
 | BR-16 | TC-AUTH-OUT-001, TC-AUTH-OUT-002, TC-AUTH-OUT-003 | passed |
-| BR-17 | TC-WRK-REFRESH-001, TC-WRK-PERSIST-002 | defect-confirmed |
+| BR-17 | TC-WRK-REFRESH-001, TC-WRK-PERSIST-002, TC-WRK-DRAFT-001, TC-WRK-DRAFT-002, TC-WRK-DRAFT-003, TC-WRK-DRAFT-004 | defect-confirmed |
 | BR-18 | TC-COMP-ACT-001, TC-COMP-ACT-002 | blocked |
 
 Rules with **no** Playwright test case: BR-12. Those are covered (or not) only by the unit tests in `web/test`.

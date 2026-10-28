@@ -12,7 +12,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -24,7 +24,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -40,7 +40,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -52,7 +52,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -68,7 +68,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -80,7 +80,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -96,7 +96,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -108,7 +108,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -124,7 +124,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -136,7 +136,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -152,7 +152,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -164,7 +164,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -180,7 +180,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -192,7 +192,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -208,7 +208,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -236,7 +236,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -264,7 +264,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -276,7 +276,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -292,7 +292,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -304,7 +304,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -320,7 +320,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -332,7 +332,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -348,7 +348,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -360,7 +360,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -376,7 +376,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -388,7 +388,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -404,7 +404,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -416,7 +416,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -432,7 +432,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -444,7 +444,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -460,7 +460,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -472,7 +472,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -488,7 +488,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -500,7 +500,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -516,7 +516,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -528,7 +528,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -544,7 +544,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -556,7 +556,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -572,7 +572,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -584,7 +584,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -600,7 +600,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -612,7 +612,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -628,7 +628,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -640,7 +640,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -656,7 +656,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -668,7 +668,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -684,7 +684,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -712,7 +712,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -740,7 +740,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -768,7 +768,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -784,6 +784,34 @@
     "dependencies": "PGlite; real jose for token cases"
   },
   {
+    "id": "DB-WORKOUT-009",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "only the profile insert maps a missing account to 401; other database errors still return ",
+    "title": "only the profile insert maps a missing account to 401; other database errors still return 500",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID under web/tests/security or web/tests/database",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "only the profile insert maps a missing account to 401; other database errors still return 500"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
     "id": "DB-WORKOUT-005",
     "area": "database",
     "module": "WORKOUT",
@@ -796,7 +824,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -808,7 +836,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -824,7 +852,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -836,7 +864,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -852,7 +880,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -864,7 +892,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "passed",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
@@ -880,7 +908,7 @@
     "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
     "testData": "Generated UUIDs; synthetic workouts; no real user data",
     "steps": [
-      "Run the test of the same ID in web/test/security-db.test.js",
+      "Run the test of the same ID under web/tests/security or web/tests/database",
       "The test body is the executable specification of the steps and assertions"
     ],
     "expected": [
@@ -892,7 +920,7 @@
     "cleanup": "In-memory database discarded when the test process exits",
     "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
     "execution": "blocked",
-    "evidence": "test log: test-sec.log (not committed)",
+    "evidence": "test log: web/e2e-results/security-db.log (local, not committed)",
     "dependencies": "PGlite; real jose for token cases"
   },
   {
