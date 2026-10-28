@@ -87,6 +87,8 @@ export async function callGemini(
 export function makeRateLimiter(limit: number, windowMs = 3_600_000) {
   const hits = new Map<string, number[]>();
   return (userId: string, now = Date.now()): boolean => {
+    // Drop users who have gone quiet, so the map cannot grow with every user who ever called.
+    if (hits.size > 5000) for (const [id, times] of hits) if (now - times[times.length - 1] >= windowMs) hits.delete(id);
     const recent = (hits.get(userId) ?? []).filter((t) => now - t < windowMs);
     if (recent.length >= limit) {
       hits.set(userId, recent);

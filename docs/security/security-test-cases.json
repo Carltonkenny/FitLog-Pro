@@ -1,0 +1,1261 @@
+[
+  {
+    "id": "SEC-AUTH-001",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "every protected route answers 401 without a token and never touches the database",
+    "title": "every protected route answers 401 without a token and never touches the database",
+    "category": "authentication",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "every protected route answers 401 without a token and never touches the database"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTH",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTH-002",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "malformed Authorization headers are rejected",
+    "title": "malformed Authorization headers are rejected",
+    "category": "authentication",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "malformed Authorization headers are rejected"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTH",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTH-003",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "an unknown or empty token is 401 with an identical body",
+    "title": "an unknown or empty token is 401 with an identical body (no hint why)",
+    "category": "authentication",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "an unknown or empty token is 401 with an identical body (no hint why)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTH",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTH-004",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "real JWT verification: valid token accepted; expired, wrong issuer, wrong key, bad kid, no",
+    "title": "real JWT verification: valid token accepted; expired, wrong issuer, wrong key, bad kid, non-UUID subject, alg=none, HS256 key-confusion and tampered payload rejected",
+    "category": "authentication",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "real JWT verification: valid token accepted; expired, wrong issuer, wrong key, bad kid, non-UUID subject, alg=none, HS256 key-confusion and tampered payload rejected"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTH",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTH-005",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "a still-valid token can be replayed",
+    "title": "a still-valid token can be replayed (bearer-token design): documented behaviour, not a defect",
+    "category": "authentication",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a still-valid token can be replayed (bearer-token design): documented behaviour, not a defect"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTH",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTH-006",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "email and name claims from the token are length-limited before they reach the database",
+    "title": "email and name claims from the token are length-limited before they reach the database",
+    "category": "authentication",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "email and name claims from the token are length-limited before they reach the database"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTH",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTHZ-001",
+    "area": "security",
+    "module": "AUTHZ",
+    "feature": "another user cannot overwrite my workout: 404 and my data is unchanged",
+    "title": "another user cannot overwrite my workout: 404 and my data is unchanged",
+    "category": "authorization",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "another user cannot overwrite my workout: 404 and my data is unchanged"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTHZ",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTHZ-002",
+    "area": "security",
+    "module": "AUTHZ",
+    "feature": "reads are scoped to the caller: B never sees A\\'s workouts, sets or records",
+    "title": "reads are scoped to the caller: B never sees A\\'s workouts, sets or records",
+    "category": "authorization",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "reads are scoped to the caller: B never sees A\\'s workouts, sets or records"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTHZ",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTHZ-003",
+    "area": "security",
+    "module": "AUTHZ",
+    "feature": "user_id, workout_id and set ids sent in the body are ignored; the row belongs to the token",
+    "title": "user_id, workout_id and set ids sent in the body are ignored; the row belongs to the token\\'s user",
+    "category": "authorization",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "user_id, workout_id and set ids sent in the body are ignored; the row belongs to the token\\'s user"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTHZ",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTHZ-004",
+    "area": "security",
+    "module": "AUTHZ",
+    "feature": "profile: is_pro_member, id, email and unknown fields cannot be set through PUT /me",
+    "title": "profile: is_pro_member, id, email and unknown fields cannot be set through PUT /me",
+    "category": "authorization",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "profile: is_pro_member, id, email and unknown fields cannot be set through PUT /me"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTHZ",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTHZ-005",
+    "area": "security",
+    "module": "AUTHZ",
+    "feature": "no endpoint deletes data, so the only delete path is account deletion",
+    "title": "no endpoint deletes data, so the only delete path is account deletion (cascade); there is no DELETE route",
+    "category": "authorization",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "no endpoint deletes data, so the only delete path is account deletion (cascade); there is no DELETE route"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTHZ",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTHZ-006",
+    "area": "security",
+    "module": "AUTHZ",
+    "feature": "the sealed realtime endpoint returns 503 when not configured and never a token for another",
+    "title": "the sealed realtime endpoint returns 503 when not configured and never a token for another user",
+    "category": "authorization",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the sealed realtime endpoint returns 503 when not configured and never a token for another user"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "AUTHZ",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-INJECT-001",
+    "area": "security",
+    "module": "INJECT",
+    "feature": "SQL metacharacters in text fields are stored literally and the schema survives",
+    "title": "SQL metacharacters in text fields are stored literally and the schema survives",
+    "category": "injection",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "SQL metacharacters in text fields are stored literally and the schema survives"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "INJECT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-INJECT-002",
+    "area": "security",
+    "module": "INJECT",
+    "feature": "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and c",
+    "title": "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and change nothing",
+    "category": "injection",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a non-UUID workout id, SQL in the path, and path tricks are rejected with 400 or 404 and change nothing"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "INJECT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-INJECT-003",
+    "area": "security",
+    "module": "INJECT",
+    "feature": "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to",
+    "title": "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to safe numbers",
+    "category": "injection",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "limit parameter: injection, negative, huge, fractional and non-numeric values fall back to safe numbers"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "INJECT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-001",
+    "area": "security",
+    "module": "VALID",
+    "feature": "workout field boundaries: each bad value is a 400 and nothing is written",
+    "title": "workout field boundaries: each bad value is a 400 and nothing is written",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "workout field boundaries: each bad value is a 400 and nothing is written"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-002",
+    "area": "security",
+    "module": "VALID",
+    "feature": "invalid JSON, empty body, JSON null and an oversized body are 400",
+    "title": "invalid JSON, empty body, JSON null and an oversized body are 400",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "invalid JSON, empty body, JSON null and an oversized body are 400"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-003",
+    "area": "security",
+    "module": "VALID",
+    "feature": "decimal boundaries are rounded to 2 places and stay inside the column limits",
+    "title": "decimal boundaries are rounded to 2 places and stay inside the column limits",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "decimal boundaries are rounded to 2 places and stay inside the column limits"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-004",
+    "area": "security",
+    "module": "VALID",
+    "feature": "profile: wrong types, out-of-range numbers and oversized JSON are 400",
+    "title": "profile: wrong types, out-of-range numbers and oversized JSON are 400",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "profile: wrong types, out-of-range numbers and oversized JSON are 400"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-VALID-005",
+    "area": "security",
+    "module": "VALID",
+    "feature": "stored XSS payloads are kept as inert text",
+    "title": "stored XSS payloads are kept as inert text (the API never renders HTML) and returned unchanged",
+    "category": "input validation",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "stored XSS payloads are kept as inert text (the API never renders HTML) and returned unchanged"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "VALID",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-ERR-001",
+    "area": "security",
+    "module": "ERR",
+    "feature": "a database failure returns a generic 500 with no SQL, table names, stack or connection det",
+    "title": "a database failure returns a generic 500 with no SQL, table names, stack or connection details",
+    "category": "error handling",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a database failure returns a generic 500 with no SQL, table names, stack or connection details"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "ERR",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-CORS-001",
+    "area": "security",
+    "module": "CORS",
+    "feature": "only localhost and configured origins are allowed; others get no CORS header; no credentia",
+    "title": "only localhost and configured origins are allowed; others get no CORS header; no credentials header",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "only localhost and configured origins are allowed; others get no CORS header; no credentials header"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "CORS",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-HEALTH-001",
+    "area": "security",
+    "module": "HEALTH",
+    "feature": "/health is public, answers ok and runs no SQL, even when the database is down",
+    "title": "/health is public, answers ok and runs no SQL, even when the database is down",
+    "category": "availability",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "/health is public, answers ok and runs no SQL, even when the database is down"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "HEALTH",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-RATE-001",
+    "area": "security",
+    "module": "RATE",
+    "feature": "coach limiter: requests 1..30 pass, the 31st is blocked, the window resets, users are inde",
+    "title": "coach limiter: requests 1..30 pass, the 31st is blocked, the window resets, users are independent",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "coach limiter: requests 1..30 pass, the 31st is blocked, the window resets, users are independent"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "RATE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-RATE-002",
+    "area": "security",
+    "module": "RATE",
+    "feature": "/coach returns 429 {error: rate-limited} after 30 calls per user; limit is per user id, so",
+    "title": "/coach returns 429 {error: rate-limited} after 30 calls per user; limit is per user id, so spoofed headers do not change it",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "/coach returns 429 {error: rate-limited} after 30 calls per user; limit is per user id, so spoofed headers do not change it"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "RATE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-RATE-003",
+    "area": "security",
+    "module": "RATE",
+    "feature": "the 429 carries a Retry-After header",
+    "title": "the 429 carries a Retry-After header",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the 429 carries a Retry-After header"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "RATE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "DEF-S01 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-RATE-004",
+    "area": "security",
+    "module": "RATE",
+    "feature": "coach input limits: bad MIME, 4 images, oversize text and wrong shapes are 400 and never r",
+    "title": "coach input limits: bad MIME, 4 images, oversize text and wrong shapes are 400 and never reach Gemini",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "coach input limits: bad MIME, 4 images, oversize text and wrong shapes are 400 and never reach Gemini"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "RATE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-RATE-005",
+    "area": "security",
+    "module": "RATE",
+    "feature": "the Gemini key is sent in a header to Google only, never in a URL, and never returned to t",
+    "title": "the Gemini key is sent in a header to Google only, never in a URL, and never returned to the browser",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the Gemini key is sent in a header to Google only, never in a URL, and never returned to the browser"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "RATE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-RATE-006",
+    "area": "security",
+    "module": "RATE",
+    "feature": "the limiter evicts users who stopped calling, and still blocks an active abuser while prun",
+    "title": "the limiter evicts users who stopped calling, and still blocks an active abuser while pruning",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the limiter evicts users who stopped calling, and still blocks an active abuser while pruning"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "RATE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "DEF-S02 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-CONFIG-001",
+    "area": "security",
+    "module": "CONFIG",
+    "feature": "no secret-looking value is committed",
+    "title": "no secret-looking value is committed (API keys, DB URLs with passwords, private keys)",
+    "category": "configuration",
+    "priority": "P0",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "no secret-looking value is committed (API keys, DB URLs with passwords, private keys)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "CONFIG",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-CONFIG-002",
+    "area": "security",
+    "module": "CONFIG",
+    "feature": "only .env.example is tracked, and it holds public values or placeholders",
+    "title": "only .env.example is tracked, and it holds public values or placeholders",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "only .env.example is tracked, and it holds public values or placeholders"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "CONFIG",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-CONFIG-003",
+    "area": "security",
+    "module": "CONFIG",
+    "feature": "Vite only exposes public prefixes, never DATABASE/SECRET/GEMINI names",
+    "title": "Vite only exposes public prefixes, never DATABASE/SECRET/GEMINI names",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "Vite only exposes public prefixes, never DATABASE/SECRET/GEMINI names"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "CONFIG",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-CONFIG-004",
+    "area": "security",
+    "module": "CONFIG",
+    "feature": "the built bundle",
+    "title": "the built bundle (when present) has no source maps and none of the secret variable names",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the built bundle (when present) has no source maps and none of the secret variable names"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "CONFIG",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-CONFIG-005",
+    "area": "security",
+    "module": "CONFIG",
+    "feature": "Netlify sends the security headers and a CSP without unsafe-eval or third-party script/fon",
+    "title": "Netlify sends the security headers and a CSP without unsafe-eval or third-party script/font hosts",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "Netlify sends the security headers and a CSP without unsafe-eval or third-party script/font hosts"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "CONFIG",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-CONFIG-006",
+    "area": "security",
+    "module": "CONFIG",
+    "feature": "the API keeps its Gemini key only on the server side",
+    "title": "the API keeps its Gemini key only on the server side (no import from src/)",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "In-process API (createApp); fixed test tokens; PGlite database with neon/schema.sql",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the API keeps its Gemini key only on the server side (no import from src/)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "unchanged for rejected requests",
+    "expectedControl": "CONFIG",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "SEC-AUTH-101",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "Real sign-up, sign-in, sign-out and session invalidation against Neon Auth",
+    "title": "Real sign-up, sign-in, sign-out and session invalidation against Neon Auth",
+    "category": "authentication",
+    "priority": "P0",
+    "endpoint": "/neon-auth/*",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Sign up a test account in a dedicated test environment",
+      "Sign in",
+      "Sign out",
+      "Reuse the old session cookie"
+    ],
+    "expected": [
+      "Old session is rejected after sign-out"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Needs a dedicated Neon branch/test auth tenant; automation must not create accounts on the live project",
+    "dependencies": "Authorised test environment"
+  },
+  {
+    "id": "SEC-AUTH-102",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "Account enumeration: sign-up with an existing email reveals existence",
+    "title": "Account enumeration: sign-up with an existing email reveals existence",
+    "category": "authentication",
+    "priority": "P2",
+    "endpoint": "/neon-auth/sign-up/email",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Sign up twice with the same email"
+    ],
+    "expected": [
+      "Observed in the UI test: message says the user already exists (enumeration by design)"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "automated (Playwright, mocked auth)",
+    "execution": "passed (mock only)",
+    "evidence": "e2e TC-AUTH-SIGNUP-002 (mock). Real Neon response unverified",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-AUTH-103",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "Brute-force / lockout on sign-in",
+    "title": "Brute-force / lockout on sign-in",
+    "category": "rate limiting",
+    "priority": "P1",
+    "endpoint": "/neon-auth/sign-in/email",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Submit many wrong passwords"
+    ],
+    "expected": [
+      "Throttled"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Policy lives in Neon Auth; not exercised",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-AUTH-104",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "Password reset token expiry and single use",
+    "title": "Password reset token expiry and single use",
+    "category": "authentication",
+    "priority": "P1",
+    "endpoint": "/neon-auth/reset-password",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Request reset",
+      "Use the token twice",
+      "Use an old token"
+    ],
+    "expected": [
+      "Second use rejected; expired rejected"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Needs real email delivery in a test tenant",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-AUTH-105",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "Google OAuth: state, redirect URI and callback validation; disabled when not configured",
+    "title": "Google OAuth: state, redirect URI and callback validation; disabled when not configured",
+    "category": "authentication",
+    "priority": "P0",
+    "endpoint": "/neon-auth/sign-in/social",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Enable Google on a test tenant",
+      "Start sign-in",
+      "Tamper with state and redirect"
+    ],
+    "expected": [
+      "Tampered state/redirect rejected"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Needs a Google test app and a test tenant. Dependency advisory GHSA-965c-763c-88jm concerns OAuth state handling (server side, run by Neon)",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-AUTH-106",
+    "area": "security",
+    "module": "AUTH",
+    "feature": "Session fixation and cookie flags (HttpOnly, Secure, SameSite)",
+    "title": "Session fixation and cookie flags (HttpOnly, Secure, SameSite)",
+    "category": "authentication",
+    "priority": "P1",
+    "endpoint": "cookies",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Sign in on a deployed HTTPS site",
+      "inspect Set-Cookie"
+    ],
+    "expected": [
+      "HttpOnly; Secure; SameSite set; session id changes on login"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Needs the deployed site",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-CSRF-001",
+    "area": "security",
+    "module": "CSRF",
+    "feature": "CSRF: API uses Bearer tokens (no ambient cookies), so cross-site form posts carry no crede",
+    "title": "CSRF: API uses Bearer tokens (no ambient cookies), so cross-site form posts carry no credentials",
+    "category": "web security",
+    "priority": "P1",
+    "endpoint": "functions/app.ts",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Review: API reads only Authorization header; CORS allows no credentials"
+    ],
+    "expected": [
+      "No cookie-authenticated API route exists"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "manual (static review)",
+    "execution": "reviewed",
+    "evidence": "Verified by SEC-CORS-001 (no credentials header) and code review. Auth cookies on /neon-auth are Neon's",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-HDR-001",
+    "area": "security",
+    "module": "HDR",
+    "feature": "Deployed security headers (CSP, HSTS, nosniff, frame, referrer)",
+    "title": "Deployed security headers (CSP, HSTS, nosniff, frame, referrer)",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "netlify.toml",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Request the deployed site and read headers"
+    ],
+    "expected": [
+      "Headers present"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Configuration verified statically in SEC-CONFIG-005; live headers need the deployed URL",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-DEP-001",
+    "area": "security",
+    "module": "DEP",
+    "feature": "Dependency vulnerabilities",
+    "title": "Dependency vulnerabilities",
+    "category": "dependencies",
+    "priority": "P0",
+    "endpoint": "package-lock.json",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "npm audit"
+    ],
+    "expected": [
+      "No high/critical in code we run"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "automated (npm audit, manual review)",
+    "execution": "failed (see DEF-S03)",
+    "evidence": "npm audit: 1 critical + 9 low, all transitive via @neondatabase/neon-js -> better-auth 1.7.6 (fixed in 1.7.7); no fix available from the SDK",
+    "dependencies": ""
+  },
+  {
+    "id": "SEC-RATE-101",
+    "area": "security",
+    "module": "RATE",
+    "feature": "Coach limiter is shared across function instances",
+    "title": "Coach limiter is shared across function instances",
+    "category": "rate limiting",
+    "priority": "P2",
+    "endpoint": "POST /coach",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Run two function instances",
+      "30 calls on each"
+    ],
+    "expected": [
+      "Combined limit enforced"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Limiter is in memory per instance by design (beta decision). Not shared. Needs a database or Redis counter",
+    "dependencies": ""
+  }
+]

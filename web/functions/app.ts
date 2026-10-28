@@ -52,6 +52,8 @@ export function createApp(deps: Deps) {
 
   app.onError((err, c) => {
     if (err instanceof ValidationError) return c.json({ error: err.message }, 400);
+    // A valid token for an account that no longer exists (profiles.id references the auth user) is not a server error.
+    if ((err as { code?: string }).code === '23503') return c.json({ error: 'unauthorized' }, 401);
     console.error('api error:', err instanceof Error ? err.message : 'unknown');
     return c.json({ error: 'server-error' }, 500);
   });
@@ -200,7 +202,10 @@ export function createApp(deps: Deps) {
   app.post('/coach', async (c) => {
     const user = c.get('user');
     if (!deps.geminiKey) return c.json({ error: 'not-configured' }, 500);
-    if (coachLimited(user.id)) return c.json({ error: 'rate-limited' }, 429);
+    if (coachLimited(user.id)) {
+      c.header('Retry-After', '3600'); // the limit is per hour; the exact wait is at most this
+      return c.json({ error: 'rate-limited' }, 429);
+    }
     let payload;
     try {
       payload = sanitizeCoachRequest(await readJson(c, 6_000_000));

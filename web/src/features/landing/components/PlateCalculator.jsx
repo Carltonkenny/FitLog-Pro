@@ -53,7 +53,7 @@ export default function PlateCalculator() {
             <Calculator className="w-3.5 h-3.5" />
             <span>INSTANT BIOMECHANICS ENGINE</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-['Outfit']">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-['Outfit_Variable']">
             Epley 1RM & Visual Plate Loader
           </h2>
           <p className="text-slate-400 mt-2 text-sm sm:text-base">
@@ -170,7 +170,7 @@ export default function PlateCalculator() {
               <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-[#181C26] to-[#12141A] border border-[#32384D]">
                 <div>
                   <span className="text-xs font-mono text-slate-400 block uppercase">Theoretical 1RM (Epley)</span>
-                  <div className="text-3xl font-black text-white font-['Outfit'] mt-0.5">
+                  <div className="text-3xl font-black text-white font-['Outfit_Variable'] mt-0.5">
                     {oneRepMax} <span className="text-sm font-normal text-[#00F59B]">kg</span>
                   </div>
                 </div>

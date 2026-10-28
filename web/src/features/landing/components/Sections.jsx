@@ -3,7 +3,7 @@ import { Camera, ClipboardList, LineChart, MessageSquareText, ShieldCheck, Zap }
 import Reveal from '../../../components/Reveal';
 
 const eyebrow = 'text-xs font-semibold uppercase tracking-[0.12em] text-[#00F59B]';
-const h2 = "font-['Outfit'] text-3xl sm:text-4xl font-extrabold text-white tracking-[-0.02em]";
+const h2 = "font-['Outfit_Variable'] text-3xl sm:text-4xl font-extrabold text-white tracking-[-0.02em]";
 
 const STEPS = [
   {

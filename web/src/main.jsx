@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+// Fonts are served from our own domain (latin subset only): no render-blocking third-party stylesheet.
+import '@fontsource-variable/inter/wght.css';
+import '@fontsource-variable/jetbrains-mono/wght.css';
+import '@fontsource-variable/outfit/wght.css';
 import './styles/theme.css';
 import { isCloudConfigured } from './lib/neonClient';
 

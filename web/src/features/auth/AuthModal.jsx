@@ -164,7 +164,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
           <span className="w-11 h-11 mx-auto mb-4 rounded-xl bg-[#00F59B] flex items-center justify-center">
             <Dumbbell className="w-6 h-6 text-black" aria-hidden="true" />
           </span>
-          <h2 id="auth-title" className="font-['Outfit'] text-2xl font-bold text-white tracking-tight">
+          <h2 id="auth-title" className="font-['Outfit_Variable'] text-2xl font-bold text-white tracking-tight">
             {copy.title}
           </h2>
           <p className="text-sm text-zinc-400 mt-1">{copy.sub}</p>

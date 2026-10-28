@@ -21,15 +21,16 @@ export function toRows(record, userId) {
     ),
   };
   const sets = [];
+  let order = 0; // one running position across the whole workout, so exercise order and repeated exercises survive a round trip
   (record.exercises || []).forEach((ex) => {
-    (ex.sets || []).forEach((s, i) => {
+    (ex.sets || []).forEach((s) => {
       sets.push({
         id: crypto.randomUUID(),
         workout_id: record.id,
         user_id: userId,
         exercise_id: String(ex.exerciseId).slice(0, 100),
         exercise_name: String(ex.exerciseName).slice(0, 150),
-        set_order: i + 1,
+        set_order: (order += 1),
         weight_kg: Math.round((s.weight || 0) * 100) / 100,
         reps: Math.round(s.reps || 0),
         is_completed: !!s.completed,
@@ -53,28 +54,35 @@ export function toRows(record, userId) {
 
 /** Rebuilds the local workout shape from an API workout row with its workout_sets. */
 export function fromRow(row) {
-  const groups = new Map();
-  [...(row.workout_sets || [])]
-    .sort((a, b) => a.set_order - b.set_order)
-    .forEach((s) => {
-      const g = groups.get(s.exercise_id) || { exerciseId: s.exercise_id, exerciseName: s.exercise_name, sets: [] };
-      g.sets.push({
-        id: g.sets.length + 1,
-        type: s.set_type === 'warmup' ? 'W' : String(g.sets.length + 1),
-        weight: Number(s.weight_kg),
-        reps: s.reps,
-        completed: s.is_completed,
-        isPR: false,
-      });
-      groups.set(s.exercise_id, g);
+  const ordered = [...(row.workout_sets || [])].sort((a, b) => a.set_order - b.set_order);
+  // Rows saved by older builds numbered sets per exercise (1,2,3,1,2...). Those cannot be split by position,
+  // so they are grouped by exercise id as before; newer rows have unique positions and keep exact blocks.
+  const legacy = new Set(ordered.map((s) => s.set_order)).size !== ordered.length;
+  const groups = [];
+  const byId = new Map();
+  ordered.forEach((s) => {
+    let g = legacy ? byId.get(s.exercise_id) : groups[groups.length - 1];
+    if (!g || g.exerciseId !== s.exercise_id) {
+      g = { exerciseId: s.exercise_id, exerciseName: s.exercise_name, sets: [] };
+      groups.push(g);
+      byId.set(s.exercise_id, g);
+    }
+    g.sets.push({
+      id: g.sets.length + 1,
+      type: s.set_type === 'warmup' ? 'W' : String(g.sets.length + 1),
+      weight: Number(s.weight_kg),
+      reps: s.reps,
+      completed: s.is_completed,
+      isPR: false,
     });
+  });
   return {
     id: row.id,
     title: row.title,
     timestamp: new Date(row.completed_at || row.started_at).getTime(),
     volumeKg: Number(row.volume_kg),
     durationSeconds: row.duration_seconds,
-    exercises: [...groups.values()],
+    exercises: groups,
     newPRs: [],
     synced: true,
     pendingSync: false,

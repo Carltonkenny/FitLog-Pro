@@ -44,7 +44,7 @@ export default function Navbar({ onOpenAuth, onEnterApp, session }) {
           <span className="w-9 h-9 rounded-xl bg-[#00F59B] flex items-center justify-center">
             <Dumbbell className="w-5 h-5 text-black" aria-hidden="true" />
           </span>
-          <span className="font-['Outfit'] font-extrabold text-lg tracking-tight text-white">FitLog Pro</span>
+          <span className="font-['Outfit_Variable'] font-extrabold text-lg tracking-tight text-white">FitLog Pro</span>
         </a>
 
         <nav aria-label="Primary" className="hidden lg:flex items-center gap-1 text-sm font-medium text-zinc-300">

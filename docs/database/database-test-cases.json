@@ -1,0 +1,1092 @@
+[
+  {
+    "id": "DB-SCHEMA-001",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "the four tables exist with primary keys, and the expected indexes and unique key are prese",
+    "title": "the four tables exist with primary keys, and the expected indexes and unique key are present",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the four tables exist with primary keys, and the expected indexes and unique key are present"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-002",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "CHECK constraints reject out-of-range values written directly",
+    "title": "CHECK constraints reject out-of-range values written directly (second line of defence)",
+    "category": "schema/constraints",
+    "priority": "P0",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "CHECK constraints reject out-of-range values written directly (second line of defence)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-003",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "NOT NULL and numeric precision: nulls rejected; NUMERIC(6,2) overflow rejected",
+    "title": "NOT NULL and numeric precision: nulls rejected; NUMERIC(6,2) overflow rejected",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "NOT NULL and numeric precision: nulls rejected; NUMERIC(6,2) overflow rejected"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-004",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "foreign keys: no workout without a profile, no set without a workout, no profile without a",
+    "title": "foreign keys: no workout without a profile, no set without a workout, no profile without an auth user",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "foreign keys: no workout without a profile, no set without a workout, no profile without an auth user"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-005",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "profile JSON checks: routines must be an array and coach_memory an object",
+    "title": "profile JSON checks: routines must be an array and coach_memory an object",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "profile JSON checks: routines must be an array and coach_memory an object"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-006",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "updated_at advances on update",
+    "title": "updated_at advances on update (trigger) and created_at does not",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "updated_at advances on update (trigger) and created_at does not"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-007",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "the unique key on personal records blocks a duplicate event for the same user, exercise an",
+    "title": "the unique key on personal records blocks a duplicate event for the same user, exercise and time",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the unique key on personal records blocks a duplicate event for the same user, exercise and time"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-008",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "KNOWN GAP: nothing stops two sets with the same set_order in one workout",
+    "title": "nothing stops two sets with the same set_order in one workout (no unique key)",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "KNOWN GAP: nothing stops two sets with the same set_order in one workout (no unique key)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "DEF-D01 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-SCHEMA-009",
+    "area": "database",
+    "module": "SCHEMA",
+    "feature": "KNOWN GAP: a set\\'s user_id is not forced to equal its workout\\'s user_id by the database",
+    "title": "a set\\'s user_id is not forced to equal its workout\\'s user_id by the database",
+    "category": "schema/constraints",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "KNOWN GAP: a set\\'s user_id is not forced to equal its workout\\'s user_id by the database"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "SCHEMA",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "DEF-D02 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-DELETE-001",
+    "area": "database",
+    "module": "DELETE",
+    "feature": "deleting an auth user cascades to profile, workouts, sets and records; other users are unt",
+    "title": "deleting an auth user cascades to profile, workouts, sets and records; other users are untouched",
+    "category": "deletion/cascade",
+    "priority": "P0",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "deleting an auth user cascades to profile, workouts, sets and records; other users are untouched"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "DELETE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-DELETE-002",
+    "area": "database",
+    "module": "DELETE",
+    "feature": "deleting a workout cascades to its sets only",
+    "title": "deleting a workout cascades to its sets only",
+    "category": "deletion/cascade",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "deleting a workout cascades to its sets only"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "DELETE",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-001",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "one valid workout is stored with its sets and records, owned by the caller, with a profile",
+    "title": "one valid workout is stored with its sets and records, owned by the caller, with a profile row created on demand",
+    "category": "workout persistence",
+    "priority": "P0",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "one valid workout is stored with its sets and records, owned by the caller, with a profile row created on demand"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-002",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "zero, one and many sets are all accepted and stored exactly",
+    "title": "zero, one and many sets are all accepted and stored exactly",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "zero, one and many sets are all accepted and stored exactly"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-BULK-001",
+    "area": "database",
+    "module": "BULK",
+    "feature": "the bulk insert keeps every value and the order of each set",
+    "title": "the bulk insert keeps every value and the order of each set (nulls, booleans, types, timestamps)",
+    "category": "bulk insert",
+    "priority": "P0",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the bulk insert keeps every value and the order of each set (nulls, booleans, types, timestamps)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "BULK",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-BULK-002",
+    "area": "database",
+    "module": "BULK",
+    "feature": "unknown set types fall back to normal; text is trimmed and truncated to the column size",
+    "title": "unknown set types fall back to normal; text is trimmed and truncated to the column size",
+    "category": "bulk insert",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "unknown set types fall back to normal; text is trimmed and truncated to the column size"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "BULK",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-BULK-003",
+    "area": "database",
+    "module": "BULK",
+    "feature": "statement count is constant: saving 2 sets and 400 sets both take the same number of SQL s",
+    "title": "statement count is constant: saving 2 sets and 400 sets both take the same number of SQL statements",
+    "category": "bulk insert",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "statement count is constant: saving 2 sets and 400 sets both take the same number of SQL statements"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "BULK",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-BULK-004",
+    "area": "database",
+    "module": "BULK",
+    "feature": "BENCHMARK",
+    "title": "bulk insert of 500 sets vs one INSERT per set",
+    "category": "bulk insert",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "BENCHMARK (PGlite, in-process WASM Postgres; NOT Neon): bulk insert of 500 sets vs one INSERT per set"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "BULK",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-BULK-005",
+    "area": "database",
+    "module": "BULK",
+    "feature": "retrying the same workout is idempotent: same rows, no duplicate sets or records, updated ",
+    "title": "retrying the same workout is idempotent: same rows, no duplicate sets or records, updated values win",
+    "category": "bulk insert",
+    "priority": "P0",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "retrying the same workout is idempotent: same rows, no duplicate sets or records, updated values win"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "BULK",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-TXN-001",
+    "area": "database",
+    "module": "TXN",
+    "feature": "failure while writing records rolls everything back: a new workout leaves no workout, no s",
+    "title": "failure while writing records rolls everything back: a new workout leaves no workout, no sets, no records",
+    "category": "transactions",
+    "priority": "P0",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "failure while writing records rolls everything back: a new workout leaves no workout, no sets, no records"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "TXN",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-TXN-002",
+    "area": "database",
+    "module": "TXN",
+    "feature": "failure during the set insert on an EXISTING workout keeps the old sets and old title",
+    "title": "failure during the set insert on an EXISTING workout keeps the old sets and old title (no partial update)",
+    "category": "transactions",
+    "priority": "P0",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "failure during the set insert on an EXISTING workout keeps the old sets and old title (no partial update)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "TXN",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-TXN-003",
+    "area": "database",
+    "module": "TXN",
+    "feature": "a database constraint violation inside the transaction",
+    "title": "a database constraint violation inside the transaction (CHECK) rolls back and returns a generic 500, not partial data",
+    "category": "transactions",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a database constraint violation inside the transaction (CHECK) rolls back and returns a generic 500, not partial data"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "TXN",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-TXN-004",
+    "area": "database",
+    "module": "TXN",
+    "feature": "the connection is always released, even after a failed save",
+    "title": "the connection is always released, even after a failed save (no leak)",
+    "category": "transactions",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the connection is always released, even after a failed save (no leak)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "TXN",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-TXN-005",
+    "area": "database",
+    "module": "TXN",
+    "feature": "REGRESSION: a rejected cross-user overwrite rolls back and does not leave the transaction ",
+    "title": "a rejected cross-user overwrite rolls back and does not leave the transaction open or change the profile table",
+    "category": "transactions",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "REGRESSION: a rejected cross-user overwrite rolls back and does not leave the transaction open or change the profile table"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "TXN",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-003",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "a 2xx on retry after a \"lost\" response leaves exactly the state of the first success",
+    "title": "a 2xx on retry after a \"lost\" response leaves exactly the state of the first success (ambiguous timeout)",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a 2xx on retry after a \"lost\" response leaves exactly the state of the first success (ambiguous timeout)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-004",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "characterisation: re-sending a soft-deleted workout revives it",
+    "title": "characterisation: re-sending a soft-deleted workout revives it (deleted_at cleared); the API has no delete route",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "characterisation: re-sending a soft-deleted workout revives it (deleted_at cleared); the API has no delete route"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "INFO-D04 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-006",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "a valid token for an account that no longer exists is 401, not a 500, and nothing is writt",
+    "title": "a valid token for an account that no longer exists is 401, not a 500, and nothing is written",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a valid token for an account that no longer exists is 401, not a 500, and nothing is written"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "DEF-D03 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-007",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "a workout round-trips through the API with its exercise order and a repeated exercise inta",
+    "title": "a workout round-trips through the API with its exercise order and a repeated exercise intact (set_order is one running position)",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "a workout round-trips through the API with its exercise order and a repeated exercise intact (set_order is one running position)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "DEF-D05 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-008",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "rows written by older builds",
+    "title": "rows written by older builds (set_order restarting per exercise) still load, grouped by exercise",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "rows written by older builds (set_order restarting per exercise) still load, grouped by exercise"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "DEF-D05 (see final report)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-WORKOUT-005",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "listing returns only my non-deleted, non-template workouts, newest first, at most `limit`,",
+    "title": "listing returns only my non-deleted, non-template workouts, newest first, at most `limit`, with their sets",
+    "category": "workout persistence",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "listing returns only my non-deleted, non-template workouts, newest first, at most `limit`, with their sets"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "WORKOUT",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-PERF-001",
+    "area": "database",
+    "module": "PERF",
+    "feature": "the read path for a list of workouts is exactly two queries",
+    "title": "the read path for a list of workouts is exactly two queries (no N+1)",
+    "category": "query performance",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the read path for a list of workouts is exactly two queries (no N+1)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "PERF",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-PERF-002",
+    "area": "database",
+    "module": "PERF",
+    "feature": "the hot queries use the intended indexes in the query plan",
+    "title": "the hot queries use the intended indexes in the query plan (PGlite planner, small data: indicative only)",
+    "category": "query performance",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "the hot queries use the intended indexes in the query plan (PGlite planner, small data: indicative only)"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "PERF",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "passed",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-CONCURRENCY-001",
+    "area": "database",
+    "module": "CONCURRENCY",
+    "feature": "BLOCKED: true parallel transactions",
+    "title": "true parallel transactions (two connections racing on one workout id) need a real multi-connection Postgres, i.e. an isolated Neon branch",
+    "category": "concurrency",
+    "priority": "P1",
+    "endpoint": "neon/schema.sql + functions/app.ts",
+    "role": "Anonymous or authenticated test user (fixed token table) / direct SQL as owner",
+    "preconditions": "PGlite (real PostgreSQL in WASM) loaded with neon/schema.sql; no Neon contact",
+    "testData": "Generated UUIDs; synthetic workouts; no real user data",
+    "steps": [
+      "Run the test of the same ID in web/test/security-db.test.js",
+      "The test body is the executable specification of the steps and assertions"
+    ],
+    "expected": [
+      "BLOCKED: true parallel transactions (two connections racing on one workout id) need a real multi-connection Postgres, i.e. an isolated Neon branch"
+    ],
+    "expectedHttp": "see assertions in the test body",
+    "expectedDbState": "as asserted in the test body",
+    "expectedControl": "CONCURRENCY",
+    "cleanup": "In-memory database discarded when the test process exits",
+    "automation": "automated (unit/integration, mocked auth table, real Postgres engine)",
+    "execution": "blocked",
+    "evidence": "test log: test-sec.log (not committed)",
+    "dependencies": "PGlite; real jose for token cases"
+  },
+  {
+    "id": "DB-CONCURRENCY-101",
+    "area": "database",
+    "module": "CONCURRENCY",
+    "feature": "Two simultaneous PUTs of the same new workout id",
+    "title": "Two simultaneous PUTs of the same new workout id",
+    "category": "concurrency",
+    "priority": "P0",
+    "endpoint": "PUT /workouts/:id",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Open two connections",
+      "Start both transactions",
+      "Commit"
+    ],
+    "expected": [
+      "One workout row; sets equal to the last writer; no duplicates"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Needs a real multi-connection Postgres (isolated Neon branch). Reasoned: ON CONFLICT waits on the row lock, so writers serialise",
+    "dependencies": ""
+  },
+  {
+    "id": "DB-CONCURRENCY-102",
+    "area": "database",
+    "module": "CONCURRENCY",
+    "feature": "Queue several workouts concurrently from one browser",
+    "title": "Queue several workouts concurrently from one browser",
+    "category": "concurrency",
+    "priority": "P0",
+    "endpoint": "cloudSync.flush",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Finish workout B while A uploads"
+    ],
+    "expected": [
+      "Both uploaded; queue empty"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "automated (Playwright, mocked API)",
+    "execution": "passed (mock only)",
+    "evidence": "e2e TC-SYNC-RACE-001 passes (browser queue logic; server mocked)",
+    "dependencies": ""
+  },
+  {
+    "id": "DB-WORKOUT-101",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "Refresh or close the browser during an upload; draft restore then upload",
+    "title": "Refresh or close the browser during an upload; draft restore then upload",
+    "category": "resilience",
+    "priority": "P0",
+    "endpoint": "browser + API",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Reload during a slow PUT",
+      "Reopen",
+      "Finish"
+    ],
+    "expected": [
+      "Workout still queued and uploaded once"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "automated in part (Playwright)",
+    "execution": "partly passed",
+    "evidence": "e2e TC-WRK-REFRESH-001/002 (draft and clock). Interrupted PUT itself is not automated",
+    "dependencies": ""
+  },
+  {
+    "id": "DB-WORKOUT-102",
+    "area": "database",
+    "module": "WORKOUT",
+    "feature": "Failed item in a multi-item upload: queue keeps order and continues; failed upload does no",
+    "title": "Failed item in a multi-item upload: queue keeps order and continues; failed upload does not disappear",
+    "category": "resilience",
+    "priority": "P1",
+    "endpoint": "cloudSync.flush",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Queue 3",
+      "Make the 2nd return 400"
+    ],
+    "expected": [
+      "2nd flagged syncFailed, 1st and 3rd uploaded"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "automated in part (Playwright 4XX/5XX)",
+    "execution": "partly passed",
+    "evidence": "e2e TC-SYNC-4XX-001 / 5XX-001 (single item). Multi-item ordering not automated",
+    "dependencies": ""
+  },
+  {
+    "id": "DB-MIGRATE-001",
+    "area": "database",
+    "module": "MIGRATE",
+    "feature": "Migration is safe to re-run and creates the same schema",
+    "title": "Migration is safe to re-run and creates the same schema",
+    "category": "migrations",
+    "priority": "P1",
+    "endpoint": "scripts/db-migrate.mjs",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Apply schema twice on an empty database"
+    ],
+    "expected": [
+      "No error; same objects"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "automated in part",
+    "execution": "partly passed",
+    "evidence": "schema.sql loads cleanly into PGlite (every run). The migrate script itself and the Neon-specific parts were not run",
+    "dependencies": ""
+  },
+  {
+    "id": "DB-NEON-001",
+    "area": "database",
+    "module": "NEON",
+    "feature": "Neon role privileges: the function should connect with a least-privilege role, not the own",
+    "title": "Neon role privileges: the function should connect with a least-privilege role, not the owner",
+    "category": "configuration",
+    "priority": "P1",
+    "endpoint": "DATABASE_URL",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Inspect the role used by the function"
+    ],
+    "expected": [
+      "Role cannot DROP/ALTER"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Needs Neon console / MCP authorisation; not inspected",
+    "dependencies": ""
+  },
+  {
+    "id": "DB-NEON-002",
+    "area": "database",
+    "module": "NEON",
+    "feature": "Real Neon timing of the bulk insert (round trips, execution time)",
+    "title": "Real Neon timing of the bulk insert (round trips, execution time)",
+    "category": "performance",
+    "priority": "P2",
+    "endpoint": "PUT /workouts/:id",
+    "role": "Test user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Run on an isolated branch with 40 and 500 sets"
+    ],
+    "expected": [
+      "Measured"
+    ],
+    "expectedHttp": "",
+    "expectedDbState": "",
+    "expectedControl": "",
+    "cleanup": "Delete only the test-created rows",
+    "automation": "blocked",
+    "execution": "blocked",
+    "evidence": "Needs a Neon branch. Local numbers are in DB-BULK-004 and are not a Neon figure",
+    "dependencies": ""
+  }
+]

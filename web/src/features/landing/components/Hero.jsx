@@ -27,7 +27,7 @@ export default function Hero({ onStartOnboarding }) {
             Workout tracker for lifters
           </p>
 
-          <h1 className="font-['Outfit'] text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-[-0.03em]">
+          <h1 className="font-['Outfit_Variable'] text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-[-0.03em]">
             Log every set<br />
             in <span className="text-[#00F59B]">two taps.</span>
           </h1>
@@ -70,7 +70,7 @@ export default function Hero({ onStartOnboarding }) {
           <div className="relative mx-auto max-w-md rounded-2xl bg-[#101218] border border-white/[0.09] p-5 shadow-2xl shadow-black/60 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.06),0_30px_80px_-20px_rgba(0,0,0,0.8)]">
             <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.07]">
               <div>
-                <p className="font-['Outfit'] font-bold text-white text-sm">Push day</p>
+                <p className="font-['Outfit_Variable'] font-bold text-white text-sm">Push day</p>
                 <p className="text-xs text-zinc-400">Barbell bench press</p>
               </div>
               <span className="text-[11px] font-medium px-2 py-1 rounded-md bg-white/[0.06] text-zinc-300">

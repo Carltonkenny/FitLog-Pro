@@ -16,7 +16,7 @@ const FOOTER_LINKS = [
 
 export default function LandingPage({ onOpenAuth, onStartOnboarding, onEnterApp, session }) {
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-slate-100 flex flex-col font-['Inter']">
+    <div className="min-h-screen bg-[#0A0B0E] text-slate-100 flex flex-col font-['Inter_Variable']">
       <Navbar onOpenAuth={onOpenAuth} onEnterApp={onEnterApp} session={session} />
 
       <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
@@ -38,7 +38,7 @@ export default function LandingPage({ onOpenAuth, onStartOnboarding, onEnterApp,
             <span className="w-8 h-8 rounded-lg bg-[#00F59B] flex items-center justify-center">
               <Dumbbell className="w-4 h-4 text-black" aria-hidden="true" />
             </span>
-            <span className="font-['Outfit'] font-extrabold text-white">FitLog Pro</span>
+            <span className="font-['Outfit_Variable'] font-extrabold text-white">FitLog Pro</span>
           </div>
           <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-zinc-400">
             {FOOTER_LINKS.map((l) => (

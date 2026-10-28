@@ -18,7 +18,7 @@ export default function PricingSection({ onStartOnboarding }) {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#00F59B]">Pricing</p>
-          <h2 className="font-['Outfit'] text-3xl sm:text-4xl font-extrabold text-white tracking-[-0.02em]">
+          <h2 className="font-['Outfit_Variable'] text-3xl sm:text-4xl font-extrabold text-white tracking-[-0.02em]">
             Free during early access
           </h2>
           <p className="text-zinc-400">
@@ -29,9 +29,9 @@ export default function PricingSection({ onStartOnboarding }) {
 
         <Reveal delay={80} className="max-w-xl mx-auto rounded-2xl bg-[#101218] border border-[#00F59B]/30 p-8 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.06)]">
           <div className="flex items-baseline justify-between gap-4">
-            <h3 className="font-['Outfit'] font-bold text-xl text-white">Early access</h3>
+            <h3 className="font-['Outfit_Variable'] font-bold text-xl text-white">Early access</h3>
             <p className="text-white">
-              <span className="font-['Outfit'] text-4xl font-black tabular-nums">$0</span>
+              <span className="font-['Outfit_Variable'] text-4xl font-black tabular-nums">$0</span>
               <span className="text-zinc-400 text-sm ml-1.5">/ month</span>
             </p>
           </div>

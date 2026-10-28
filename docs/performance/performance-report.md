@@ -23,6 +23,18 @@ Desktop LCP "after" is a little higher in the medians; the ranges overlap (deskt
 
 Thresholds: LCP good ≤ 2.5 s, INP good ≤ 200 ms, CLS good ≤ 0.1. The phone landing is at the line; the phone app is over it. One run reached 8.1 s, so the variance is large; I would not quote a single number.
 
+## Update: fonts self-hosted (the audit's top remaining item)
+`theme.css` still pulled Google Fonts through a CSS `@import` (a render-blocking chain) in addition to `index.html`; both are gone. Fonts now come from our own domain as 3 variable files (118 kB total) instead of 11 static files (210 kB) from Google. The CSP no longer allows Google font hosts.
+
+| Page / profile | LCP | FCP | TBT | Spread of LCP |
+|---|---|---|---|---|
+| Landing, desktop | 632 → **424 ms** | 572 → 340 ms | 0 | 356–804 ms |
+| App, desktop | 496 → **372 ms** | 496 → 372 ms | 0 | 344–880 ms |
+| Landing, phone | 2212 → 2272 ms | 1976 → 1940 ms | 253 → 139 ms | 2120–2472 ms |
+| App, phone | 3140 → **2636 ms** | 2520 → 2536 ms | 95 → 117 ms | 2536–2900 ms (was 2588–8092) |
+
+The phone app is now within about 0.1 s of the 2.5 s "good" line and far steadier. The "Transfer" column in earlier tables did not include Google's fonts (browsers report 0 bytes for cross-origin files), so transfer sizes before and after are **not comparable**; the font weight (210 kB → 118 kB) is the comparable figure.
+
 ## Interactions with 500 saved workouts (desktop, unthrottled)
 | Action | Before | After |
 |---|---|---|
@@ -50,7 +62,7 @@ Lazy-loaded app and onboarding chunks; History paging; bulk set insert; no-query
 Lighthouse scores, real-user data, the service worker, Firefox/Safari, a real phone, image/media pipeline (there are no images yet), Gemini photo requests, and the font-loading cost in isolation (risk R2).
 
 ## Next steps, in order
-1. Self-host the fonts (R2), then re-measure phone LCP; this is the most likely cause of the 3.1 s.
+1. (Done) Self-host the fonts.
 2. Create a Neon branch and run a short load test on `GET /workouts` and `PUT /workouts/:id` (k6 or autocannon).
 3. Add Sentry (browser tracing) so you get real-user Web Vitals.
 4. Add a CI budget: fail the build if the shared chunk grows past about 400 kB.

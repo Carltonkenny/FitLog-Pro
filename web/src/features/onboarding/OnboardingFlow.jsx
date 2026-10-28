@@ -189,7 +189,7 @@ export default function OnboardingFlow({ session, onComplete }) {
 
         <div key={step} className="space-y-6 animate-popIn">
           <div>
-            <h1 ref={headingRef} tabIndex={-1} className="font-['Outfit'] text-2xl sm:text-3xl font-extrabold text-white tracking-[-0.02em] focus:outline-none">
+            <h1 ref={headingRef} tabIndex={-1} className="font-['Outfit_Variable'] text-2xl sm:text-3xl font-extrabold text-white tracking-[-0.02em] focus:outline-none">
               {current.title}
             </h1>
             <p className="text-sm text-zinc-400 mt-1.5">{current.sub}</p>
