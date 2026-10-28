@@ -73,37 +73,10 @@ export default function AnalyticsView({ onStartWorkout }) {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-<<<<<<< HEAD
         <Kpi label="Total workouts" value={history.length} />
         <Kpi label="All-time volume" value={formatWeight(totalVolume, unit)} tone="text-emerald-400" />
         <Kpi label="Last 4 weeks" value={`${last28} workout${last28 === 1 ? '' : 's'}`} tone="text-cyan-400" />
         <Kpi label="Current streak" value={`${streak} day${streak === 1 ? '' : 's'}`} tone="text-amber-400" />
-=======
-        <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/[0.06]">
-          <span className="text-[11px] text-zinc-400">Total Workouts</span>
-          <div className="text-xl font-bold text-white font-mono mt-0.5">
-            {totalSessionsCount}
-          </div>
-        </div>
-        <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/[0.06]">
-          <span className="text-[11px] text-zinc-400">All-Time Volume</span>
-          <div className="text-xl font-bold text-emerald-400 font-mono mt-0.5">
-            {(totalVolumeAllTime / 1000).toFixed(1)} tons
-          </div>
-        </div>
-        <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/[0.06]">
-          <span className="text-[11px] text-zinc-400">Overload Consistency</span>
-          <div className="text-xl font-bold text-cyan-400 font-mono mt-0.5">
-            94%
-          </div>
-        </div>
-        <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/[0.06]">
-          <span className="text-[11px] text-zinc-400">Current Streak</span>
-          <div className="text-xl font-bold text-amber-400 font-mono mt-0.5">
-            🔥 {currentStreak} {currentStreak === 1 ? 'Day' : 'Days'}
-          </div>
-        </div>
->>>>>>> feat/local-enhancements-and-audit
       </div>
 
       <section aria-label="Top lifts" className="space-y-2">

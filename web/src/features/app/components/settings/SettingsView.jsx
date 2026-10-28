@@ -115,7 +115,6 @@ export default function SettingsView({ blueprint, session, syncStatus, onSignOut
               <span id="unit-lbl" className="text-zinc-200 font-medium">Weight unit</span>
               <p className="text-zinc-400 text-[11px]">Shown in set inputs, totals and history. Stored in kg.</p>
             </div>
-<<<<<<< HEAD
             <div role="radiogroup" aria-labelledby="unit-lbl" className="flex items-center bg-zinc-950 p-1 rounded-xl border border-white/[0.06]">
               {[
                 { id: 'kg', label: 'kg' },
@@ -134,31 +133,6 @@ export default function SettingsView({ blueprint, session, syncStatus, onSignOut
                   {u.label}
                 </button>
               ))}
-=======
-            <div className="flex items-center bg-zinc-950 p-1 rounded-xl border border-white/[0.06]">
-              <button
-                type="button"
-                onClick={() => handleUnitChange('kg')}
-                className={`px-3 py-1 rounded-lg text-xs font-medium transition ${
-                  unit === 'kg'
-                    ? 'bg-emerald-500 text-zinc-950 font-bold shadow-sm'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                Metric (kg)
-              </button>
-              <button
-                type="button"
-                onClick={() => handleUnitChange('lbs')}
-                className={`px-3 py-1 rounded-lg text-xs font-medium transition ${
-                  unit === 'lbs'
-                    ? 'bg-emerald-500 text-zinc-950 font-bold shadow-sm'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                Imperial (lbs)
-              </button>
->>>>>>> feat/local-enhancements-and-audit
             </div>
           </div>
 
@@ -168,16 +142,10 @@ export default function SettingsView({ blueprint, session, syncStatus, onSignOut
               <p className="text-zinc-400 text-[11px]">The timer starts when you complete a set.</p>
             </div>
             <select
-<<<<<<< HEAD
               id="rest-select"
               value={settings.restSeconds}
               onChange={(e) => setSettings({ restSeconds: Number(e.target.value) })}
               className="h-10 px-3 rounded-xl bg-zinc-950 border border-white/[0.08] text-zinc-200 text-xs font-mono focus:border-emerald-500"
-=======
-              value={restDuration}
-              onChange={(e) => handleRestChange(e.target.value)}
-              className="px-3 py-1.5 rounded-xl bg-zinc-950 border border-white/[0.08] text-zinc-200 text-xs font-mono focus:border-emerald-500 focus:outline-none"
->>>>>>> feat/local-enhancements-and-audit
             >
               {REST_OPTIONS.map((s) => (
                 <option key={s} value={s}>
