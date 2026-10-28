@@ -36,7 +36,7 @@ function Field({ id, label, error, hint, children }) {
 }
 
 const inputClass =
-  'w-full h-12 px-3.5 rounded-xl bg-[#0D0E13] border text-white text-sm placeholder:text-zinc-500 focus:border-[#00F59B]';
+  'w-full h-12 px-3.5 rounded-xl bg-[#0D0E13] border text-white text-sm placeholder:text-zinc-400 focus:border-[#00F59B]';
 
 export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onSuccess, resetToken }) {
   const [mode, setMode] = useState(initialMode);
@@ -200,7 +200,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'signup', onS
             </button>
             <div className="flex items-center gap-3 mb-4" aria-hidden="true">
               <div className="flex-1 h-px bg-white/[0.1]" />
-              <span className="text-xs text-zinc-500">or</span>
+              <span className="text-xs text-zinc-400">or</span>
               <div className="flex-1 h-px bg-white/[0.1]" />
             </div>
           </>

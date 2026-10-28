@@ -34,15 +34,17 @@ let cached = { token: null, expiresAt: 0 };
 async function accessToken(force = false) {
   if (!force && cached.token && Date.now() < cached.expiresAt - 30_000) return cached.token;
   const { data, error } = await authClient.token();
-  if (error || !data?.token) return null;
+  // Once a session is cached the SDK answers with the session object, so the JWT can be at session.token.
+  const jwt = data?.token ?? data?.session?.token;
+  if (error || !jwt) return null;
   let expiresAt = Date.now() + 10 * 60_000;
   try {
-    const exp = JSON.parse(atob(data.token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).exp;
+    const exp = JSON.parse(atob(jwt.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).exp;
     if (Number.isFinite(exp)) expiresAt = exp * 1000;
   } catch {
     // Keep the conservative 10 minute guess.
   }
-  cached = { token: data.token, expiresAt };
+  cached = { token: jwt, expiresAt };
   return cached.token;
 }
 
@@ -65,6 +67,15 @@ export async function api(path, { method = 'GET', body } = {}) {
 }
 
 // ---------------------------------------------------------------------------------------- accounts
+
+// The SDK throws on failure instead of returning { error }; this normalises both into one error object.
+const authError = async (call) => {
+  try {
+    return (await call())?.error ?? null;
+  } catch (err) {
+    return err;
+  }
+};
 
 function friendlyAuthError(err) {
   const code = String(err?.code || '').toUpperCase();
@@ -93,7 +104,7 @@ async function currentSession() {
   return toSession(data?.user);
 }
 
-const LOCAL_KEYS = ['fitlog_session', 'fitlog_profile', 'fitlog_workout_history', 'fitlog_prs', 'fitlog_sync_queue', 'fitlog_userdata', 'fitlog_userdata_base'];
+const LOCAL_KEYS = ['fitlog_workout_draft', 'fitlog_session', 'fitlog_profile', 'fitlog_workout_history', 'fitlog_prs', 'fitlog_sync_queue', 'fitlog_userdata', 'fitlog_userdata_base'];
 
 const localSession = (email, fullName) => {
   const session = {
@@ -111,7 +122,7 @@ export const AuthService = {
       const session = localSession(email, fullName);
       return { user: session.user, session };
     }
-    const { error } = await authClient.signUp.email({ email, password, name: fullName || email.split('@')[0] });
+    const error = await authError(() => authClient.signUp.email({ email, password, name: fullName || email.split('@')[0] }));
     if (error) throw new Error(friendlyAuthError(error));
     // No session yet means the project requires email verification first.
     const session = await currentSession();
@@ -123,7 +134,7 @@ export const AuthService = {
       const session = localSession(email);
       return { user: session.user, session };
     }
-    const { error } = await authClient.signIn.email({ email, password });
+    const error = await authError(() => authClient.signIn.email({ email, password }));
     if (error) throw new Error(friendlyAuthError(error));
     const session = await currentSession();
     return { user: session?.user ?? null, session };
@@ -172,19 +183,18 @@ export const AuthService = {
   /** Emails a reset link that returns to /reset-password?token=... */
   async resetPassword(email) {
     if (!isCloudConfigured) throw new Error('Password reset needs an online account.');
-    const request = authClient.requestPasswordReset || authClient.forgetPassword;
-    const { error } = await request.call(authClient, { email, redirectTo: `${window.location.origin}/reset-password` });
+    const error = await authError(() => authClient.requestPasswordReset({ email, redirectTo: `${window.location.origin}/reset-password` }));
     if (error) throw new Error(friendlyAuthError(error));
   },
 
   /** Sets a new password using the token from the reset email link. */
   async updatePassword(newPassword, token) {
-    const { error } = await authClient.resetPassword({ newPassword, token });
+    const error = await authError(() => authClient.resetPassword({ newPassword, token }));
     if (error) throw new Error(friendlyAuthError(error));
   },
 
   async signInWithGoogle() {
-    const { error } = await authClient.signIn.social({ provider: 'google', callbackURL: `${window.location.origin}/app` });
+    const error = await authError(() => authClient.signIn.social({ provider: 'google', callbackURL: `${window.location.origin}/app` }));
     if (error) throw new Error(friendlyAuthError(error));
   },
 

@@ -62,14 +62,36 @@ function buildStarterWorkout() {
   });
 }
 
+const DRAFT_KEY = 'fitlog_workout_draft';
+
+/** The unfinished workout saved on every change, so a refresh or a killed tab loses nothing. Null when absent or unusable. */
+function readDraft() {
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    const ok = d && Array.isArray(d.exercises) && d.exercises.length > 0 && d.exercises.every((e) => e && typeof e.exerciseId === 'string' && Array.isArray(e.sets));
+    return ok ? d : null;
+  } catch {
+    return null;
+  }
+}
+
 export function useWorkoutLogger(initialGoal = 'muscle_growth') {
+  const [draft] = useState(readDraft);
   const [workoutTitle, setWorkoutTitle] = useState(
-    initialGoal === 'strength'
+    typeof draft?.title === 'string' ? draft.title : initialGoal === 'strength'
       ? 'Raw Strength & Power Session (Chest & Back)'
       : 'Muscle Growth Session (Chest, Shoulders & Arms)'
   );
 
-  const [exercises, setExercises] = useState(buildStarterWorkout);
+  const [exercises, setExercises] = useState(() => draft?.exercises ?? buildStarterWorkout());
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ title: workoutTitle, exercises }));
+    } catch {
+      // Storage full or blocked: the workout still works in memory.
+    }
+  }, [workoutTitle, exercises]);
 
   const [activeExerciseIndex, setActiveExerciseIndex] = useState(0);
   const currentFocusedExercise = exercises[activeExerciseIndex] || exercises[0];

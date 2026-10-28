@@ -43,7 +43,7 @@ export default function StudioVisualizer({ currentFocusedExercise }) {
   const estimatedMaxLift = calculate1RM(focusedActiveWeight, focusedActiveReps);
 
   return (
-    <aside className="w-80 lg:w-96 border-l border-white/[0.08] p-4 space-y-5 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto bg-[#0c0e12]/60 backdrop-blur-sm">
+    <aside tabIndex={0} aria-label="Plate loader and coach" className="w-80 lg:w-96 border-l border-white/[0.08] p-4 space-y-5 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto bg-[#0c0e12]/60 backdrop-blur-sm">
       {/* Olympic Barbell Sleeve Visualizer */}
       <div className="p-4 rounded-2xl bg-zinc-900/80 border border-white/[0.08] space-y-3">
         <div className="flex items-center justify-between">
@@ -130,7 +130,7 @@ export default function StudioVisualizer({ currentFocusedExercise }) {
           <div className="absolute top-2 left-2 text-[9px] font-mono text-zinc-400">
             1RM: {estimatedMaxLift} kg
           </div>
-          <div className="absolute bottom-1 right-2 text-[9px] font-mono text-zinc-500">
+          <div className="absolute bottom-1 right-2 text-[9px] font-mono text-zinc-400">
             10 Reps: {focusedActiveWeight} kg
           </div>
         </div>

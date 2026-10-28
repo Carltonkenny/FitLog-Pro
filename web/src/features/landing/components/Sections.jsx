@@ -38,7 +38,7 @@ export function HowItWorks() {
                 <span className="w-10 h-10 rounded-xl bg-[#00F59B]/10 text-[#00F59B] flex items-center justify-center">
                   <s.icon className="w-5 h-5" aria-hidden="true" />
                 </span>
-                <span className="font-mono text-xs text-zinc-500 tabular-nums">0{i + 1}</span>
+                <span className="font-mono text-xs text-zinc-400 tabular-nums">0{i + 1}</span>
               </div>
               <h3 className="text-lg font-bold text-white">{s.title}</h3>
               <p className="text-sm text-zinc-400 mt-2 leading-relaxed">{s.body}</p>

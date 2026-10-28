@@ -89,7 +89,7 @@ export default function RoutinesBar({ exercises, onLoad }) {
             maxLength={40}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name it, e.g. Push day"
-            className="flex-1 min-w-0 h-11 px-3 rounded-xl bg-zinc-900 border border-white/[0.1] text-sm text-white placeholder:text-zinc-500 focus:border-emerald-500"
+            className="flex-1 min-w-0 h-11 px-3 rounded-xl bg-zinc-900 border border-white/[0.1] text-sm text-white placeholder:text-zinc-400 focus:border-emerald-500"
           />
           <button type="submit" className="h-11 px-4 rounded-xl bg-emerald-500 text-zinc-950 text-sm font-bold">Save</button>
           <button type="button" onClick={() => { setNaming(false); setError(''); }} className="h-11 px-3 rounded-xl text-zinc-300 hover:bg-white/[0.06] text-sm">Cancel</button>

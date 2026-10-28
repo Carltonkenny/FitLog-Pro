@@ -45,7 +45,7 @@ function Row({ ex, reasons, added, favorite, onAdd, onFavorite }) {
       <button
         type="button"
         onClick={onAdd}
-        aria-label={`Add ${ex.name}`}
+        aria-label={`${added ? 'Added' : 'Add'} ${ex.name}`}
         className={`shrink-0 h-11 min-w-20 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1 ${
           added ? 'bg-emerald-500 text-zinc-950' : 'bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500 hover:text-zinc-950'
         }`}
@@ -129,7 +129,7 @@ export default function ExercisePickerModal({ isOpen, onClose, onSelectExercise,
             onChange={(e) => { setSearch(e.target.value); setShown(PAGE); }}
             aria-label="Search exercises"
             placeholder="Search by name, muscle or equipment"
-            className="w-full h-11 pl-10 pr-3 rounded-xl bg-zinc-900 border border-white/[0.1] text-sm text-white placeholder:text-zinc-500 focus:border-emerald-500"
+            className="w-full h-11 pl-10 pr-3 rounded-xl bg-zinc-900 border border-white/[0.1] text-sm text-white placeholder:text-zinc-400 focus:border-emerald-500"
           />
         </div>
 

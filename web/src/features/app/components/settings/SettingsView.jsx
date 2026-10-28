@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { ShieldCheck, User, Database, Download, LogOut, CloudOff } from 'lucide-react';
 import { isCloudConfigured } from '../../../../lib/neonClient';
 import { WorkoutStore } from '../../../../lib/workoutStore';
@@ -8,17 +8,18 @@ import { isIos, isStandalone, promptInstall, useCanInstall } from '../../../../l
 const GOAL_LABELS = { strength: 'Raw strength', muscle_growth: 'Muscle growth' };
 
 function Toggle({ checked, onChange, label, description }) {
+  const labelId = useId(); // ids with spaces (the old label-based id) break aria-labelledby
   return (
     <div className="flex items-center justify-between gap-4">
       <div>
-        <span id={`${label}-lbl`} className="text-zinc-200 font-medium">{label}</span>
+        <span id={labelId} className="text-zinc-200 font-medium">{label}</span>
         <p className="text-zinc-400 text-[11px]">{description}</p>
       </div>
       <button
         type="button"
         role="switch"
         aria-checked={checked}
-        aria-labelledby={`${label}-lbl`}
+        aria-labelledby={labelId}
         onClick={() => onChange(!checked)}
         className={`shrink-0 w-12 h-7 rounded-full transition-colors flex items-center px-0.5 ${
           checked ? 'bg-emerald-500 justify-end' : 'bg-zinc-700 justify-start'

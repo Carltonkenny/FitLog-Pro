@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .neon
+e2e-results/
+test-results/
+playwright-report/

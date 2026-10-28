@@ -12,7 +12,7 @@ export default function ExerciseImage({ id, name, size = 56, hideIfMissing = fal
   const box = { width: size, height: size };
   if (missing) {
     return (
-      <span aria-hidden="true" style={box} className={`shrink-0 rounded-xl bg-zinc-800 text-zinc-500 flex items-center justify-center ${className}`}>
+      <span aria-hidden="true" style={box} className={`shrink-0 rounded-xl bg-zinc-800 text-zinc-400 flex items-center justify-center ${className}`}>
         <Dumbbell style={{ width: size * 0.4, height: size * 0.4 }} />
       </span>
     );

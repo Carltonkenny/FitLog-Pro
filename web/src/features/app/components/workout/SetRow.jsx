@@ -6,7 +6,7 @@ const MAX_KG = 1000;
 const MAX_REPS = 200;
 
 const stepperClass =
-  'w-9 h-10 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 flex items-center justify-center';
+  'w-11 h-11 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 flex items-center justify-center';
 const inputClass =
   'h-10 px-1 rounded-lg bg-zinc-900 border border-white/[0.1] text-center font-mono font-semibold text-white focus:border-emerald-500 tabular-nums';
 

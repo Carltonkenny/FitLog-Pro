@@ -263,7 +263,7 @@ export default function Companion({ open, setOpen, blueprint, onUseDay, onAddExe
                 aria-label={`Message ${memory.petName}`}
                 maxLength={500}
                 placeholder={`Ask ${memory.petName} anything`}
-                className="flex-1 min-w-0 h-11 px-3 rounded-xl bg-zinc-950 border border-white/[0.1] text-sm text-white placeholder:text-zinc-500 focus:border-emerald-500"
+                className="flex-1 min-w-0 h-11 px-3 rounded-xl bg-zinc-950 border border-white/[0.1] text-sm text-white placeholder:text-zinc-400 focus:border-emerald-500"
               />
               <button type="submit" aria-label="Send" disabled={busy || !input.trim()} className="shrink-0 w-11 h-11 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 flex items-center justify-center">
                 <Send className="w-5 h-5" aria-hidden="true" />

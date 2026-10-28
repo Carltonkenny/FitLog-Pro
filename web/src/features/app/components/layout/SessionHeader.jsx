@@ -25,7 +25,7 @@ export default function SessionHeader({
   finishDisabled,
 }) {
   return (
-    <header className="sticky top-0 z-40 bg-[#0d0f14]/90 backdrop-blur-md border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-[#0d0f14]/90 backdrop-blur-md border-b border-white/[0.08] px-4 py-2.5 flex flex-wrap gap-y-2 items-center justify-between">
       {/* Brand & Home */}
       <div className="flex items-center gap-3">
         <button
@@ -37,7 +37,7 @@ export default function SessionHeader({
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <div className="flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-zinc-950 font-black shadow-md shadow-emerald-500/20">
             <Dumbbell className="w-4 h-4" />
           </div>

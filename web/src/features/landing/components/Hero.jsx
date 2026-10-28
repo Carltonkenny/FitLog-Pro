@@ -78,7 +78,7 @@ export default function Hero({ onStartOnboarding }) {
               </span>
             </div>
 
-            <div className="grid grid-cols-12 text-[11px] uppercase tracking-wide text-zinc-500 px-3 pb-1">
+            <div className="grid grid-cols-12 text-[11px] uppercase tracking-wide text-zinc-400 px-3 pb-1">
               <span className="col-span-2">Set</span>
               <span className="col-span-4">Previous</span>
               <span className="col-span-4">kg × reps</span>

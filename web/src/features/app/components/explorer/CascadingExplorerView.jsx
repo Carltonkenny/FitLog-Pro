@@ -82,7 +82,7 @@ export default function CascadingExplorerView({ onAddExercise }) {
 
         {/* Global Instant Search */}
         <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-2.5" />
           <input
             type="text"
             value={searchQuery}
@@ -154,7 +154,7 @@ export default function CascadingExplorerView({ onAddExercise }) {
 
           {/* EQUIPMENT FILTER PILLS */}
           <div className="flex items-center gap-2 pt-1 overflow-x-auto pb-1">
-            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider shrink-0 flex items-center gap-1">
+            <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
               <Filter className="w-3 h-3" /> Equipment:
             </span>
             {equipmentOptions.map((eq) => (
@@ -180,7 +180,7 @@ export default function CascadingExplorerView({ onAddExercise }) {
           <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
             Step 3: Highly Rated Movements ({filteredExercises.length} available)
           </span>
-          <span className="text-[10px] font-mono text-zinc-500">
+          <span className="text-[10px] font-mono text-zinc-400">
             Ranked by Growth vs. Fatigue Score
           </span>
         </div>
@@ -212,7 +212,7 @@ export default function CascadingExplorerView({ onAddExercise }) {
                     <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                       ★ {ex.growthFatigueScore || 9.2}
                     </span>
-                    <div className="text-[9px] text-zinc-500 font-mono mt-0.5">Growth Score</div>
+                    <div className="text-[9px] text-zinc-400 font-mono mt-0.5">Growth Score</div>
                   </div>
                 </div>
 

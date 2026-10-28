@@ -62,7 +62,7 @@ export default function StudioSidebar({
                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                       isActive
                         ? 'bg-emerald-500/20 text-emerald-300'
-                        : 'bg-zinc-800 text-zinc-500'
+                        : 'bg-zinc-800 text-zinc-400'
                     }`}
                   >
                     {item.badge}
@@ -80,7 +80,7 @@ export default function StudioSidebar({
               <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
               <span>Your plan</span>
             </div>
-            <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-mono">
+            <span className="text-[10px] text-zinc-400 uppercase tracking-wider font-mono">
               Active
             </span>
           </div>

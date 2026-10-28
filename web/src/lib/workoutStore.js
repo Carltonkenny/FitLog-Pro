@@ -44,12 +44,14 @@ export const WorkoutStore = {
     const history = this.getHistory();
     for (const wo of history) {
       const match = wo.exercises?.find((e) => e.exerciseId === exerciseId);
-      if (match && match.sets && match.sets.length > 0) {
+      // Only sets that were actually done count; planned-but-skipped sets must not become "last session".
+      const done = (match?.sets || []).filter((s) => s.completed !== false);
+      if (done.length > 0) {
         return {
           workoutTitle: wo.title,
           timestamp: wo.timestamp,
-          sets: match.sets,
-          bestSet: match.sets.reduce((prev, curr) => (curr.weight > prev.weight ? curr : prev), match.sets[0]),
+          sets: done,
+          bestSet: done.reduce((prev, curr) => (curr.weight > prev.weight ? curr : prev), done[0]),
         };
       }
     }

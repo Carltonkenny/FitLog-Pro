@@ -43,7 +43,7 @@ export default function ExerciseCard({
           <p className="text-xs text-zinc-400 mt-0.5">
             Target: <span className="text-emerald-400">{exercise.targetMuscle}</span>
             {exercise.growthFatigueScore && (
-              <span className="ml-2 text-zinc-500 font-mono">
+              <span className="ml-2 text-zinc-400 font-mono">
                 • Growth Score: {exercise.growthFatigueScore}/10
               </span>
             )}
@@ -84,9 +84,9 @@ export default function ExerciseCard({
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs">
           <thead>
-            <tr className="text-zinc-500 uppercase tracking-wider font-mono text-[10px] border-b border-white/[0.06]">
+            <tr className="text-zinc-400 uppercase tracking-wider font-mono text-[10px] border-b border-white/[0.06]">
               <th className="pb-2 w-12 text-center">Set</th>
-              <th className="pb-2 w-28">Weight (kg)</th>
+              <th className="pb-2 w-28">Weight ({unit})</th>
               <th className="pb-2 w-24">Reps</th>
               <th className="pb-2 text-right pr-2">Done</th>
             </tr>
@@ -121,7 +121,7 @@ export default function ExerciseCard({
           <span>Add Set</span>
         </button>
 
-        <span className="text-[11px] text-zinc-500 max-w-xs truncate">
+        <span className="text-[11px] text-zinc-400 max-w-xs truncate">
           {exercise.notes}
         </span>
       </div>
