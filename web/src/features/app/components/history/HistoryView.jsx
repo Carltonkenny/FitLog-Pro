@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Calendar, Clock, History as HistoryIcon } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import { formatWeight, useSettings } from '../../../../lib/settings';
@@ -7,10 +7,13 @@ import PetAvatar from '../../../companion/PetAvatar';
 import { petMood } from '../../../../lib/companionActions.js';
 import { useUserData } from '../../../../lib/userData.js';
 
+const PAGE = 30;
+
 export default function HistoryView({ onOpenCompanion }) {
   const { unit } = useSettings();
   const { memory } = useUserData();
   const history = WorkoutStore.getHistory();
+  const [shown, setShown] = useState(PAGE); // rendering every workout made the tab take ~0.9 s at 500 workouts
 
   return (
     <div className="space-y-6">
@@ -48,7 +51,7 @@ export default function HistoryView({ onOpenCompanion }) {
           </div>
         )}
 
-        {history.map((wo) => (
+        {history.slice(0, shown).map((wo) => (
           <article
             key={wo.id}
             className="p-4 rounded-2xl bg-zinc-900/70 border border-white/[0.08] hover:border-emerald-500/30 transition space-y-3"
@@ -94,6 +97,15 @@ export default function HistoryView({ onOpenCompanion }) {
             </div>
           </article>
         ))}
+        {history.length > shown && (
+          <button
+            type="button"
+            onClick={() => setShown((n) => n + PAGE)}
+            className="w-full min-h-11 rounded-xl border border-white/[0.1] text-sm font-semibold text-zinc-200 hover:bg-white/[0.04]"
+          >
+            Show more ({history.length - shown} left)
+          </button>
+        )}
       </section>
     </div>
   );

@@ -2,7 +2,7 @@
 
 Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved Playwright results. Do not edit by hand; run `npm run qa:docs` in `web`.
 
-143 cases. Machine-readable copy: `functional-test-cases.json`.
+145 cases. Machine-readable copy: `functional-test-cases.json`.
 
 **How to read it:** *Automation* says whether a Playwright test exists. *Baseline* is the observed result against the unmodified app. *After fixes* is the final full run after the defects were fixed. `defect-confirmed` means the test is written to expect the defect and the defect was observed.
 
@@ -372,6 +372,7 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 | TC-WRK-LB-002 | Weight column header says lb in pound mode | positive | P2 | BR-07 | automated | defect-confirmed | passed | DEF-002 |
 | TC-WRK-TIMER-001 | Session clock runs and pauses (fake clock) | positive | P1 |  | automated | passed | passed |  |
 | TC-WRK-REFRESH-001 | Completed set survives a page refresh | resilience | P0 | BR-17 | automated | defect-confirmed | passed | DEF-001 |
+| TC-WRK-REFRESH-002 | Session clock keeps elapsed time after a refresh and returns paused | resilience | P1 | BR-08 | automated | not executed | passed |  |
 | TC-WRK-PERSIST-002 | Process death mid-workout keeps the logged sets | resilience | P0 | BR-17 | manual (not automated) | not run (manual) |  | DEF-001 |
 | TC-WRK-LOC-001 | Comma decimal "42,5" is read as 42.5 | boundary | P2 |  | manual (not automated) | not run (manual) |  |  |
 | TC-WRK-PERF-001 | Workout screen stays responsive with 500 saved workouts | resilience | P2 |  | manual (not automated) | not run (manual) |  |  |
@@ -482,6 +483,11 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 **TC-WRK-REFRESH-001** (Guest (dev) / signed-in user; /app (Workout tab))
 - Steps: Complete a set → Reload
 - Expected: Set still completed
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
+**TC-WRK-REFRESH-002** (Guest (dev) / signed-in user; /app (Workout tab))
+- Steps: Start clock → Advance 65 s → Reload
+- Expected: About 01:0x shown; Start/Resume offered
 - Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
 
 **TC-WRK-PERSIST-002** (Guest (dev) / signed-in user; /app (Workout tab))
@@ -816,6 +822,7 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 | TC-SYNC-TOKEN-001 | A signed-in user's profile request reaches the API with a token | auth | P0 |  | automated | defect-confirmed | passed | DEF-007 |
 | TC-SYNC-UP-001 | Finished workout uploads once with sets and records | data-integrity | P0 | BR-15 | automated | blocked | passed |  |
 | TC-SYNC-OFF-001 | API unreachable: workout stays queued, uploads on reconnect | resilience | P0 |  | automated | blocked | passed |  |
+| TC-SYNC-RACE-001 | A workout finished during another upload is still uploaded | data-integrity | P0 |  | automated | not executed | passed |  |
 | TC-SYNC-4XX-001 | Permanent 400 flags the workout and stops retrying | resilience | P1 |  | automated | blocked | passed |  |
 | TC-SYNC-5XX-001 | 500 keeps the workout queued and never loses it | resilience | P0 |  | automated | blocked | passed |  |
 | TC-SYNC-PULL-001 | Workouts from another device appear once | data-integrity | P1 | BR-15 | automated | blocked | passed |  |
@@ -837,6 +844,11 @@ Generated from `web/scripts/qa-cases.mjs` (the registry) joined with the saved P
 **TC-SYNC-OFF-001** (Signed-in user; /app)
 - Steps: API offline → Finish → Back online
 - Expected: Queue 1 then 0; history 1
+- Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
+
+**TC-SYNC-RACE-001** (Signed-in user; /app)
+- Steps: Slow PUT 1.5 s → Finish workout A → Finish workout B while A uploads
+- Expected: Two workouts stored on the server; queue empty
 - Note: Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)
 
 **TC-SYNC-4XX-001** (Signed-in user; /app)

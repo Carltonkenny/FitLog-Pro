@@ -2195,6 +2195,37 @@
     "executionWithFix": "passed"
   },
   {
+    "id": "TC-WRK-REFRESH-002",
+    "module": "Active workout",
+    "feature": "REFRESH",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Session clock keeps elapsed time after a refresh and returns paused",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Start clock",
+      "Advance 65 s",
+      "Reload"
+    ],
+    "expectedResults": [
+      "About 01:0x shown; Start/Resume offered"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-08",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
     "id": "TC-WRK-PERSIST-002",
     "module": "Active workout",
     "feature": "PERSIST",
@@ -3623,6 +3654,37 @@
     "dependencies": "",
     "linkedDefect": "",
     "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-RACE-001",
+    "module": "Cloud sync",
+    "feature": "RACE",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "A workout finished during another upload is still uploaded",
+    "category": "data-integrity",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Slow PUT 1.5 s",
+      "Finish workout A",
+      "Finish workout B while A uploads"
+    ],
+    "expectedResults": [
+      "Two workouts stored on the server; queue empty"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
     "executionWithFix": "passed"
   },
   {

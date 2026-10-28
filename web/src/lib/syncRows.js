@@ -1,6 +1,8 @@
 // Pure mapping between the local workout shape and the API rows. No network or browser APIs.
 
-const toIso = (ts) => new Date(ts || Date.now()).toISOString();
+// A phone with a wrong date must not make the server reject the workout for good: clamp to the range it accepts.
+const FLOOR = Date.parse('2000-01-02');
+const toIso = (ts) => new Date(Math.min(Date.now(), Math.max(FLOOR, ts || Date.now()))).toISOString();
 
 export function toRows(record, userId) {
   const started = record.timestamp - (record.durationSeconds || 0) * 1000;

@@ -104,7 +104,7 @@ async function currentSession() {
   return toSession(data?.user);
 }
 
-const LOCAL_KEYS = ['fitlog_workout_draft', 'fitlog_session', 'fitlog_profile', 'fitlog_workout_history', 'fitlog_prs', 'fitlog_sync_queue', 'fitlog_userdata', 'fitlog_userdata_base'];
+const LOCAL_KEYS = ['fitlog_workout_draft', 'fitlog_workout_clock', 'fitlog_session', 'fitlog_profile', 'fitlog_workout_history', 'fitlog_prs', 'fitlog_sync_queue', 'fitlog_userdata', 'fitlog_userdata_base'];
 
 const localSession = (email, fullName) => {
   const session = {

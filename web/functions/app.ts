@@ -67,10 +67,8 @@ export function createApp(deps: Deps) {
     }
   }
 
-  app.get('/health', async (c) => {
-    await deps.pool.query('SELECT 1');
-    return c.json({ ok: true });
-  });
+  // No database call: a public URL that wakes a scale-to-zero database is a cost and abuse risk.
+  app.get('/health', (c) => c.json({ ok: true }));
 
   // Everything below needs a valid Neon Auth token.
   app.use('*', async (c, next) => {
@@ -136,11 +134,17 @@ export function createApp(deps: Deps) {
         return c.json({ error: 'not-found' }, 404);
       }
       await client.query('DELETE FROM workout_sets WHERE workout_id = $1 AND user_id = $2', [id, user.id]);
-      for (const s of sets) {
+      if (sets.length) {
+        // One statement for all sets: a 40-set workout used to be 40 round trips to the database.
         await client.query(
           `INSERT INTO workout_sets (workout_id, user_id, exercise_id, exercise_name, set_order, weight_kg, reps, is_completed, set_type, completed_at)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-          [id, user.id, s.exercise_id, s.exercise_name, s.set_order, s.weight_kg, s.reps, s.is_completed, s.set_type, s.completed_at],
+           SELECT $1, $2, * FROM unnest($3::text[], $4::text[], $5::int[], $6::numeric[], $7::int[], $8::bool[], $9::text[], $10::timestamptz[])`,
+          [
+            id, user.id,
+            sets.map((s) => s.exercise_id), sets.map((s) => s.exercise_name), sets.map((s) => s.set_order),
+            sets.map((s) => s.weight_kg), sets.map((s) => s.reps), sets.map((s) => s.is_completed),
+            sets.map((s) => s.set_type), sets.map((s) => s.completed_at),
+          ],
         );
       }
       for (const p of prs) {

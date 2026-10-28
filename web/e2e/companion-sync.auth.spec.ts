@@ -124,6 +124,16 @@ test.describe('Workout sync (mocked API)', () => {
     await expect.poll(async () => (await stored(page, 'fitlog_sync_queue')).length, { timeout: 15_000 }).toBe(0);
   });
 
+  test('TC-SYNC-RACE-001 a workout finished while another is uploading is still uploaded', async ({ page }) => {
+    const m = await openSignedIn(page, (mm) => { mm.putDelayMs = 1500; });
+    await finishOne(page);
+    await page.getByRole('dialog', { name: 'Workout complete' }).getByRole('button', { name: 'View in Workout History' }).click();
+    await nav(page, /Active Workout/).click();
+    await finishOne(page); // second workout while the first PUT is still in flight
+    await expect.poll(() => m.workouts.size, { timeout: 20_000 }).toBe(2);
+    await expect.poll(async () => (await stored(page, 'fitlog_sync_queue')).length, { timeout: 20_000 }).toBe(0);
+  });
+
   test('TC-SYNC-4XX-001 a permanent rejection (400) flags the workout and stops retrying', async ({ page }) => {
     await openSignedIn(page, (m) => { m.failWorkoutPut = 400; });
     await finishOne(page);

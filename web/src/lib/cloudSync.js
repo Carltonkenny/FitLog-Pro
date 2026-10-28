@@ -8,6 +8,7 @@ const PULL_LIMIT = 200;
 
 let flushing = null;
 let pulling = null;
+let rerun = false; // a workout was queued while an upload was running
 
 const readJson = (key, fallback) => {
   try {
@@ -118,6 +119,11 @@ export const CloudSync = {
           else remaining.push(record);
         }
       }
+      // A workout finished while we were uploading was queued by saveWorkout; keep it instead of overwriting the queue.
+      const batch = new Set(queue.map((r) => r.id));
+      const added = readJson(QUEUE_KEY, []).filter((r) => !batch.has(r.id));
+      remaining.push(...added);
+      rerun = added.length > 0;
       localStorage.setItem(QUEUE_KEY, JSON.stringify(remaining));
       const history = readJson(HISTORY_KEY, []).map((h) => {
         if (doneIds.has(h.id)) return { ...h, synced: true, pendingSync: false };
@@ -129,6 +135,10 @@ export const CloudSync = {
       return { synced: doneIds.size, pending: remaining.length, error: lastError };
     })().finally(() => {
       flushing = null;
+      if (rerun) {
+        rerun = false;
+        CloudSync.flush();
+      }
     });
     return flushing;
   },

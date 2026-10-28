@@ -6,6 +6,7 @@ export type Mock = {
   workouts: Map<string, unknown>;
   calls: { method: string; path: string; body?: unknown }[];
   failWorkoutPut?: number; // status to return for PUT /workouts/:id
+  putDelayMs?: number; // slow down PUT /workouts/:id to test overlapping uploads
   coachFail?: { status: number; error: string };
   coachReply?: unknown; // JSON object returned by /coach
   signedIn?: string;
@@ -58,6 +59,7 @@ export async function mockBackend(page: Page, opts: { signedIn?: string; profile
     if (path === '/records') return json(route, 200, { records: [] });
     if (path === '/workouts' && req.method() === 'GET') return json(route, 200, { workouts: [...m.workouts.values()] });
     if (path.startsWith('/workouts/') && req.method() === 'PUT') {
+      if (m.putDelayMs) await new Promise((r) => setTimeout(r, m.putDelayMs));
       if (m.failWorkoutPut) return json(route, m.failWorkoutPut, { error: 'mock failure' });
       m.workouts.set(path.split('/').pop()!, body);
       return json(route, 200, { ok: true });

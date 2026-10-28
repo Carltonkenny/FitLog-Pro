@@ -10,7 +10,9 @@
     "test": "node --env-file-if-exists=.env --import ./test/register.mjs --test \"test/*.test.js\"",
     "db:migrate": "node --env-file=.env scripts/db-migrate.mjs",
     "e2e": "playwright test",
-    "qa:docs": "node scripts/qa-docs.mjs"
+    "qa:docs": "node scripts/qa-docs.mjs",
+    "build:perf": "vite build --outDir dist-perf",
+    "perf": "node --experimental-strip-types scripts/perf-measure.mjs"
   },
   "dependencies": {
     "@neon/config": "^1.9.4",

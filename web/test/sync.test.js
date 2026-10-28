@@ -98,3 +98,20 @@ test('bodyweight sets (0 kg) count as sets, so a pull-up-only workout can be fin
   assert.equal(workoutStats([{ sets: [{ weight: 50, reps: 0, completed: true }] }]).completedSetsCount, 0, 'zero reps is not a set');
   assert.equal(workoutStats([{ sets: [{ weight: 50, reps: 5, completed: true }] }]).volume, 250);
 });
+
+test('clock restored from a snapshot comes back paused with the saved elapsed time', () => {
+  const c = createClock();
+  c.start(1_000);
+  const snap = c.snapshot(61_000); // 60 s into the run when saved
+  const restored = createClock(snap);
+  assert.equal(restored.isRunning(), false);
+  assert.equal(restored.seconds(9_999_999), 60); // time while the tab was closed does not count
+});
+
+test('workout dates from a wrong device clock are clamped into the range the server accepts', async () => {
+  const { toRows } = await import('../src/lib/syncRows.js');
+  const future = toRows({ id: 'w', timestamp: Date.now() + 400 * 86_400_000, durationSeconds: 60, exercises: [] }, null).workout;
+  assert.ok(Date.parse(future.completed_at) <= Date.now());
+  const ancient = toRows({ id: 'w', timestamp: 1000, durationSeconds: 0, exercises: [] }, null).workout;
+  assert.ok(Date.parse(ancient.started_at) >= Date.parse('2000-01-01'));
+});

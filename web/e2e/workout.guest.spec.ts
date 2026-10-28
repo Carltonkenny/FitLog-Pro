@@ -163,6 +163,18 @@ test.describe('Active workout', () => {
     await expect(sets(page).getByRole('columnheader', { name: /lb/ })).toBeVisible();
   });
 
+  test('TC-WRK-REFRESH-002 the session clock keeps its elapsed time after a refresh and comes back paused', async ({ page }) => {
+    await page.clock.install();
+    await openApp(page);
+    await page.getByRole('button', { name: 'Start', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Pause' })).toBeVisible();
+    await page.clock.runFor(65_000);
+    await expect(page.getByText('01:05').first()).toBeVisible();
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await expect(page.getByText('01:0').first()).toBeVisible();
+    await expect(page.getByRole('button', { name: /Resume|Start/ }).first()).toBeVisible();
+  });
+
   test('TC-WRK-TIMER-001 the session clock runs and pauses (fake clock)', async ({ page }) => {
     await page.clock.install();
     await openApp(page);

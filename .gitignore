@@ -35,3 +35,5 @@ Thumbs.db
 web/.env
 web/.env.*
 !web/.env.example
+docs/qa/results/
+docs/performance/results/
