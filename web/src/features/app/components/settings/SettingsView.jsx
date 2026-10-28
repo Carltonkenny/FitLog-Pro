@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShieldCheck, User, Volume2, Smartphone, Database, Check } from 'lucide-react';
+import { WorkoutStore } from '../../../../lib/workoutStore';
 
 export default function SettingsView({ blueprint, onUpdateBlueprint }) {
-  const [unit, setUnit] = useState('kg');
-  const [restDuration, setRestDuration] = useState('90');
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [hapticsEnabled, setHapticsEnabled] = useState(true);
+  const initialPrefs = WorkoutStore.getPreferences();
+  const [unit, setUnit] = useState(initialPrefs.unit || 'kg');
+  const [restDuration, setRestDuration] = useState(String(initialPrefs.restDuration || '90'));
+  const [soundEnabled, setSoundEnabled] = useState(initialPrefs.sound ?? true);
+  const [hapticsEnabled, setHapticsEnabled] = useState(initialPrefs.haptics ?? true);
+
+  const handleUnitChange = (newUnit) => {
+    setUnit(newUnit);
+    WorkoutStore.savePreferences({ unit: newUnit });
+  };
+
+  const handleRestChange = (newRest) => {
+    setRestDuration(newRest);
+    WorkoutStore.savePreferences({ restDuration: Number(newRest) });
+  };
 
   return (
     <div className="space-y-6">
@@ -55,7 +67,8 @@ export default function SettingsView({ blueprint, onUpdateBlueprint }) {
             </div>
             <div className="flex items-center bg-zinc-950 p-1 rounded-xl border border-white/[0.06]">
               <button
-                onClick={() => setUnit('kg')}
+                type="button"
+                onClick={() => handleUnitChange('kg')}
                 className={`px-3 py-1 rounded-lg text-xs font-medium transition ${
                   unit === 'kg'
                     ? 'bg-emerald-500 text-zinc-950 font-bold shadow-sm'
@@ -65,7 +78,8 @@ export default function SettingsView({ blueprint, onUpdateBlueprint }) {
                 Metric (kg)
               </button>
               <button
-                onClick={() => setUnit('lbs')}
+                type="button"
+                onClick={() => handleUnitChange('lbs')}
                 className={`px-3 py-1 rounded-lg text-xs font-medium transition ${
                   unit === 'lbs'
                     ? 'bg-emerald-500 text-zinc-950 font-bold shadow-sm'
@@ -85,7 +99,7 @@ export default function SettingsView({ blueprint, onUpdateBlueprint }) {
             </div>
             <select
               value={restDuration}
-              onChange={(e) => setRestDuration(e.target.value)}
+              onChange={(e) => handleRestChange(e.target.value)}
               className="px-3 py-1.5 rounded-xl bg-zinc-950 border border-white/[0.08] text-zinc-200 text-xs font-mono focus:border-emerald-500 focus:outline-none"
             >
               <option value="60">60 Seconds</option>

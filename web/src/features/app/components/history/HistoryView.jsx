@@ -54,7 +54,7 @@ export default function HistoryView() {
 
               <div className="text-right">
                 <span className="text-sm font-mono font-bold text-emerald-400">
-                  {wo.volumeKg.toLocaleString()} kg
+                  {(wo.volumeKg ?? 0).toLocaleString()} kg
                 </span>
                 <div className="text-[10px] text-zinc-500 font-mono">Total Volume</div>
               </div>

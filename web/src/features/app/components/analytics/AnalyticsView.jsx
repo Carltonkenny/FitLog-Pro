@@ -9,6 +9,7 @@ export default function AnalyticsView() {
   // Dynamic calculation from history
   const totalVolumeAllTime = history.reduce((sum, wo) => sum + (wo.volumeKg || 0), 0);
   const totalSessionsCount = history.length;
+  const currentStreak = WorkoutStore.getStreak();
 
   return (
     <div className="space-y-6">
@@ -44,7 +45,7 @@ export default function AnalyticsView() {
         <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/[0.06]">
           <span className="text-[11px] text-zinc-400">Current Streak</span>
           <div className="text-xl font-bold text-amber-400 font-mono mt-0.5">
-            🔥 3 Days
+            🔥 {currentStreak} {currentStreak === 1 ? 'Day' : 'Days'}
           </div>
         </div>
       </div>

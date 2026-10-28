@@ -81,8 +81,9 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     };
   }, [isRestActive, restSeconds]);
 
-  const triggerRestTimer = (sec = 90) => {
-    setRestSeconds(sec);
+  const triggerRestTimer = (sec = null) => {
+    const defaultSec = sec || WorkoutStore.getPreferences().restDuration || 90;
+    setRestSeconds(defaultSec);
     setIsRestActive(true);
   };
 
@@ -96,11 +97,12 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       targetSet.completed = !targetSet.completed;
 
       if (targetSet.completed) {
-        triggerRestTimer(90);
+        triggerRestTimer();
         const isPR = WorkoutStore.checkIsPR(
           copy[exIndex].exerciseId,
           targetSet.weight,
-          targetSet.reps
+          targetSet.reps,
+          targetSet.type
         );
         targetSet.isPR = isPR;
 
@@ -120,7 +122,8 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
   const updateSet = (exIndex, setIndex, field, value) => {
     setExercises((prev) => {
       const copy = JSON.parse(JSON.stringify(prev));
-      copy[exIndex].sets[setIndex][field] = Number(value) || 0;
+      const parsed = Number(value);
+      copy[exIndex].sets[setIndex][field] = isNaN(parsed) ? 0 : Math.max(0, parsed);
       return copy;
     });
   };

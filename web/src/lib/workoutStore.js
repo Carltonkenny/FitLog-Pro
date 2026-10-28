@@ -3,12 +3,15 @@
 // Emil Kowalski Design Engineering & Plain-English Domain Architecture
 // ==============================================================================
 
-// Helper for 1RM calculation (Epley formula)
+// Helper for 1RM calculation (Epley formula with boundary guards)
+// Helper for 1RM calculation (Epley formula with boundary guards)
 export const calculate1RM = (weight, reps) => {
-  if (!weight || weight <= 0) return 0;
-  if (reps <= 1) return Number(weight);
+  const numWeight = Number(weight);
+  const numReps = Number(reps);
+  if (isNaN(numWeight) || isNaN(numReps) || numWeight <= 0 || numReps < 0) return 0;
+  if (numReps <= 1) return Number(numWeight.toFixed(1));
   // Epley Formula: 1RM = weight * (1 + reps / 30)
-  return Math.round(weight * (1 + reps / 30) * 10) / 10;
+  return Math.round(numWeight * (1 + numReps / 30) * 10) / 10;
 };
 
 // ------------------------------------------------------------------------------
@@ -549,13 +552,22 @@ export const WorkoutStore = {
   },
 
   // Check if a set qualifies as a new personal best
-  checkIsPR(exerciseId, weight, reps) {
-    if (!weight || !reps) return false;
-    const current1RM = calculate1RM(weight, reps);
+  checkIsPR(exerciseId, weight, reps, setType = 'normal') {
+    // Warmup sets ('W' or 'warmup') can NEVER be a personal record
+    if (setType === 'W' || setType === 'warmup') return false;
+    const numWeight = Number(weight);
+    const numReps = Number(reps);
+    if (isNaN(numWeight) || isNaN(numReps) || numWeight <= 0 || numReps <= 0) return false;
+
+    const current1RM = calculate1RM(numWeight, numReps);
+    if (current1RM <= 0) return false;
+
     const prs = this.getPersonalRecords();
     const existing = prs[exerciseId];
     if (!existing) return true;
-    return current1RM > existing.oneRepMax;
+
+    // Strict overload check: must strictly exceed existing 1RM to avoid false floating-point ties
+    return current1RM > (existing.oneRepMax + 0.05);
   },
 
   // Save workout locally (local-first) and mark as pending sync if offline
@@ -563,24 +575,25 @@ export const WorkoutStore = {
     const history = this.getHistory();
     const prs = this.getPersonalRecords();
 
-    // Check for new PRs
+    // Check for new PRs (excluding warmups)
     let newPRsFound = [];
     workoutData.exercises?.forEach((ex) => {
       ex.sets?.forEach((set) => {
-        if (set.completed && set.weight > 0 && set.reps > 0) {
+        const isWarmup = set.type === 'W' || set.type === 'warmup';
+        if (!isWarmup && set.completed && set.weight > 0 && set.reps > 0) {
           const oneRepMax = calculate1RM(set.weight, set.reps);
           const currentPR = prs[ex.exerciseId];
-          if (!currentPR || oneRepMax > currentPR.oneRepMax) {
+          if (!currentPR || oneRepMax > (currentPR.oneRepMax + 0.05)) {
             prs[ex.exerciseId] = {
-              weight: set.weight,
-              reps: set.reps,
+              weight: Number(set.weight),
+              reps: Number(set.reps),
               oneRepMax: oneRepMax,
               date: 'Today',
             };
             newPRsFound.push({
               exerciseName: ex.exerciseName,
-              weight: set.weight,
-              reps: set.reps,
+              weight: Number(set.weight),
+              reps: Number(set.reps),
               oneRepMax: oneRepMax,
             });
           }
@@ -595,9 +608,9 @@ export const WorkoutStore = {
       title: workoutData.title || 'Logged Workout',
       date: 'Today',
       timestamp: Date.now(),
-      volumeKg: workoutData.volumeKg || 0,
-      durationSeconds: workoutData.durationSeconds || 0,
-      exercises: workoutData.exercises,
+      volumeKg: Number(workoutData.volumeKg) || 0,
+      durationSeconds: Number(workoutData.durationSeconds) || 0,
+      exercises: workoutData.exercises || [],
       newPRs: newPRsFound,
       synced: isOnline,
       pendingSync: !isOnline,
@@ -618,6 +631,65 @@ export const WorkoutStore = {
       savedRecord,
       newPRsFound,
     };
+  },
+
+  // Calculate current active training streak in days
+  getStreak() {
+    const history = this.getHistory();
+    if (!history || history.length === 0) return 0;
+
+    const daySet = new Set();
+    for (const item of history) {
+      if (item.timestamp) {
+        const d = new Date(item.timestamp);
+        const dayKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        daySet.add(dayKey);
+      }
+    }
+
+    const today = new Date();
+    const toDayKey = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+    let streak = 0;
+    let checkDate = new Date(today);
+
+    // If not worked out today, check if yesterday was worked out to maintain active streak
+    let checkKey = toDayKey(checkDate);
+    if (!daySet.has(checkKey)) {
+      checkDate.setDate(checkDate.getDate() - 1);
+      checkKey = toDayKey(checkDate);
+      if (!daySet.has(checkKey)) return 0;
+    }
+
+    while (daySet.has(checkKey)) {
+      streak++;
+      checkDate.setDate(checkDate.getDate() - 1);
+      checkKey = toDayKey(checkDate);
+    }
+    return streak;
+  },
+
+  // User preferences persistence (unit, rest duration)
+  getPreferences() {
+    try {
+      const raw = localStorage.getItem('fitlog_preferences');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {
+      // fallback
+    }
+    return { unit: 'kg', restDuration: 90, sound: true, haptics: true };
+  },
+
+  savePreferences(prefs) {
+    try {
+      const current = this.getPreferences();
+      const updated = { ...current, ...prefs };
+      localStorage.setItem('fitlog_preferences', JSON.stringify(updated));
+      return updated;
+    } catch (e) {
+      return prefs;
+    }
   },
 
   // Flush pending sync queue when reconnected

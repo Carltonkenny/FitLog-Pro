@@ -26,7 +26,7 @@ export default function FinishModal({
           <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">
             <span className="text-zinc-400">Total Volume</span>
             <div className="text-base font-bold font-mono text-emerald-400 mt-0.5">
-              {workout?.volumeKg.toLocaleString()} kg
+              {(workout?.volumeKg ?? 0).toLocaleString()} kg
             </div>
           </div>
           <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">

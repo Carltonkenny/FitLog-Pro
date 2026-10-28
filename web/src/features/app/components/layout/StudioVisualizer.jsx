@@ -42,51 +42,68 @@ export default function StudioVisualizer({ currentFocusedExercise }) {
 
   const estimatedMaxLift = calculate1RM(focusedActiveWeight, focusedActiveReps);
 
+  const isBarbell = currentFocusedExercise?.equipment?.toLowerCase().includes('barbell');
+
   return (
     <aside className="w-80 lg:w-96 border-l border-white/[0.08] p-4 space-y-5 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto bg-[#0c0e12]/60 backdrop-blur-sm">
-      {/* Olympic Barbell Sleeve Visualizer */}
+      {/* Equipment Load Visualizer */}
       <div className="p-4 rounded-2xl bg-zinc-900/80 border border-white/[0.08] space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Calculator className="w-4 h-4 text-emerald-400" />
-            <h4 className="text-xs font-bold text-white">Olympic Barbell Visualizer</h4>
+            <h4 className="text-xs font-bold text-white">
+              {isBarbell ? 'Olympic Barbell Visualizer' : `${currentFocusedExercise?.equipment || 'Load'} Guide`}
+            </h4>
           </div>
           <span className="text-xs font-mono font-bold text-emerald-400">
             {focusedActiveWeight} kg
           </span>
         </div>
 
-        <p className="text-[11px] text-zinc-400">
-          Standard 20kg barbell sleeve. Load these exact plates on <strong>each side</strong>:
-        </p>
+        {isBarbell ? (
+          <>
+            <p className="text-[11px] text-zinc-400">
+              Standard 20kg barbell sleeve. Load these exact plates on <strong>each side</strong>:
+            </p>
 
-        {/* Barbell Sleeve Graphic */}
-        <div className="h-16 bg-zinc-950 rounded-xl border border-white/[0.06] flex items-center px-4 overflow-hidden relative">
-          <div className="w-5 h-10 bg-zinc-600 rounded-l-md border-r-2 border-zinc-400" />
-          <div className="flex items-center gap-1 ml-1">
-            {computePlatesPerSide(focusedActiveWeight).map((plate, idx) => (
-              <div
-                key={idx}
-                className={`w-4 h-12 rounded flex items-center justify-center text-[9px] font-bold shadow-md ${plate.color}`}
-                title={`${plate.label} kg plate`}
-              >
-                <span className="rotate-90">{plate.label}</span>
+            {/* Barbell Sleeve Graphic */}
+            <div className="h-16 bg-zinc-950 rounded-xl border border-white/[0.06] flex items-center px-4 overflow-hidden relative">
+              <div className="w-5 h-10 bg-zinc-600 rounded-l-md border-r-2 border-zinc-400" />
+              <div className="flex items-center gap-1 ml-1">
+                {computePlatesPerSide(focusedActiveWeight).map((plate, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-4 h-12 rounded flex items-center justify-center text-[9px] font-bold shadow-md ${plate.color}`}
+                    title={`${plate.label} kg plate`}
+                  >
+                    <span className="rotate-90">{plate.label}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="flex-1 h-3 bg-zinc-500 rounded-r-full ml-1" />
-        </div>
+              <div className="flex-1 h-3 bg-zinc-500 rounded-r-full ml-1" />
+            </div>
 
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {computePlatesPerSide(focusedActiveWeight).map((plate, idx) => (
-            <span
-              key={idx}
-              className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold ${plate.color}`}
-            >
-              {plate.label} kg
-            </span>
-          ))}
-        </div>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {computePlatesPerSide(focusedActiveWeight).map((plate, idx) => (
+                <span
+                  key={idx}
+                  className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold ${plate.color}`}
+                >
+                  {plate.label} kg
+                </span>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="p-3 rounded-xl bg-zinc-950/80 border border-white/[0.05] text-[11px] text-zinc-400 space-y-1">
+            <div className="text-zinc-200 font-medium">
+              Equipment: <span className="text-emerald-400">{currentFocusedExercise?.equipment || 'Dumbbells / Cable'}</span>
+            </div>
+            <p>
+              Select {focusedActiveWeight} kg selector pin or matching dumbbells. Olympic plate loader activates automatically for barbell movements.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Live Estimated 1RM Strength Curve */}

@@ -27,9 +27,11 @@ export default function SetRow({
       <td className="py-2.5">
         <div className="flex items-center gap-1.5">
           <button
+            type="button"
+            aria-label="Decrease weight by 2.5 kg"
             onClick={(e) => {
               e.stopPropagation();
-              onUpdateSet(exIndex, setIndex, 'weight', Math.max(0, set.weight - 2.5));
+              onUpdateSet(exIndex, setIndex, 'weight', Math.max(0, Number((set.weight - 2.5).toFixed(1))));
             }}
             className="w-6 h-6 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 flex items-center justify-center active:scale-95 transition"
           >
@@ -38,14 +40,18 @@ export default function SetRow({
           <input
             type="number"
             step="0.5"
+            min="0"
+            aria-label={`Set ${set.type} weight in kilograms`}
             value={set.weight}
             onChange={(e) => onUpdateSet(exIndex, setIndex, 'weight', e.target.value)}
-            className="w-14 px-2 py-1 rounded bg-zinc-900 border border-white/[0.08] text-center font-mono font-semibold text-white focus:border-emerald-500 focus:outline-none tabular-nums"
+            className="w-14 px-2 py-1 rounded bg-zinc-900 border border-white/[0.08] text-center font-mono font-semibold text-white focus:border-emerald-500 focus:outline-none tabular-nums [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
           <button
+            type="button"
+            aria-label="Increase weight by 2.5 kg"
             onClick={(e) => {
               e.stopPropagation();
-              onUpdateSet(exIndex, setIndex, 'weight', set.weight + 2.5);
+              onUpdateSet(exIndex, setIndex, 'weight', Number((set.weight + 2.5).toFixed(1)));
             }}
             className="w-6 h-6 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 flex items-center justify-center active:scale-95 transition"
           >
@@ -58,6 +64,8 @@ export default function SetRow({
       <td className="py-2.5">
         <div className="flex items-center gap-1.5">
           <button
+            type="button"
+            aria-label="Decrease reps by 1"
             onClick={(e) => {
               e.stopPropagation();
               onUpdateSet(exIndex, setIndex, 'reps', Math.max(1, set.reps - 1));
@@ -68,11 +76,15 @@ export default function SetRow({
           </button>
           <input
             type="number"
+            min="1"
+            aria-label={`Set ${set.type} reps`}
             value={set.reps}
             onChange={(e) => onUpdateSet(exIndex, setIndex, 'reps', e.target.value)}
-            className="w-12 px-2 py-1 rounded bg-zinc-900 border border-white/[0.08] text-center font-mono font-semibold text-white focus:border-emerald-500 focus:outline-none tabular-nums"
+            className="w-12 px-2 py-1 rounded bg-zinc-900 border border-white/[0.08] text-center font-mono font-semibold text-white focus:border-emerald-500 focus:outline-none tabular-nums [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
           <button
+            type="button"
+            aria-label="Increase reps by 1"
             onClick={(e) => {
               e.stopPropagation();
               onUpdateSet(exIndex, setIndex, 'reps', set.reps + 1);
@@ -93,6 +105,8 @@ export default function SetRow({
             </span>
           )}
           <button
+            type="button"
+            aria-label={set.completed ? `Mark Set ${set.type} incomplete` : `Mark Set ${set.type} complete`}
             onClick={(e) => {
               e.stopPropagation();
               onToggleSet(exIndex, setIndex);
