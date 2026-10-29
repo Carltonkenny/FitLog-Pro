@@ -1,5 +1,7 @@
 import React from 'react';
+import EscapeClose from '../../../../components/EscapeClose';
 import { Award } from 'lucide-react';
+import { formatWeight, useSettings } from '../../../../lib/settings';
 
 export default function FinishModal({
   isOpen,
@@ -7,11 +9,13 @@ export default function FinishModal({
   formatTimer,
   onClose,
 }) {
+  const { unit } = useSettings();
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#12141a] border border-emerald-500/30 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-150">
+    <div role="dialog" aria-modal="true" aria-label="Workout complete" className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
+      <EscapeClose onClose={onClose} />
+      <div className="bg-[#12141a] border border-emerald-500/30 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-popIn">
         <div className="text-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400 shadow-lg shadow-emerald-500/20">
             <Award className="w-6 h-6" />
@@ -26,13 +30,13 @@ export default function FinishModal({
           <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">
             <span className="text-zinc-400">Total Volume</span>
             <div className="text-base font-bold font-mono text-emerald-400 mt-0.5">
-              {workout?.volumeKg.toLocaleString()} kg
+              {formatWeight(workout?.volumeKg || 0, unit)}
             </div>
           </div>
           <div className="p-3 rounded-xl bg-zinc-900 border border-white/[0.06]">
             <span className="text-zinc-400">Duration</span>
             <div className="text-base font-bold font-mono text-zinc-200 mt-0.5">
-              {formatTimer(workout?.durationSeconds || 1800)}
+              {formatTimer(workout?.durationSeconds || 0)}
             </div>
           </div>
         </div>
@@ -47,7 +51,7 @@ export default function FinishModal({
               <div key={idx} className="text-xs text-zinc-200 flex justify-between">
                 <span>{pr.exerciseName}</span>
                 <strong className="text-amber-400 font-mono">
-                  {pr.weight} kg × {pr.reps} reps (1RM: {pr.oneRepMax} kg)
+                  {formatWeight(pr.weight, unit)} × {pr.reps} reps (est. max {formatWeight(pr.oneRepMax, unit)})
                 </strong>
               </div>
             ))}

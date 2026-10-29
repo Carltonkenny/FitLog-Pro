@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { Calculator, Plus, Minus, Info, Sparkles } from 'lucide-react';
+import {
+  Calculator,
+} from 'lucide-react';
 
 export default function PlateCalculator() {
   const [weight, setWeight] = useState(100);
@@ -18,9 +20,9 @@ export default function PlateCalculator() {
     if (remainder <= 0) return [];
 
     const availablePlates = [
-      { weight: 25, color: '#EF4444', label: '25kg', height: 76 },
+      { weight: 25, color: '#DC2626', label: '25kg', height: 76 },
       { weight: 20, color: '#3B82F6', label: '20kg', height: 74 },
-      { weight: 15, color: '#EAB308', label: '15kg', height: 68 },
+      { weight: 15, color: '#EAB308', textColor: '#18181B', label: '15kg', height: 68 },
       { weight: 10, color: '#22C55E', label: '10kg', height: 60 },
       { weight: 5, color: '#F8FAFC', label: '5kg', height: 48, textColor: '#000' },
       { weight: 2.5, color: '#1E293B', label: '2.5kg', height: 38 },
@@ -51,7 +53,7 @@ export default function PlateCalculator() {
             <Calculator className="w-3.5 h-3.5" />
             <span>INSTANT BIOMECHANICS ENGINE</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-['Outfit']">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-['Outfit_Variable']">
             Epley 1RM & Visual Plate Loader
           </h2>
           <p className="text-slate-400 mt-2 text-sm sm:text-base">
@@ -74,13 +76,13 @@ export default function PlateCalculator() {
                 <div className="flex items-center gap-2 mb-2">
                   <button
                     onClick={() => adjustWeight(-5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     -5
                   </button>
                   <button
                     onClick={() => adjustWeight(-2.5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     -2.5
                   </button>
@@ -91,17 +93,17 @@ export default function PlateCalculator() {
                     step="2.5"
                     value={weight}
                     onChange={(e) => setWeight(parseFloat(e.target.value))}
-                    className="flex-1 accent-[#00F59B] h-2 bg-[#242836] rounded-lg cursor-pointer"
+                    aria-label="Total weight in kilograms" className="flex-1 accent-[#00F59B] h-6 cursor-pointer"
                   />
                   <button
                     onClick={() => adjustWeight(2.5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     +2.5
                   </button>
                   <button
                     onClick={() => adjustWeight(5)}
-                    className="p-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-300 border border-[#2B3040] text-xs font-mono"
+                    className="min-w-11 h-11 px-2 rounded-lg bg-[#1F232E] hover:bg-[#2A2F3E] text-slate-200 border border-[#2B3040] text-xs font-mono"
                   >
                     +5
                   </button>
@@ -121,9 +123,9 @@ export default function PlateCalculator() {
                   step="1"
                   value={reps}
                   onChange={(e) => setReps(parseInt(e.target.value))}
-                  className="w-full accent-[#00F59B] h-2 bg-[#242836] rounded-lg cursor-pointer"
+                  aria-label="Reps" className="w-full accent-[#00F59B] h-6 cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+                <div className="flex justify-between text-[10px] font-mono text-slate-400 mt-1">
                   <span>1 (Max)</span>
                   <span>5 (Strength)</span>
                   <span>8 (Hypertrophy)</span>
@@ -136,8 +138,9 @@ export default function PlateCalculator() {
                 <label className="text-xs font-mono uppercase text-slate-400 block mb-2">Barbell Tare</label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
+                    aria-pressed={barWeight === 20}
                     onClick={() => setBarWeight(20)}
-                    className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                    className={`min-h-11 px-4 rounded-lg text-xs font-semibold border transition-all ${
                       barWeight === 20
                         ? 'bg-[#00F59B]/10 border-[#00F59B] text-[#00F59B]'
                         : 'bg-[#181B24] border-[#282C3B] text-slate-400'
@@ -146,8 +149,9 @@ export default function PlateCalculator() {
                     Olympic Men's (20 kg)
                   </button>
                   <button
+                    aria-pressed={barWeight === 15}
                     onClick={() => setBarWeight(15)}
-                    className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                    className={`min-h-11 px-4 rounded-lg text-xs font-semibold border transition-all ${
                       barWeight === 15
                         ? 'bg-[#00F59B]/10 border-[#00F59B] text-[#00F59B]'
                         : 'bg-[#181B24] border-[#282C3B] text-slate-400'
@@ -166,7 +170,7 @@ export default function PlateCalculator() {
               <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-[#181C26] to-[#12141A] border border-[#32384D]">
                 <div>
                   <span className="text-xs font-mono text-slate-400 block uppercase">Theoretical 1RM (Epley)</span>
-                  <div className="text-3xl font-black text-white font-['Outfit'] mt-0.5">
+                  <div className="text-3xl font-black text-white font-['Outfit_Variable'] mt-0.5">
                     {oneRepMax} <span className="text-sm font-normal text-[#00F59B]">kg</span>
                   </div>
                 </div>
@@ -215,13 +219,13 @@ export default function PlateCalculator() {
                 {/* Plate Legend */}
                 <div className="flex flex-wrap items-center justify-center gap-2 mt-4 pt-3 border-t border-[#1C1F2B]">
                   {platesPerSide.length === 0 ? (
-                    <span className="text-xs text-slate-500 italic">Only the bare bar. Add weight to see plates.</span>
+                    <span className="text-xs text-slate-400 italic">Only the bare bar. Add weight to see plates.</span>
                   ) : (
                     platesPerSide.map((plate, idx) => (
                       <span
                         key={idx}
                         className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold"
-                        style={{ backgroundColor: plate.color + '25', color: plate.color }}
+                        style={{ backgroundColor: plate.color + '25', color: '#E2E8F0' }}
                       >
                         {plate.label}
                       </span>

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { BookOpen, Target, Activity, Cpu, Check, Layers, Sparkles } from 'lucide-react';
+import {
+  BookOpen,
+  Target,
+  Activity,
+  Cpu,
+  Check,
+} from 'lucide-react';
 
 export default function ScienceAcademy() {
   const [selectedMuscle, setSelectedMuscle] = useState('Chest');
@@ -103,7 +109,7 @@ export default function ScienceAcademy() {
                 <button
                   key={muscle}
                   onClick={() => setSelectedMuscle(muscle)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition active:scale-95 border ${
+                  className={`min-h-11 px-4 rounded-xl text-xs font-semibold transition active:scale-95 border ${
                     selectedMuscle === muscle
                       ? 'bg-emerald-500 text-zinc-950 border-emerald-400 shadow-md shadow-emerald-500/20'
                       : 'bg-zinc-950 text-zinc-400 border-white/[0.06] hover:text-white'

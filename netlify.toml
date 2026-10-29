@@ -1,0 +1,41 @@
+[build]
+  base    = "web"
+  command = "npm run build"
+  publish = "dist"
+
+# Neon Auth through our own domain, so its session cookie is first-party (iPhone Safari blocks cross-site
+# cookies). The target is this project's Neon Auth base URL (`neon neon-auth status`). It is public.
+[[redirects]]
+  from   = "/neon-auth/*"
+  to     = "https://ep-late-morning-aoqnwcuj.neonauth.c-2.ap-southeast-1.aws.neon.tech/neondb/auth/:splat"
+  status = 200
+  force  = true
+
+# SPA fallback — every route (including /app, /onboarding) returns index.html
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+# Security headers for every response
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://*.neon.tech wss://*.neon.tech; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+
+# The service worker and manifest must always be re-checked so updates reach users
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# Hashed build assets can be cached forever
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

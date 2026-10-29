@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { lazyWithRetry } from './lib/lazyWithRetry';
 import LandingPage from './features/landing/LandingPage';
 import AuthModal from './features/auth/AuthModal';
-import OnboardingFlow from './features/onboarding/OnboardingFlow';
-import ProApp from './features/app/ProApp';
-import { AuthService } from './lib/supabaseClient';
+// The signed-in app is a separate chunk, so landing visitors do not download it (and the reverse).
+const OnboardingFlow = lazyWithRetry(() => import('./features/onboarding/OnboardingFlow'));
+const ProApp = lazyWithRetry(() => import('./features/app/ProApp'));
+import { AuthService, authRequired } from './lib/neonClient';
+import { CloudSync } from './lib/cloudSync';
+import { resetUserData } from './lib/userData';
 
 export default function App() {
   const getInitialView = () => {
@@ -19,7 +23,10 @@ export default function App() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState('signup');
   const [session, setSession] = useState(null);
+  const [authReady, setAuthReady] = useState(!authRequired);
   const [blueprint, setBlueprint] = useState(null);
+  // Set when the user arrives from a password-reset email: /reset-password?token=...
+  const [resetToken, setResetToken] = useState(null);
 
   const updateView = (newView) => {
     setView(newView);
@@ -43,11 +50,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Restore existing session and cached blueprint if present
-    const existing = AuthService.getSession();
-    if (existing) {
-      setSession(existing);
-    }
+    // Restore the signed-in user (Neon Auth session cookie) and the cached plan if present.
+    AuthService.restoreSession().then((existing) => {
+      if (existing) setSession(existing);
+      setAuthReady(true);
+    });
     const cachedProfile = localStorage.getItem('fitlog_profile');
     if (cachedProfile) {
       try {
@@ -55,29 +62,80 @@ export default function App() {
       } catch (e) {
         // ignore
       }
-    } else {
-      // Default initial blueprint
+    } else if (!authRequired) {
+      // Local-only mode (no cloud account): start with a neutral plan.
       setBlueprint({
-        fitness_goal: 'Hypertrophy',
+        fitness_goal: 'Muscle Growth',
+        goal: 'muscle_growth',
         experience_level: 'Intermediate',
         split_preference: 'PPL',
-        body_weight_kg: 76.5,
-        target_weight_kg: 80.0,
-        bench_1rm_kg: 85.0,
       });
     }
   }, []);
+
+  useEffect(() => {
+    // Arriving from a password-reset email: open the "choose a new password" dialog.
+    if (window.location.pathname === '/reset-password') {
+      const token = new URLSearchParams(window.location.search).get('token');
+      if (token) {
+        setResetToken(token);
+        setAuthMode('reset');
+        setAuthModalOpen(true);
+      }
+      window.history.replaceState({}, '', '/');
+    }
+  }, []);
+
+  // Cloud mode: the app and onboarding screens require a signed-in user.
+  useEffect(() => {
+    if (authReady && authRequired && !session && (view === 'app' || view === 'onboarding')) {
+      updateView('landing');
+      setAuthMode('signin');
+      setAuthModalOpen(true);
+    }
+  }, [authReady, session, view]);
+
+  // Returning user on a new device: restore their saved plan instead of repeating onboarding.
+  useEffect(() => {
+    if (!session || !authRequired || localStorage.getItem('fitlog_profile')) return;
+    AuthService.fetchProfile().then((profile) => {
+      if (profile) setBlueprint(profile);
+      else if (window.location.pathname === '/app') updateView('onboarding');
+    });
+  }, [session]);
+
+  const handleSignOut = async () => {
+    const result = await CloudSync.flush();
+    if (result.pending > 0) {
+      const ok = window.confirm(
+        `${result.pending} workout${result.pending === 1 ? ' has' : 's have'} not synced yet and will be lost if you sign out. Sign out anyway?`
+      );
+      if (!ok) return;
+    }
+    await AuthService.signOut();
+    resetUserData();
+    setSession(null);
+    setBlueprint(null);
+    updateView('landing');
+  };
 
   const handleOpenAuth = (mode = 'signup') => {
     setAuthMode(mode);
     setAuthModalOpen(true);
   };
 
-  const handleAuthSuccess = (newSession) => {
+  const handleAuthSuccess = async (newSession) => {
     setSession(newSession);
-    // If onboarding hasn't been completed, go to onboarding, else go directly into app
-    const cachedProfile = localStorage.getItem('fitlog_profile');
-    if (cachedProfile) {
+    // Finished onboarding before (here or on another device)? Go straight to the app.
+    let profile = null;
+    try {
+      const cached = localStorage.getItem('fitlog_profile');
+      profile = cached ? JSON.parse(cached) : await AuthService.fetchProfile();
+    } catch {
+      profile = null;
+    }
+    if (profile) {
+      setBlueprint(profile);
       updateView('app');
     } else {
       updateView('onboarding');
@@ -109,7 +167,8 @@ export default function App() {
         />
       )}
 
-      {view === 'onboarding' && (
+      <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
+      {view === 'onboarding' && (!authRequired || session) && (
         <OnboardingFlow
           session={session}
           onComplete={handleOnboardingComplete}
@@ -117,19 +176,22 @@ export default function App() {
         />
       )}
 
-      {view === 'app' && (
+      {view === 'app' && (!authRequired || session) && (
         <ProApp
           blueprint={blueprint}
           session={session}
           onUpdateBlueprint={(newBp) => setBlueprint(newBp)}
           onBack={() => updateView('landing')}
+          onSignOut={handleSignOut}
         />
       )}
+      </Suspense>
 
       {/* Global Auth Modal */}
       <AuthModal
         isOpen={authModalOpen}
         initialMode={authMode}
+        resetToken={resetToken}
         onClose={() => setAuthModalOpen(false)}
         onSuccess={handleAuthSuccess}
       />
