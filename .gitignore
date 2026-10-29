@@ -37,3 +37,8 @@ web/.env.*
 !web/.env.example
 docs/qa/results/
 docs/performance/results/
+
+# Test results
+test-results/
+web/test-results/
+web/playwright-report/

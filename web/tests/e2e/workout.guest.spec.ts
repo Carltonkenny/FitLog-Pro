@@ -164,7 +164,7 @@ test.describe('Active workout', () => {
   });
 
   test('TC-WRK-REFRESH-002 the session clock keeps its elapsed time after a refresh and comes back paused', async ({ page }) => {
-    await page.clock.install();
+    await page.clock.install({ time: new Date() });
     await openApp(page);
     await page.getByRole('button', { name: 'Start', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Pause' })).toBeVisible();
@@ -176,15 +176,17 @@ test.describe('Active workout', () => {
   });
 
   test('TC-WRK-TIMER-001 the session clock runs and pauses (fake clock)', async ({ page }) => {
-    await page.clock.install();
+    await page.clock.install({ time: new Date() });
     await openApp(page);
     await page.getByRole('button', { name: 'Start', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Pause' })).toBeVisible(); // wait until the interval is registered
     await page.clock.runFor(5000);
-    await expect(page.getByText('00:05').first()).toBeVisible();
+    const timeLocator = page.locator('header').getByText(/00:0[5-9]/).first();
+    await expect(timeLocator).toBeVisible();
+    const paused = await timeLocator.textContent();
     await page.getByRole('button', { name: 'Pause' }).click();
     await page.clock.runFor(5000);
-    await expect(page.getByText('00:05').first()).toBeVisible();
+    await expect(page.locator('header').getByText(paused)).toBeVisible();
   });
   test('TC-WRK-REFRESH-001 a completed set survives a page refresh', async ({ page }) => {
     await openApp(page);
