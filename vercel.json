@@ -1,20 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
   "buildCommand": "npm --prefix web run build",
   "outputDirectory": "web/dist",
-  "framework": "vite",
-  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/neon-auth/:splat*",
-      "destination": "https://ep-late-morning-aoqnwcuj.neonauth.c-2.ap-southeast-1.aws.neon.tech/neondb/auth/:splat*"
+      "source": "/neon-auth/:path*",
+      "destination": "https://ep-late-morning-aoqnwcuj.neonauth.c-2.ap-southeast-1.aws.neon.tech/neondb/auth/:path*"
     },
     {
-      "source": "/api/:match*",
+      "source": "/api/:path*",
       "destination": "/api"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/|icons/|favicon.svg|manifest.webmanifest|sw.js).*)",
       "destination": "/index.html"
     }
   ],
@@ -68,4 +67,3 @@
     }
   ]
 }
-
