@@ -89,7 +89,9 @@ function friendlyAuthError(err) {
   if (code.includes('PASSWORD_TOO_SHORT') || msg.includes('password') && msg.includes('short')) return 'Password must be at least 8 characters.';
   if (code.includes('INVALID_EMAIL') || msg.includes('invalid email')) return 'Enter a valid email address.';
   if (code.includes('INVALID_TOKEN') || msg.includes('invalid token') || msg.includes('expired')) return 'That reset link has expired. Request a new one.';
-  if (code.includes('INVALID_ORIGIN')) return 'This site is not allowed to sign in yet. Tell the site owner.';
+  if (code.includes('INVALID_ORIGIN') || code.includes('INVALID_HOSTNAME') || msg.includes('invalid hostname') || msg.includes('invalid origin')) {
+    return 'This domain is not whitelisted in Neon Auth yet. Add ' + window.location.origin + ' in your Neon Console under Auth > Domains.';
+  }
   if (msg.includes('rate') || err?.status === 429) return 'Too many attempts. Wait a minute and try again.';
   if (msg.includes('failed to fetch') || msg.includes('network')) return 'Cannot reach the server. Check your connection and try again.';
   return err?.message || 'Authentication failed. Try again.';
