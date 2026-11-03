@@ -13,6 +13,7 @@ class SupabaseService {
   /// Current authenticated user ID (if any)
   static String? currentUserId;
   static String? currentUserEmail;
+  static String? currentAuthToken;
 
   /// Initialize client
   static Future<void> initialize({String? anonKey}) async {
@@ -30,8 +31,9 @@ class SupabaseService {
     if (uri.scheme == 'fitlogpro') {
       final token = uri.queryParameters['token'];
       final userId = uri.queryParameters['userId'];
-      if (userId != null) {
+      if (userId != null && token != null && token.isNotEmpty) {
         currentUserId = userId;
+        currentAuthToken = token;
         currentUserEmail = uri.queryParameters['email'] ?? 'athlete@fitlogpro.in';
         debugPrint('[SupabaseService] Deep link handoff authenticated: $userId');
         return true;

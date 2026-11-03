@@ -1,0 +1,4549 @@
+[
+  {
+    "id": "TC-LAND-SEO-001",
+    "module": "Landing page",
+    "feature": "SEO",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Page has a title, a description and a language",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Read title, meta description, html lang"
+    ],
+    "expectedResults": [
+      "Title contains FitLog; description 20+ chars; lang=en"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-NAV-001",
+    "module": "Landing page",
+    "feature": "NAV",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Primary navigation lists five sections",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Read the Primary navigation"
+    ],
+    "expectedResults": [
+      "How it works, AI coach, Tools, Pricing, FAQ links visible"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-NAV-002",
+    "module": "Landing page",
+    "feature": "NAV",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Pricing link jumps to the pricing section",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Click Pricing"
+    ],
+    "expectedResults": [
+      "URL ends #pricing; Pricing heading is in the viewport"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-NAV-003",
+    "module": "Landing page",
+    "feature": "NAV",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "First Tab stop is the skip link",
+    "category": "positive",
+    "priority": "P1",
+    "type": "a11y",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Press Tab"
+    ],
+    "expectedResults": [
+      "Skip to main content is focused and targets #main"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-HERO-001",
+    "module": "Landing page",
+    "feature": "HERO",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Hero preview sets can be ticked and unticked",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Check set 3",
+      "Uncheck set 3"
+    ],
+    "expectedResults": [
+      "Checkbox state follows the clicks"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-CALC-001",
+    "module": "Landing page",
+    "feature": "CALC",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Plate calculator steppers change total weight",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Click +2.5",
+      "Click -5"
+    ],
+    "expectedResults": [
+      "Slider reads 102.5 then 97.5"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "BR-05",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-CALC-002",
+    "module": "Landing page",
+    "feature": "CALC",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Reps slider and bar choice are operable",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Set reps to 10",
+      "Click Technique (15 kg)"
+    ],
+    "expectedResults": [
+      "Reps slider reads 10; bar choice accepts the click"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-A11Y-001",
+    "module": "Landing page",
+    "feature": "A11Y",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Chosen bar weight is exposed to assistive technology",
+    "category": "a11y",
+    "priority": "P2",
+    "type": "a11y",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Click Technique (15 kg)",
+      "Read aria-pressed"
+    ],
+    "expectedResults": [
+      "aria-pressed=true on the chosen bar"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-009",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-ANAT-001",
+    "module": "Landing page",
+    "feature": "ANAT",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Choosing a muscle updates the anatomy explorer",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Click Back in Tools"
+    ],
+    "expectedResults": [
+      "The region heading changes"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-FAQ-001",
+    "module": "Landing page",
+    "feature": "FAQ",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "A FAQ item opens and closes",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Click the first FAQ summary twice"
+    ],
+    "expectedResults": [
+      "Open then closed"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-CTA-001",
+    "module": "Landing page",
+    "feature": "CTA",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Start free opens the sign-up dialog",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Click Start free"
+    ],
+    "expectedResults": [
+      "A dialog with the name field appears"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-404-001",
+    "module": "Landing page",
+    "feature": "404",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Unknown path shows the landing page",
+    "category": "negative",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /this-page-does-not-exist"
+    ],
+    "expectedResults": [
+      "The landing h1 is shown, no error"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LAND-HDR-001",
+    "module": "Landing page",
+    "feature": "HDR",
+    "screen": "Landing page",
+    "route": "/",
+    "title": "Exactly one h1",
+    "category": "positive",
+    "priority": "P3",
+    "type": "a11y",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Count h1"
+    ],
+    "expectedResults": [
+      "1"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/landing.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-GUARD-001",
+    "module": "Authentication",
+    "feature": "GUARD",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Signed-out visitor to /app is sent to the landing page with the sign-in dialog",
+    "category": "auth",
+    "priority": "P0",
+    "type": "security",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock no session",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "Dialog visible; path is /"
+    ],
+    "uiApiExpectations": "Mocked auth server",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-GUARD-002",
+    "module": "Authentication",
+    "feature": "GUARD",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Signed-out visitor to /onboarding is sent to the landing page with the sign-in dialog",
+    "category": "auth",
+    "priority": "P0",
+    "type": "security",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock no session",
+      "Open /onboarding"
+    ],
+    "expectedResults": [
+      "Dialog visible; path is /"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-GUARD-003",
+    "module": "Authentication",
+    "feature": "GUARD",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Signed-in user with a finished profile opens /app directly",
+    "category": "auth",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock session + completed profile",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "App shell shown; path stays /app"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-GUARD-004",
+    "module": "Authentication",
+    "feature": "GUARD",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Signed-in user without a profile is sent to onboarding",
+    "category": "auth",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock session, profile null",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "Path becomes /onboarding"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-DLG-001",
+    "module": "Authentication",
+    "feature": "DLG",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Dialog opens focused on the first field and closes on Escape",
+    "category": "positive",
+    "priority": "P1",
+    "type": "a11y",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Click Sign in",
+      "Press Escape"
+    ],
+    "expectedResults": [
+      "Email field focused; dialog closes"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-DLG-002",
+    "module": "Authentication",
+    "feature": "DLG",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Google button shows when Google sign-in is enabled",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open dialog with VITE_GOOGLE_AUTH=true"
+    ],
+    "expectedResults": [
+      "Continue with Google button visible"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-DLG-003",
+    "module": "Authentication",
+    "feature": "DLG",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Show-password toggle reveals and hides the password",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Type password",
+      "Click show password"
+    ],
+    "expectedResults": [
+      "Input type changes password to text"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-DLG-004",
+    "module": "Authentication",
+    "feature": "DLG",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Switching between sign-in and sign-up changes the form",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open sign-in",
+      "Switch to create account"
+    ],
+    "expectedResults": [
+      "Name field appears"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-VAL-001",
+    "module": "Authentication",
+    "feature": "VAL",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Empty sign-up shows all three errors and sends nothing",
+    "category": "negative",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open sign-up",
+      "Submit empty"
+    ],
+    "expectedResults": [
+      "Name, email and password errors; no sign-up request"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-VAL-002",
+    "module": "Authentication",
+    "feature": "VAL",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Invalid emails (plain, a@b, space, SQL-like text) are rejected before any request",
+    "category": "negative",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "plain | a@b | \"a b@c.com\" | \"' OR 1=1 --\"",
+    "steps": [
+      "Enter bad email + good password",
+      "Submit"
+    ],
+    "expectedResults": [
+      "Email error; no sign-in request"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-VAL-003",
+    "module": "Authentication",
+    "feature": "VAL",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Password boundary: 7 characters rejected, 8 accepted",
+    "category": "boundary",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign up with 7 chars",
+      "Submit",
+      "Change to 8",
+      "Submit"
+    ],
+    "expectedResults": [
+      "Error at 7; account created at 8"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNIN-001",
+    "module": "Authentication",
+    "feature": "SIGNIN",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Wrong password shows an error and keeps the dialog open",
+    "category": "negative",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign in with wrong password"
+    ],
+    "expectedResults": [
+      "Error text mentions invalid email or password; dialog stays"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNIN-002",
+    "module": "Authentication",
+    "feature": "SIGNIN",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Unknown email gets the same message as a wrong password",
+    "category": "security",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign in with an unknown email"
+    ],
+    "expectedResults": [
+      "Same message (no account enumeration)"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNIN-003",
+    "module": "Authentication",
+    "feature": "SIGNIN",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Valid credentials with a finished profile open the app",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign in with valid credentials"
+    ],
+    "expectedResults": [
+      "Path becomes /app"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNIN-004",
+    "module": "Authentication",
+    "feature": "SIGNIN",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Email is matched ignoring case and surrounding spaces",
+    "category": "boundary",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign in with \"  ANA@Example.com \""
+    ],
+    "expectedResults": [
+      "Signs in"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNIN-005",
+    "module": "Authentication",
+    "feature": "SIGNIN",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Double-clicking Sign in sends one request",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Double-click Sign in"
+    ],
+    "expectedResults": [
+      "Exactly one sign-in request"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNIN-006",
+    "module": "Authentication",
+    "feature": "SIGNIN",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Unreachable auth server shows a message, not a crash",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Abort the sign-in request",
+      "Submit"
+    ],
+    "expectedResults": [
+      "An error message is shown in the dialog"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-MSG-001",
+    "module": "Authentication",
+    "feature": "MSG",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Wrong password shows the app's own plain message",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign in with wrong password"
+    ],
+    "expectedResults": [
+      "Email or password is incorrect."
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-006",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNUP-001",
+    "module": "Authentication",
+    "feature": "SIGNUP",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "New account goes to onboarding",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign up with valid details"
+    ],
+    "expectedResults": [
+      "Path becomes /onboarding"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNUP-002",
+    "module": "Authentication",
+    "feature": "SIGNUP",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Existing email is refused with a clear message",
+    "category": "negative",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign up with an existing email"
+    ],
+    "expectedResults": [
+      "Message says the user already exists"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-SIGNUP-003",
+    "module": "Authentication",
+    "feature": "SIGNUP",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Markup in the name is sent as text and never executed",
+    "category": "security",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Sign up with an <img onerror> name"
+    ],
+    "expectedResults": [
+      "No script runs; name stored as text"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-RESET-001",
+    "module": "Authentication",
+    "feature": "RESET",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Forgot password sends a reset request",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open forgot",
+      "Enter email",
+      "Send reset link"
+    ],
+    "expectedResults": [
+      "Request reaches the server; no client error"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-008",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-RESET-002",
+    "module": "Authentication",
+    "feature": "RESET",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Emailed link opens the new-password dialog and removes the token from the URL",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /reset-password?token=..."
+    ],
+    "expectedResults": [
+      "Reset dialog visible; URL is / without the token"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-RESET-003",
+    "module": "Authentication",
+    "feature": "RESET",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "New password: 5 characters refused, valid one accepted",
+    "category": "boundary",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open reset link",
+      "Enter short",
+      "Submit",
+      "Enter valid",
+      "Submit"
+    ],
+    "expectedResults": [
+      "Error then success notice"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-RESET-004",
+    "module": "Authentication",
+    "feature": "RESET",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "/reset-password without a token opens no dialog",
+    "category": "negative",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /reset-password"
+    ],
+    "expectedResults": [
+      "No dialog"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-OUT-001",
+    "module": "Authentication",
+    "feature": "OUT",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Sign out clears device data and returns to landing",
+    "category": "data-integrity",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Signed in with history",
+      "Settings",
+      "Sign out"
+    ],
+    "expectedResults": [
+      "Landing page; history key removed; session ended"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "BR-16",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-OUT-002",
+    "module": "Authentication",
+    "feature": "OUT",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Declining the unsynced-workout warning keeps data and session",
+    "category": "data-integrity",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed an unsynced workout",
+      "Sign out",
+      "Decline"
+    ],
+    "expectedResults": [
+      "Still on /app; history intact"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "BR-16",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-OUT-003",
+    "module": "Authentication",
+    "feature": "OUT",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Accepting the warning signs out and clears the device",
+    "category": "data-integrity",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed an unsynced workout",
+      "Sign out",
+      "Accept"
+    ],
+    "expectedResults": [
+      "Landing; history cleared"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "BR-16",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-AUTH-GOOGLE-001",
+    "module": "Authentication",
+    "feature": "GOOGLE",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Google sign-in end to end",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Click Continue with Google",
+      "Complete provider flow"
+    ],
+    "expectedResults": [
+      "Signed in"
+    ],
+    "uiApiExpectations": "Needs a real Google provider and consent; not automatable without an account",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-AUTH-REAL-001",
+    "module": "Authentication",
+    "feature": "REAL",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Real sign-up, sign-in and reset email against Neon Auth",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Sign up once",
+      "Receive nothing (no verification)",
+      "Sign in on a second browser"
+    ],
+    "expectedResults": [
+      "Works end to end"
+    ],
+    "uiApiExpectations": "No test accounts may be created by automation; owner to run once manually",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-AUTH-EXP-001",
+    "module": "Authentication",
+    "feature": "EXP",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Expired token is refreshed once and the request retried",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Return 401 once from the API",
+      "Observe retry"
+    ],
+    "expectedResults": [
+      "One refresh, then success"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "DEF-007",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-AUTH-LOCK-001",
+    "module": "Authentication",
+    "feature": "LOCK",
+    "screen": "Authentication",
+    "route": "/",
+    "title": "Repeated failed sign-ins are throttled",
+    "category": "security",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Anonymous visitor",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Submit 10 wrong passwords"
+    ],
+    "expectedResults": [
+      "Rate-limit message"
+    ],
+    "uiApiExpectations": "Server-side policy of Neon Auth; not run against the real service",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-ONB-FLOW-001",
+    "module": "Onboarding",
+    "feature": "FLOW",
+    "screen": "Onboarding",
+    "route": "/onboarding",
+    "title": "Four steps complete and open the app with a saved profile",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Pick goal, experience, split",
+      "Enter weight",
+      "Finish and start"
+    ],
+    "expectedResults": [
+      "Path /app; fitlog_profile.onboarding_completed=true"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/onboarding.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ONB-SKIP-001",
+    "module": "Onboarding",
+    "feature": "SKIP",
+    "screen": "Onboarding",
+    "route": "/onboarding",
+    "title": "Skip for now opens the app",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Skip for now"
+    ],
+    "expectedResults": [
+      "Path /app"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/onboarding.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ONB-BACK-001",
+    "module": "Onboarding",
+    "feature": "BACK",
+    "screen": "Onboarding",
+    "route": "/onboarding",
+    "title": "Back is disabled on step 1 and returns to the previous step",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Observe Back",
+      "Continue",
+      "Back"
+    ],
+    "expectedResults": [
+      "Disabled then step 2 then step 1"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/onboarding.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ONB-A11Y-001",
+    "module": "Onboarding",
+    "feature": "A11Y",
+    "screen": "Onboarding",
+    "route": "/onboarding",
+    "title": "Heading takes focus on each new step",
+    "category": "a11y",
+    "priority": "P2",
+    "type": "a11y",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Continue to step 2"
+    ],
+    "expectedResults": [
+      "h1 is focused"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/onboarding.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ONB-A11Y-002",
+    "module": "Onboarding",
+    "feature": "A11Y",
+    "screen": "Onboarding",
+    "route": "/onboarding",
+    "title": "Progress bar reports its position",
+    "category": "a11y",
+    "priority": "P3",
+    "type": "a11y",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /onboarding"
+    ],
+    "expectedResults": [
+      "progressbar named Onboarding progress"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/onboarding.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ONB-BND-001",
+    "module": "Onboarding",
+    "feature": "BND",
+    "screen": "Onboarding",
+    "route": "/onboarding",
+    "title": "Body weight boundaries: 300 ok, 301 / -5 / 0 block Finish",
+    "category": "boundary",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "300, 301, -5, 0",
+    "steps": [
+      "Go to step 4",
+      "Enter value"
+    ],
+    "expectedResults": [
+      "Finish enabled only for 300"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/onboarding.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ONB-BND-002",
+    "module": "Onboarding",
+    "feature": "BND",
+    "screen": "Onboarding",
+    "route": "/onboarding",
+    "title": "All body numbers are optional",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Go to step 4",
+      "Leave blank"
+    ],
+    "expectedResults": [
+      "Finish enabled"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/onboarding.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-FINISH-001",
+    "module": "Active workout",
+    "feature": "FINISH",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Finish is disabled until a set is completed",
+    "category": "negative",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /app",
+      "Observe Finish",
+      "Complete set 2"
+    ],
+    "expectedResults": [
+      "Disabled then enabled"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-03",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-SET-001",
+    "module": "Active workout",
+    "feature": "SET",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Completing and undoing a set updates total lifted",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Complete set 2 (40x10)",
+      "Undo"
+    ],
+    "expectedResults": [
+      "400 kg total lifted, then 0 kg; aria-pressed follows"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-02",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-SET-002",
+    "module": "Active workout",
+    "feature": "SET",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Completing a set starts the rest timer; +30s extends; Skip dismisses",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Complete a set",
+      "+30s",
+      "Skip"
+    ],
+    "expectedResults": [
+      "Rest bar shows; seconds rise by about 30; bar hides"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-09",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-SET-003",
+    "module": "Active workout",
+    "feature": "SET",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "A set with 0 reps does not count",
+    "category": "boundary",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Set reps 0",
+      "Complete set"
+    ],
+    "expectedResults": [
+      "0 kg total; Finish stays disabled"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-01",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-SET-004",
+    "module": "Active workout",
+    "feature": "SET",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "A bodyweight (0 kg) set with reps counts",
+    "category": "boundary",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Set weight 0",
+      "Complete set"
+    ],
+    "expectedResults": [
+      "Finish enabled; 0 kg total"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-01",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-BND-001",
+    "module": "Active workout",
+    "feature": "BND",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Weight above 1000 kg is clamped",
+    "category": "boundary",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Type 5000 in weight",
+      "Blur"
+    ],
+    "expectedResults": [
+      "1000"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-04",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-BND-002",
+    "module": "Active workout",
+    "feature": "BND",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Reps above 200 are clamped",
+    "category": "boundary",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Type 999 in reps",
+      "Blur"
+    ],
+    "expectedResults": [
+      "200"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-04",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-BND-003",
+    "module": "Active workout",
+    "feature": "BND",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Negative weight is not accepted",
+    "category": "negative",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Type -5 in weight",
+      "Blur"
+    ],
+    "expectedResults": [
+      "Value is 0 or more"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-04",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-BND-004",
+    "module": "Active workout",
+    "feature": "BND",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Steppers: weight +2.5, reps -1",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Increase weight",
+      "Decrease reps"
+    ],
+    "expectedResults": [
+      "42.5 and 9"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-ADD-001",
+    "module": "Active workout",
+    "feature": "ADD",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Add Set appends a row",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Add Set"
+    ],
+    "expectedResults": [
+      "Row count +1"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-REM-001",
+    "module": "Active workout",
+    "feature": "REM",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Remove drops the exercise",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Remove exercise"
+    ],
+    "expectedResults": [
+      "Heading gone"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-NAME-001",
+    "module": "Active workout",
+    "feature": "NAME",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Edited workout name is saved with the workout",
+    "category": "data-integrity",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Rename",
+      "Complete a set",
+      "Finish"
+    ],
+    "expectedResults": [
+      "History title equals the new name"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-FIN-001",
+    "module": "Active workout",
+    "feature": "FIN",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Finish shows the summary, saves one workout and a first PR",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Complete set",
+      "Finish"
+    ],
+    "expectedResults": [
+      "Dialog with volume, duration and PR list; 1 stored workout; History tab opens on close"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-06",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-FIN-002",
+    "module": "Active workout",
+    "feature": "FIN",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Next workout starts with nothing completed",
+    "category": "data-integrity",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Finish",
+      "Go back to Workout"
+    ],
+    "expectedResults": [
+      "Finish disabled"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-FIN-003",
+    "module": "Active workout",
+    "feature": "FIN",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Double-clicking Finish saves once",
+    "category": "resilience",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Complete a set",
+      "Double-click Finish"
+    ],
+    "expectedResults": [
+      "1 stored workout"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-PR-001",
+    "module": "Active workout",
+    "feature": "PR",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Repeating the identical best set is a tie, not a record",
+    "category": "boundary",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Finish with set 4",
+      "Next session set 2 is prefilled the same",
+      "Finish"
+    ],
+    "expectedResults": [
+      "No \"New Personal Records Broken\""
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-06",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-LAST-001",
+    "module": "Active workout",
+    "feature": "LAST",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Only completed sets feed the next-session prefill",
+    "category": "data-integrity",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Complete set 2 only",
+      "Finish",
+      "Open Workout"
+    ],
+    "expectedResults": [
+      "Set 2 prefilled with 40 kg (the done set)"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-003",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-LB-001",
+    "module": "Active workout",
+    "feature": "LB",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "In pounds, 40 kg shows as 88.2",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Set unit lb",
+      "Open Workout"
+    ],
+    "expectedResults": [
+      "Weight input 88.2"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-07",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-LB-002",
+    "module": "Active workout",
+    "feature": "LB",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Weight column header says lb in pound mode",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Set unit lb",
+      "Read column header"
+    ],
+    "expectedResults": [
+      "Header contains lb"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-07",
+    "dependencies": "",
+    "linkedDefect": "DEF-002",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-TIMER-001",
+    "module": "Active workout",
+    "feature": "TIMER",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Session clock runs and pauses (fake clock)",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Start",
+      "Advance 5 s",
+      "Pause",
+      "Advance 5 s"
+    ],
+    "expectedResults": [
+      "00:05 and stays 00:05"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-REFRESH-001",
+    "module": "Active workout",
+    "feature": "REFRESH",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Completed set survives a page refresh",
+    "category": "resilience",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Complete a set",
+      "Reload"
+    ],
+    "expectedResults": [
+      "Set still completed"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-17",
+    "dependencies": "",
+    "linkedDefect": "DEF-001",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-REFRESH-002",
+    "module": "Active workout",
+    "feature": "REFRESH",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Session clock keeps elapsed time after a refresh and returns paused",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Start clock",
+      "Advance 65 s",
+      "Reload"
+    ],
+    "expectedResults": [
+      "About 01:0x shown; Start/Resume offered"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/workout.guest.spec.ts",
+    "businessRule": "BR-08",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-PERSIST-002",
+    "module": "Active workout",
+    "feature": "PERSIST",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Process death mid-workout keeps the logged sets",
+    "category": "resilience",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Complete sets",
+      "Kill the tab",
+      "Reopen"
+    ],
+    "expectedResults": [
+      "Sets restored"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "BR-17",
+    "dependencies": "",
+    "linkedDefect": "DEF-001",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-WRK-LOC-001",
+    "module": "Active workout",
+    "feature": "LOC",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Comma decimal \"42,5\" is read as 42.5",
+    "category": "boundary",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Type 42,5 in weight"
+    ],
+    "expectedResults": [
+      "Value 42.5"
+    ],
+    "uiApiExpectations": "Not run: locale input behaviour not yet probed",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-WRK-PERF-001",
+    "module": "Active workout",
+    "feature": "PERF",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Workout screen stays responsive with 500 saved workouts",
+    "category": "resilience",
+    "priority": "P2",
+    "type": "performance",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Seed 500 workouts",
+      "Open app",
+      "Complete a set"
+    ],
+    "expectedResults": [
+      "Interaction under 100 ms"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-WRK-DST-001",
+    "module": "Active workout",
+    "feature": "DST",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Streak and \"day\" at midnight and DST",
+    "category": "boundary",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Workout at 23:59 and 00:01 local; across a DST change"
+    ],
+    "expectedResults": [
+      "Streak counts calendar days correctly"
+    ],
+    "uiApiExpectations": "Covered at unit level in web/test/domain.test.js (run outside Playwright)",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "BR-10",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-RTN-SAVE-001",
+    "module": "Routines",
+    "feature": "SAVE",
+    "screen": "Routines",
+    "route": "/app (Workout tab)",
+    "title": "A routine can be saved, listed and deleted (with confirm)",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Save as routine",
+      "Name",
+      "Save",
+      "Delete",
+      "Confirm"
+    ],
+    "expectedResults": [
+      "Chip appears then disappears"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "BR-14",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-RTN-LIMIT-001",
+    "module": "Routines",
+    "feature": "LIMIT",
+    "screen": "Routines",
+    "route": "/app (Workout tab)",
+    "title": "Routine cap of 30 and 20 exercises each",
+    "category": "boundary",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Save 31 routines"
+    ],
+    "expectedResults": [
+      "Oldest or new is refused per rule"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "BR-14",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-RTN-LOAD-001",
+    "module": "Routines",
+    "feature": "LOAD",
+    "screen": "Routines",
+    "route": "/app (Workout tab)",
+    "title": "Loading a routine asks before replacing completed sets",
+    "category": "data-integrity",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Complete a set",
+      "Load routine"
+    ],
+    "expectedResults": [
+      "Confirm dialog appears"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-PICK-ADD-001",
+    "module": "Exercise picker",
+    "feature": "ADD",
+    "screen": "Exercise picker",
+    "route": "/app (modal)",
+    "title": "Add marks the row Added; Done puts it in the workout",
+    "category": "positive",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open picker",
+      "Add",
+      "Done"
+    ],
+    "expectedResults": [
+      "Exercise heading appears in the workout"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-PICK-A11Y-001",
+    "module": "Exercise picker",
+    "feature": "A11Y",
+    "screen": "Exercise picker",
+    "route": "/app (modal)",
+    "title": "Add button announces the Added state",
+    "category": "a11y",
+    "priority": "P2",
+    "type": "a11y",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Add an exercise",
+      "Read the button name"
+    ],
+    "expectedResults": [
+      "Name includes Added"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-005",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-PICK-FAV-001",
+    "module": "Exercise picker",
+    "feature": "FAV",
+    "screen": "Exercise picker",
+    "route": "/app (modal)",
+    "title": "Favorite star toggles and is stored",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Press the star"
+    ],
+    "expectedResults": [
+      "aria-pressed true; stored in fitlog_userdata"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "BR-13",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-PICK-FILTER-001",
+    "module": "Exercise picker",
+    "feature": "FILTER",
+    "screen": "Exercise picker",
+    "route": "/app (modal)",
+    "title": "Chest chip reduces the count below 106",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Chest"
+    ],
+    "expectedResults": [
+      "All exercises count changes"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-PICK-SEARCH-001",
+    "module": "Exercise picker",
+    "feature": "SEARCH",
+    "screen": "Exercise picker",
+    "route": "/app (modal)",
+    "title": "Searching narrows the list to Results",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Search \"face pull\""
+    ],
+    "expectedResults": [
+      "Heading becomes Results (n)"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-PICK-ESC-001",
+    "module": "Exercise picker",
+    "feature": "ESC",
+    "screen": "Exercise picker",
+    "route": "/app (modal)",
+    "title": "Escape closes the picker",
+    "category": "a11y",
+    "priority": "P2",
+    "type": "a11y",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open picker",
+      "Escape"
+    ],
+    "expectedResults": [
+      "Dialog hidden"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LIB-COUNT-001",
+    "module": "Exercise explorer",
+    "feature": "COUNT",
+    "screen": "Exercise explorer",
+    "route": "/app (Explorer tab)",
+    "title": "Library reports 106 movements",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open Explorer"
+    ],
+    "expectedResults": [
+      "Heading says 106 movements"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LIB-FILTER-001",
+    "module": "Exercise explorer",
+    "feature": "FILTER",
+    "screen": "Exercise explorer",
+    "route": "/app (Explorer tab)",
+    "title": "Choosing Back replaces the chest results",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Back"
+    ],
+    "expectedResults": [
+      "Chest-only exercise disappears"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LIB-SEARCH-001",
+    "module": "Exercise explorer",
+    "feature": "SEARCH",
+    "screen": "Exercise explorer",
+    "route": "/app (Explorer tab)",
+    "title": "Searching by name finds the exercise",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Search \"face pull\""
+    ],
+    "expectedResults": [
+      "A Face Pull heading shows"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LIB-SEARCH-002",
+    "module": "Exercise explorer",
+    "feature": "SEARCH",
+    "screen": "Exercise explorer",
+    "route": "/app (Explorer tab)",
+    "title": "No match shows nothing to add",
+    "category": "negative",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Search \"zzqqxx\""
+    ],
+    "expectedResults": [
+      "No add buttons"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LIB-SEARCH-003",
+    "module": "Exercise explorer",
+    "feature": "SEARCH",
+    "screen": "Exercise explorer",
+    "route": "/app (Explorer tab)",
+    "title": "Markup in search never runs",
+    "category": "security",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Search an <img onerror> string"
+    ],
+    "expectedResults": [
+      "No script runs"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LIB-EQ-001",
+    "module": "Exercise explorer",
+    "feature": "EQ",
+    "screen": "Exercise explorer",
+    "route": "/app (Explorer tab)",
+    "title": "Bodyweight pill narrows results",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Bodyweight"
+    ],
+    "expectedResults": [
+      "Incline Push-Up shown; Incline Dumbbell Press hidden"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-LIB-ADD-001",
+    "module": "Exercise explorer",
+    "feature": "ADD",
+    "screen": "Exercise explorer",
+    "route": "/app (Explorer tab)",
+    "title": "Adding from the explorer puts it in today's workout",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Add to Current Session",
+      "Open Workout"
+    ],
+    "expectedResults": [
+      "Heading present"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-HIST-LIST-001",
+    "module": "History",
+    "feature": "LIST",
+    "screen": "History",
+    "route": "/app (History tab)",
+    "title": "Workouts listed newest first with a pending-sync badge",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed 2 workouts",
+      "Open History"
+    ],
+    "expectedResults": [
+      "Order Push A, Pull B; Waiting to sync badge"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-HIST-PAGE-001",
+    "module": "History",
+    "feature": "PAGE",
+    "screen": "History",
+    "route": "/app (History tab)",
+    "title": "History shows 30 workouts at a time; Show more reveals the rest",
+    "category": "boundary",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed 45 workouts",
+      "Open History",
+      "Click Show more"
+    ],
+    "expectedResults": [
+      "30 cards, then 45; button gone"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/resilience.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-DRAFT-001",
+    "module": "Active workout",
+    "feature": "DRAFT",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "An unfinished workout from an hour ago is restored",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed a 1 h old draft",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "Draft exercise shown"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/resilience.guest.spec.ts",
+    "businessRule": "BR-17",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-DRAFT-002",
+    "module": "Active workout",
+    "feature": "DRAFT",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "A draft older than 12 hours is ignored",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed a 13 h old draft",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "Starter session shown"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/resilience.guest.spec.ts",
+    "businessRule": "BR-17",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-DRAFT-003",
+    "module": "Active workout",
+    "feature": "DRAFT",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "A session clock older than 12 hours is ignored",
+    "category": "resilience",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed a 13 h old clock",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "Clock reads 00:00"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/resilience.guest.spec.ts",
+    "businessRule": "BR-17",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-WRK-DRAFT-004",
+    "module": "Active workout",
+    "feature": "DRAFT",
+    "screen": "Active workout",
+    "route": "/app (Workout tab)",
+    "title": "Opening the app does not refresh the draft timestamp",
+    "category": "resilience",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed a draft",
+      "Open /app",
+      "Read savedAt"
+    ],
+    "expectedResults": [
+      "Unchanged"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/resilience.guest.spec.ts",
+    "businessRule": "BR-17",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-NAV-CHUNK-001",
+    "module": "NAV",
+    "feature": "CHUNK",
+    "screen": "NAV",
+    "route": "",
+    "title": "A missing app file after a deploy reloads once, then the app loads",
+    "category": "resilience",
+    "priority": "P0",
+    "type": "functional",
+    "role": "",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Serve the home page for the app file once",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "One reload; app loads; flag cleared"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/chunk-retry.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-NAV-CHUNK-002",
+    "module": "NAV",
+    "feature": "CHUNK",
+    "screen": "NAV",
+    "route": "",
+    "title": "Still missing after one retry: error screen with Reload, no loop",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Always serve the home page for the app file"
+    ],
+    "expectedResults": [
+      "Something went wrong screen; 2 requests only"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/chunk-retry.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-HIST-XSS-001",
+    "module": "History",
+    "feature": "XSS",
+    "screen": "History",
+    "route": "/app (History tab)",
+    "title": "Markup in a workout title is shown as text",
+    "category": "security",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed a workout titled with <img onerror>",
+      "Open History"
+    ],
+    "expectedResults": [
+      "Title visible as text; no script"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-HIST-CORRUPT-001",
+    "module": "History",
+    "feature": "CORRUPT",
+    "screen": "History",
+    "route": "/app (History tab)",
+    "title": "Corrupt stored history does not crash the app",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed invalid JSON",
+      "Open History"
+    ],
+    "expectedResults": [
+      "Screen still renders"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ANA-KPI-001",
+    "module": "Progress",
+    "feature": "KPI",
+    "screen": "Progress",
+    "route": "/app (Progress tab)",
+    "title": "Progress totals come from logged workouts",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed 2 workouts",
+      "Open Progress"
+    ],
+    "expectedResults": [
+      "All-time volume 3,600 kg; est. max 53.3 kg (Epley)"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "BR-02",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ANA-WEEK-001",
+    "module": "Progress",
+    "feature": "WEEK",
+    "screen": "Progress",
+    "route": "/app (Progress tab)",
+    "title": "Weekly muscle bars count completed sets in the last 7 days",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed",
+      "Open Progress"
+    ],
+    "expectedResults": [
+      "Chest 2 / 12 sets; progressbar present"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "BR-11",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-ANA-EMPTY-001",
+    "module": "Progress",
+    "feature": "EMPTY",
+    "screen": "Progress",
+    "route": "/app (Progress tab)",
+    "title": "No workouts: empty state with a Log a workout button",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open Progress on a clean device"
+    ],
+    "expectedResults": [
+      "Button visible"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SET-UNIT-001",
+    "module": "Settings",
+    "feature": "UNIT",
+    "screen": "Settings",
+    "route": "/app (Settings tab)",
+    "title": "Switching to lb is saved and shown in the workout",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Settings",
+      "lb",
+      "Workout"
+    ],
+    "expectedResults": [
+      "fitlog_settings.unit=lb; 88.2 shown"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "BR-07",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SET-REST-001",
+    "module": "Settings",
+    "feature": "REST",
+    "screen": "Settings",
+    "route": "/app (Settings tab)",
+    "title": "Chosen rest time drives the rest timer",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Settings",
+      "2:00 min",
+      "Complete a set"
+    ],
+    "expectedResults": [
+      "restSeconds=120; bar shows 11x-12x s"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "BR-09",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SET-SW-001",
+    "module": "Settings",
+    "feature": "SW",
+    "screen": "Settings",
+    "route": "/app (Settings tab)",
+    "title": "Vibration switch toggles and is saved",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Vibration"
+    ],
+    "expectedResults": [
+      "Unchecked; haptics=false"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SET-A11Y-001",
+    "module": "Settings",
+    "feature": "A11Y",
+    "screen": "Settings",
+    "route": "/app (Settings tab)",
+    "title": "Every settings switch has an accessible name",
+    "category": "a11y",
+    "priority": "P2",
+    "type": "a11y",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open Settings",
+      "Find the chime switch by name"
+    ],
+    "expectedResults": [
+      "Named switch exists"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-004",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SET-EXP-001",
+    "module": "Settings",
+    "feature": "EXP",
+    "screen": "Settings",
+    "route": "/app (Settings tab)",
+    "title": "Export my data downloads a parseable JSON file",
+    "category": "data-integrity",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Seed",
+      "Export my data"
+    ],
+    "expectedResults": [
+      "Download .json containing the workout"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SET-GUEST-001",
+    "module": "Settings",
+    "feature": "GUEST",
+    "screen": "Settings",
+    "route": "/app (Settings tab)",
+    "title": "Guest sees the guest label and no Sign out",
+    "category": "auth",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev) / signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open Settings as guest"
+    ],
+    "expectedResults": [
+      "Guest on this device; no Sign out"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/screens.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-OPEN-001",
+    "module": "AI companion",
+    "feature": "OPEN",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Companion opens from the floating button and closes on Escape",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Click Buddy",
+      "Escape"
+    ],
+    "expectedResults": [
+      "Dialog and log shown, then hidden"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-CHIPS-001",
+    "module": "AI companion",
+    "feature": "CHIPS",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Three starter prompts are offered",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open Buddy"
+    ],
+    "expectedResults": [
+      "Build my plan, What should I train today?, Review my progress"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-REPLY-001",
+    "module": "AI companion",
+    "feature": "REPLY",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Reply shown and memory note saved",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock a reply with a note",
+      "Send"
+    ],
+    "expectedResults": [
+      "Reply visible; note stored"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "BR-14",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-ACT-001",
+    "module": "AI companion",
+    "feature": "ACT",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "add_exercise action adds the exercise",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock an add_exercise action",
+      "Send"
+    ],
+    "expectedResults": [
+      "Exercise heading in workout"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "BR-18",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-ACT-002",
+    "module": "AI companion",
+    "feature": "ACT",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Unknown model actions are ignored",
+    "category": "security",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock {type: delete_all_data}",
+      "Send"
+    ],
+    "expectedResults": [
+      "Nothing changes"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "BR-18",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-ERR-001",
+    "module": "AI companion",
+    "feature": "ERR",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Busy coach shows a retry message and chat stays usable",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock 503 busy",
+      "Send"
+    ],
+    "expectedResults": [
+      "Busy message; input enabled"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-ERR-002",
+    "module": "AI companion",
+    "feature": "ERR",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Hourly limit shows its own message",
+    "category": "resilience",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock 429 rate-limited",
+      "Send"
+    ],
+    "expectedResults": [
+      "Hourly limit message"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-XSS-001",
+    "module": "AI companion",
+    "feature": "XSS",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Markup in a coach reply is shown as text",
+    "category": "security",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock an <img onerror> reply",
+      "Send"
+    ],
+    "expectedResults": [
+      "Shown as text; no script"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-GUARD-001",
+    "module": "AI companion",
+    "feature": "GUARD",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Browser never calls Gemini or sends an API key",
+    "category": "security",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Send a message",
+      "Inspect requests"
+    ],
+    "expectedResults": [
+      "No generativelanguage.googleapis.com or key= requests"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-COMP-PHOTO-001",
+    "module": "AI companion",
+    "feature": "PHOTO",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Photo attach limit of 3, EXIF stripped",
+    "category": "boundary",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Attach 4 photos"
+    ],
+    "expectedResults": [
+      "Only 3 accepted; re-encoded JPEG"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-COMP-PLAN-001",
+    "module": "AI companion",
+    "feature": "PLAN",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Build my plan then Use today replaces today's workout",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Build my plan",
+      "Use today"
+    ],
+    "expectedResults": [
+      "Workout replaced"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "DEF-007",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-COMP-MEM-001",
+    "module": "AI companion",
+    "feature": "MEM",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Memory view: edit name, remove a note, Forget all",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Open Memory",
+      "edit",
+      "forget"
+    ],
+    "expectedResults": [
+      "Changes stored"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "BR-14",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-COMP-LIVE-001",
+    "module": "AI companion",
+    "feature": "LIVE",
+    "screen": "AI companion",
+    "route": "/app (dialog)",
+    "title": "Real Gemini coach answers within limits",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Send a real message in a deployed environment"
+    ],
+    "expectedResults": [
+      "Valid JSON reply"
+    ],
+    "uiApiExpectations": "Needs the deployed function and a Gemini key; not run",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-SYNC-TOKEN-001",
+    "module": "Cloud sync",
+    "feature": "TOKEN",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "A signed-in user's profile request reaches the API with a token",
+    "category": "auth",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock session",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "GET /me is sent"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/auth.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-007",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-UP-001",
+    "module": "Cloud sync",
+    "feature": "UP",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "Finished workout uploads once with sets and records",
+    "category": "data-integrity",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Finish a workout"
+    ],
+    "expectedResults": [
+      "One PUT /workouts/<uuid>; queue empties"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "BR-15",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-OFF-001",
+    "module": "Cloud sync",
+    "feature": "OFF",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "API unreachable: workout stays queued, uploads on reconnect",
+    "category": "resilience",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "API offline",
+      "Finish",
+      "Back online"
+    ],
+    "expectedResults": [
+      "Queue 1 then 0; history 1"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-RACE-001",
+    "module": "Cloud sync",
+    "feature": "RACE",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "A workout finished during another upload is still uploaded",
+    "category": "data-integrity",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Slow PUT 1.5 s",
+      "Finish workout A",
+      "Finish workout B while A uploads"
+    ],
+    "expectedResults": [
+      "Two workouts stored on the server; queue empty"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-4XX-001",
+    "module": "Cloud sync",
+    "feature": "4XX",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "Permanent 400 flags the workout and stops retrying",
+    "category": "resilience",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock 400",
+      "Finish"
+    ],
+    "expectedResults": [
+      "syncFailed=true; queue empty"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-5XX-001",
+    "module": "Cloud sync",
+    "feature": "5XX",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "500 keeps the workout queued and never loses it",
+    "category": "resilience",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Mock 500",
+      "Finish"
+    ],
+    "expectedResults": [
+      "Queue 1; history 1"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-PULL-001",
+    "module": "Cloud sync",
+    "feature": "PULL",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "Workouts from another device appear once",
+    "category": "data-integrity",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Server has a workout",
+      "Sign in"
+    ],
+    "expectedResults": [
+      "One matching card in History"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/companion-sync.auth.spec.ts",
+    "businessRule": "BR-15",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SYNC-RT-001",
+    "module": "Cloud sync",
+    "feature": "RT",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "Live update from another device",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Edit on device A"
+    ],
+    "expectedResults": [
+      "Device B updates without refresh"
+    ],
+    "uiApiExpectations": "Needs the Neon Realtime service; not run",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-SYNC-MERGE-001",
+    "module": "Cloud sync",
+    "feature": "MERGE",
+    "screen": "Cloud sync",
+    "route": "/app",
+    "title": "Three-way merge of routines and memory",
+    "category": "data-integrity",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Signed-in user",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Edit on two devices"
+    ],
+    "expectedResults": [
+      "Additions kept; deletions stick"
+    ],
+    "uiApiExpectations": "Covered at unit level in web/test/sync.test.js (run outside Playwright)",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "BR-15",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-RESP-NAV-001",
+    "module": "Responsive layout",
+    "feature": "NAV",
+    "screen": "Responsive layout",
+    "route": "/ and /app on a phone",
+    "title": "Five tabs form a bottom bar on a phone",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev)",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /app on 412 px"
+    ],
+    "expectedResults": [
+      "Bottom bar with 5 buttons"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/responsive.phone.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-RESP-OVF-001",
+    "module": "Responsive layout",
+    "feature": "OVF",
+    "screen": "Responsive layout",
+    "route": "/ and /app on a phone",
+    "title": "Workout screen does not scroll sideways on a phone",
+    "category": "positive",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev)",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /app on 412 px"
+    ],
+    "expectedResults": [
+      "No horizontal scroll"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/responsive.phone.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-010",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-RESP-OVF-002",
+    "module": "Responsive layout",
+    "feature": "OVF",
+    "screen": "Responsive layout",
+    "route": "/ and /app on a phone",
+    "title": "Landing page does not scroll sideways on a phone",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev)",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open / on 412 px"
+    ],
+    "expectedResults": [
+      "No horizontal scroll"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/responsive.phone.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-RESP-SCALE-001",
+    "module": "Responsive layout",
+    "feature": "SCALE",
+    "screen": "Responsive layout",
+    "route": "/ and /app on a phone",
+    "title": "At 130% text the workout screen does not scroll sideways",
+    "category": "a11y",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Guest (dev)",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Set 130% font size",
+      "Open /app"
+    ],
+    "expectedResults": [
+      "No horizontal scroll"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/responsive.phone.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-010",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-RESP-DRAWER-001",
+    "module": "Responsive layout",
+    "feature": "DRAWER",
+    "screen": "Responsive layout",
+    "route": "/ and /app on a phone",
+    "title": "Plate Loader & Coach opens a dialog on a phone",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev)",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Tap the button"
+    ],
+    "expectedResults": [
+      "Dialog visible"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/responsive.phone.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "passed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-RESP-TAP-001",
+    "module": "Responsive layout",
+    "feature": "TAP",
+    "screen": "Responsive layout",
+    "route": "/ and /app on a phone",
+    "title": "Tap targets are at least 44 px",
+    "category": "a11y",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Guest (dev)",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Measure set controls, tabs, Buddy button"
+    ],
+    "expectedResults": [
+      "All 44 px or more"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/responsive.phone.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "DEF-011",
+    "executionBaseline": "defect-confirmed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-SEC-ISO-001",
+    "module": "Security",
+    "feature": "ISO",
+    "screen": "Security",
+    "route": "n/a",
+    "title": "One user cannot read or overwrite another user's data",
+    "category": "security",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Various",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "API calls with user A token for user B ids"
+    ],
+    "expectedResults": [
+      "404 / empty; no leak"
+    ],
+    "uiApiExpectations": "Covered by web/test/api.test.js against a live database (not run in this session to avoid touching the real project)",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-SEC-HDR-001",
+    "module": "Security",
+    "feature": "HDR",
+    "screen": "Security",
+    "route": "n/a",
+    "title": "CSP and security headers on the deployed site",
+    "category": "security",
+    "priority": "P1",
+    "type": "functional",
+    "role": "Various",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Request the deployed site headers"
+    ],
+    "expectedResults": [
+      "CSP, nosniff, frame protections present"
+    ],
+    "uiApiExpectations": "Headers come from netlify.toml and are absent on the dev server; needs a deployed URL",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-SEC-SECRET-001",
+    "module": "Security",
+    "feature": "SECRET",
+    "screen": "Security",
+    "route": "n/a",
+    "title": "No secret in the shipped bundle",
+    "category": "security",
+    "priority": "P0",
+    "type": "functional",
+    "role": "Various",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Build",
+      "search dist for key patterns"
+    ],
+    "expectedResults": [
+      "No DATABASE_URL, Gemini or realtime secret"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-PWA-001",
+    "module": "PWA and offline",
+    "feature": "001",
+    "screen": "PWA and offline",
+    "route": "n/a",
+    "title": "Service worker caches the app shell for offline start",
+    "category": "resilience",
+    "priority": "P2",
+    "type": "functional",
+    "role": "Any",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Build",
+      "preview",
+      "go offline",
+      "reload"
+    ],
+    "expectedResults": [
+      "Shell loads"
+    ],
+    "uiApiExpectations": "Service worker registers only in production builds",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-PWA-002",
+    "module": "PWA and offline",
+    "feature": "002",
+    "screen": "PWA and offline",
+    "route": "n/a",
+    "title": "Install prompt in Settings",
+    "category": "positive",
+    "priority": "P3",
+    "type": "functional",
+    "role": "Any",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Open on an installable browser"
+    ],
+    "expectedResults": [
+      "Install card shown"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-A11Y-SR-001",
+    "module": "Accessibility",
+    "feature": "SR",
+    "screen": "Accessibility",
+    "route": "various",
+    "title": "Screen-reader walkthrough of workout logging",
+    "category": "a11y",
+    "priority": "P1",
+    "type": "a11y",
+    "role": "Any",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Log a set with NVDA or VoiceOver"
+    ],
+    "expectedResults": [
+      "Every control announced with name and state"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-A11Y-AXE-001",
+    "module": "Accessibility",
+    "feature": "AXE",
+    "screen": "Accessibility",
+    "route": "various",
+    "title": "Landing page has no axe WCAG A/AA violations",
+    "category": "a11y",
+    "priority": "P1",
+    "type": "a11y",
+    "role": "Any",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open /",
+      "Run axe-core"
+    ],
+    "expectedResults": [
+      "Zero violations"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/axe.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-A11Y-AXE-002",
+    "module": "Accessibility",
+    "feature": "AXE",
+    "screen": "Accessibility",
+    "route": "various",
+    "title": "Each app tab has no axe WCAG A/AA violations",
+    "category": "a11y",
+    "priority": "P1",
+    "type": "a11y",
+    "role": "Any",
+    "preconditions": "Fresh browser context; backend mocked where marked",
+    "testData": "",
+    "steps": [
+      "Open each of 5 tabs",
+      "Run axe-core"
+    ],
+    "expectedResults": [
+      "Zero violations"
+    ],
+    "uiApiExpectations": "Backend is MOCKED in the browser suite (fixtures/mockBackend.ts)",
+    "postconditions": "Context discarded; no shared state",
+    "automationStatus": "automated",
+    "automationFile": "web/tests/e2e/axe.guest.spec.ts",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not executed",
+    "executionWithFix": "passed"
+  },
+  {
+    "id": "TC-A11Y-KEY-001",
+    "module": "Accessibility",
+    "feature": "KEY",
+    "screen": "Accessibility",
+    "route": "various",
+    "title": "Whole logging flow works with keyboard only",
+    "category": "a11y",
+    "priority": "P1",
+    "type": "a11y",
+    "role": "Any",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Tab through the workout"
+    ],
+    "expectedResults": [
+      "All controls reachable with visible focus"
+    ],
+    "uiApiExpectations": "",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-BROWSER-001",
+    "module": "BROWSER",
+    "feature": "001",
+    "screen": "BROWSER",
+    "route": "",
+    "title": "Firefox and Safari (WebKit) behaviour",
+    "category": "positive",
+    "priority": "P2",
+    "type": "functional",
+    "role": "",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Run the suite on other engines"
+    ],
+    "expectedResults": [
+      "Same results"
+    ],
+    "uiApiExpectations": "Only Microsoft Edge (Chromium) is installed; other engines were not run",
+    "postconditions": "",
+    "automationStatus": "blocked",
+    "automationFile": "",
+    "businessRule": "",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "blocked (not run)",
+    "executionWithFix": ""
+  },
+  {
+    "id": "TC-DATA-001",
+    "module": "Domain rules and data integrity",
+    "feature": "001",
+    "screen": "Domain rules and data integrity",
+    "route": "n/a (unit level)",
+    "title": "Domain rules: volume, Epley, PR, streak, unit conversion",
+    "category": "data-integrity",
+    "priority": "P0",
+    "type": "unit",
+    "role": "n/a",
+    "preconditions": "See steps",
+    "testData": "",
+    "steps": [
+      "Run node:test domain suites"
+    ],
+    "expectedResults": [
+      "All pass"
+    ],
+    "uiApiExpectations": "Run separately with npm test (offline files only in this session)",
+    "postconditions": "",
+    "automationStatus": "manual (not automated)",
+    "automationFile": "",
+    "businessRule": "BR-02..BR-11",
+    "dependencies": "",
+    "linkedDefect": "",
+    "executionBaseline": "not run (manual)",
+    "executionWithFix": ""
+  }
+]

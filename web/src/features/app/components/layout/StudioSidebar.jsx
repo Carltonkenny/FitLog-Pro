@@ -9,6 +9,9 @@ import {
   Wifi,
   WifiOff,
 } from 'lucide-react';
+import { WorkoutStore } from '../../../../lib/workoutStore';
+import { EXERCISE_LIBRARY } from '../../../../lib/exercises.js';
+import { computeStreak } from '../../../../lib/stats';
 
 export default function StudioSidebar({
   activeTab,
@@ -17,6 +20,7 @@ export default function StudioSidebar({
   blueprint,
   syncStatus,
 }) {
+  const streak = computeStreak(WorkoutStore.getHistory());
   const navItems = [
     {
       id: 'workout',
@@ -24,17 +28,17 @@ export default function StudioSidebar({
       icon: Dumbbell,
       badge: `${workoutStats.completedSetsCount}/${workoutStats.totalSetsCount}`,
     },
-    { id: 'library', label: 'Exercise Explorer', icon: Layers, badge: '333+' },
-    { id: 'analytics', label: 'Progress Analytics', icon: LineChart, badge: 'Live' },
-    { id: 'history', label: 'History & AI Coach', icon: History, badge: 'AI' },
-    { id: 'settings', label: 'App Settings', icon: Settings, badge: null },
+    { id: 'library', label: 'Exercise Explorer', icon: Layers, badge: String(EXERCISE_LIBRARY.length) },
+    { id: 'analytics', label: 'Progress', icon: LineChart, badge: null },
+    { id: 'history', label: 'History', icon: History, badge: null },
+    { id: 'settings', label: 'Settings', icon: Settings, badge: null },
   ];
 
   return (
     <aside className="w-64 border-r border-white/[0.08] p-4 flex flex-col justify-between shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] bg-[#0c0e12]/60 backdrop-blur-sm">
       <div className="space-y-6">
         {/* Navigation Tabs */}
-        <nav className="space-y-1">
+        <nav aria-label="Main" className="space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -42,7 +46,8 @@ export default function StudioSidebar({
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${
+                aria-current={isActive ? 'page' : undefined}
+                className={`w-full flex items-center justify-between px-3 min-h-11 rounded-xl text-xs font-medium transition-all ${
                   isActive
                     ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 shadow-sm font-semibold'
                     : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
@@ -57,7 +62,7 @@ export default function StudioSidebar({
                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                       isActive
                         ? 'bg-emerald-500/20 text-emerald-300'
-                        : 'bg-zinc-800 text-zinc-500'
+                        : 'bg-zinc-800 text-zinc-400'
                     }`}
                   >
                     {item.badge}
@@ -73,9 +78,9 @@ export default function StudioSidebar({
           <div className="flex items-center justify-between text-xs font-semibold text-zinc-300">
             <div className="flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Your Blueprint</span>
+              <span>Your plan</span>
             </div>
-            <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-mono">
+            <span className="text-[10px] text-zinc-400 uppercase tracking-wider font-mono">
               Active
             </span>
           </div>
@@ -84,22 +89,22 @@ export default function StudioSidebar({
             <div className="flex justify-between text-zinc-400">
               <span>Primary Goal</span>
               <span className="text-zinc-200 font-medium capitalize">
-                {blueprint?.goal === 'strength' ? 'Raw Strength' : 'Muscle Growth'}
+                {blueprint?.goal === 'strength' ? 'Raw strength' : blueprint?.goal ? 'Muscle growth' : blueprint?.fitness_goal || 'Not set'}
               </span>
             </div>
             <div className="flex justify-between text-zinc-400">
               <span>Target Split</span>
-              <span className="text-zinc-200 font-medium">4 Days / Week</span>
+              <span className="text-zinc-200 font-medium">{blueprint?.split_preference || 'Not set'}</span>
             </div>
             <div className="flex justify-between text-zinc-400">
-              <span>Current Streak</span>
-              <span className="text-emerald-400 font-medium font-mono">🔥 3 Sessions</span>
+              <span>Current streak</span>
+              <span className="text-emerald-400 font-medium font-mono">{streak} day{streak === 1 ? '' : 's'}</span>
             </div>
           </div>
 
           <div className="pt-2 border-t border-white/[0.06]">
             <div className="flex justify-between text-[11px] text-zinc-400 mb-1">
-              <span>Today's Progress</span>
+              <span>This workout</span>
               <span className="text-emerald-400 font-mono font-medium">
                 {workoutStats.progressPercent}%
               </span>
@@ -114,7 +119,7 @@ export default function StudioSidebar({
         </div>
       </div>
 
-      {/* Cloud Brain Sync Indicator */}
+      {/* Sync indicator */}
       <div className="pt-3 border-t border-white/[0.06]">
         <div className="flex items-center justify-between text-xs text-zinc-400">
           <div className="flex items-center gap-1.5">
@@ -125,7 +130,7 @@ export default function StudioSidebar({
             )}
             <span className="text-[11px]">{syncStatus.statusLabel}</span>
           </div>
-          <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+          <span aria-hidden="true" className={`w-2 h-2 rounded-full ${syncStatus.pendingCount > 0 || !syncStatus.isOnline ? 'bg-amber-400' : 'bg-emerald-500'}`} />
         </div>
       </div>
     </aside>

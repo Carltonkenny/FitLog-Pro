@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 /// Supports Google Gemini 1.5 Flash with zero-latency clinical fallback
 /// for offline or keyless use.
 class GeminiCoachService {
-  static String? _apiKey = null;
+  static String? _apiKey;
 
   static void setApiKey(String key) {
     _apiKey = key.trim();
@@ -86,7 +86,7 @@ class GeminiCoachService {
 
     try {
       final url = Uri.parse(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$trimmedKey',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
       );
 
       final prompt = '''
@@ -106,7 +106,10 @@ Guidelines:
       final response = await http
           .post(
             url,
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+              'Content-Type': 'application/json',
+              'x-goog-api-key': trimmedKey,
+            },
             body: jsonEncode({
               'contents': [
                 {
@@ -125,14 +128,22 @@ Guidelines:
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
-        final candidates = data['candidates'] as List?;
-        if (candidates != null && candidates.isNotEmpty) {
-          final content = candidates[0]['content'] as Map<String, dynamic>?;
-          final parts = content?['parts'] as List?;
-          if (parts != null && parts.isNotEmpty) {
-            final text = parts[0]['text'] as String?;
-            if (text != null && text.trim().isNotEmpty) {
-              return text.trim();
+        final candidates = data['candidates'];
+        if (candidates is List && candidates.isNotEmpty) {
+          final firstCandidate = candidates.first;
+          if (firstCandidate is Map<String, dynamic>) {
+            final content = firstCandidate['content'];
+            if (content is Map<String, dynamic>) {
+              final parts = content['parts'];
+              if (parts is List && parts.isNotEmpty) {
+                final firstPart = parts.first;
+                if (firstPart is Map<String, dynamic>) {
+                  final text = firstPart['text'] as String?;
+                  if (text != null && text.trim().isNotEmpty) {
+                    return text.trim();
+                  }
+                }
+              }
             }
           }
         }

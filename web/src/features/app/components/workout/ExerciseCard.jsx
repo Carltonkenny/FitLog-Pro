@@ -2,6 +2,8 @@ import React from 'react';
 import { Trash2, Plus } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import SetRow from './SetRow';
+import ExerciseImage from '../../../../components/ExerciseImage';
+import { formatWeight, useSettings } from '../../../../lib/settings';
 
 export default function ExerciseCard({
   exercise,
@@ -14,6 +16,7 @@ export default function ExerciseCard({
   onUpdateSet,
   onToggleSet,
 }) {
+  const { unit } = useSettings();
   const lastSession = WorkoutStore.getLastSessionForExercise(exercise.exerciseId);
 
   return (
@@ -27,7 +30,8 @@ export default function ExerciseCard({
     >
       {/* Exercise Header */}
       <div className="flex items-start justify-between gap-3">
-        <div>
+        <ExerciseImage id={exercise.exerciseId} name={exercise.exerciseName} size={48} hideIfMissing />
+        <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <h3 className="font-bold text-white text-base tracking-tight">
               {exercise.exerciseName}
@@ -39,7 +43,7 @@ export default function ExerciseCard({
           <p className="text-xs text-zinc-400 mt-0.5">
             Target: <span className="text-emerald-400">{exercise.targetMuscle}</span>
             {exercise.growthFatigueScore && (
-              <span className="ml-2 text-zinc-500 font-mono">
+              <span className="ml-2 text-zinc-400 font-mono">
                 • Growth Score: {exercise.growthFatigueScore}/10
               </span>
             )}
@@ -47,11 +51,13 @@ export default function ExerciseCard({
         </div>
 
         <button
+          type="button"
+          aria-label={`Remove ${exercise.exerciseName}`}
           onClick={(e) => {
             e.stopPropagation();
             onRemoveExercise(exIndex);
           }}
-          className="text-zinc-500 hover:text-red-400 p-1 transition"
+          className="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg text-zinc-400 hover:text-red-400 hover:bg-white/[0.05] transition"
           title="Remove Exercise"
         >
           <Trash2 className="w-4 h-4" />
@@ -59,16 +65,17 @@ export default function ExerciseCard({
       </div>
 
       {/* Previous Session Delta Proof */}
-      {lastSession && (
+      {lastSession && lastSession.bestSet && (
         <div className="px-3 py-1.5 rounded-lg bg-zinc-900/80 border border-white/[0.05] text-[11px] text-zinc-400 flex items-center justify-between">
           <span>
-            Last Session: <strong className="text-zinc-200">{lastSession.bestSet.weight} kg × {lastSession.bestSet.reps} reps</strong>
+            Last Session: <strong className="text-zinc-200">{formatWeight(lastSession.bestSet.weight ?? 0, unit)} × {lastSession.bestSet.reps ?? 0} reps</strong>
           </span>
           <span className="text-emerald-400 font-medium">
             {WorkoutStore.getNextSessionTarget(
               exercise.exerciseId,
-              lastSession.bestSet.weight,
-              lastSession.bestSet.reps
+              lastSession.bestSet.weight ?? 0,
+              lastSession.bestSet.reps ?? 0,
+              unit
             )}
           </span>
         </div>
@@ -76,13 +83,13 @@ export default function ExerciseCard({
 
       {/* Sets Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs">
+        <table className="w-full text-left text-xs min-w-[280px]">
           <thead>
-            <tr className="text-zinc-500 uppercase tracking-wider font-mono text-[10px] border-b border-white/[0.06]">
+            <tr className="text-zinc-400 uppercase tracking-wider font-mono text-[10px] border-b border-white/[0.06]">
               <th className="pb-2 w-12 text-center">Set</th>
-              <th className="pb-2 w-28">Weight (kg)</th>
+              <th className="pb-2 w-28">Weight ({unit})</th>
               <th className="pb-2 w-24">Reps</th>
-              <th className="pb-2 text-right pr-2">Done</th>
+              <th className="pb-2 text-right pr-2 min-w-[3.5rem]">Done</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/[0.04]">
@@ -103,17 +110,19 @@ export default function ExerciseCard({
       {/* Bottom Bar: Add Set & Form Cue */}
       <div className="flex items-center justify-between pt-1">
         <button
+          type="button"
+          aria-label={`Add set to ${exercise.exerciseName}`}
           onClick={(e) => {
             e.stopPropagation();
             onAddSet(exIndex);
           }}
-          className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium py-1 px-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 transition active:scale-95"
+          className="flex items-center gap-1 text-xs text-emerald-300 hover:text-emerald-200 font-medium min-h-10 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 transition active:scale-95"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>Add Set</span>
         </button>
 
-        <span className="text-[11px] text-zinc-500 max-w-xs truncate">
+        <span className="text-[11px] text-zinc-400 max-w-xs truncate">
           {exercise.notes}
         </span>
       </div>

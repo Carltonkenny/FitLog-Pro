@@ -326,7 +326,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
     required int setOrder,
     required double initialWeight,
     required int initialReps,
-    required Function(double newWeight, int newReps) onSave,
+    required void Function(double newWeight, int newReps) onSave,
   }) {
     double currentWeight = initialWeight;
     int currentReps = initialReps;

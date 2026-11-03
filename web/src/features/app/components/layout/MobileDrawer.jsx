@@ -1,4 +1,5 @@
 import React from 'react';
+import EscapeClose from '../../../../components/EscapeClose';
 import { Calculator, X } from 'lucide-react';
 
 export default function MobileDrawer({
@@ -31,7 +32,8 @@ export default function MobileDrawer({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col justify-end">
+    <div role="dialog" aria-modal="true" aria-label="Session menu" className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col justify-end animate-fadeIn">
+      <EscapeClose onClose={onClose} />
       <div className="bg-[#12141a] border-t border-white/[0.1] rounded-t-3xl p-5 space-y-4 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
         <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
           <div className="flex items-center gap-2">
@@ -40,6 +42,7 @@ export default function MobileDrawer({
           </div>
           <button
             onClick={onClose}
+          aria-label="Close"
             className="p-1 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white"
           >
             <X className="w-4 h-4" />

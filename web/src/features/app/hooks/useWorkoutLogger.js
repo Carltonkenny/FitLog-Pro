@@ -1,15 +1,11 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { WorkoutStore } from '../../../lib/workoutStore';
+import { buzz, getSettings } from '../../../lib/settings';
+import { workoutStats } from '../../../lib/stats';
 
-export function useWorkoutLogger(initialGoal = 'muscle_growth') {
-  const [workoutTitle, setWorkoutTitle] = useState(
-    initialGoal === 'strength'
-      ? 'Raw Strength & Power Session (Chest & Back)'
-      : 'Muscle Growth Session (Chest, Shoulders & Arms)'
-  );
-
-  const [exercises, setExercises] = useState([
+// Starter session. Weights and reps are replaced by the user's last logged session when one exists.
+const STARTER_TEMPLATE = [
     {
       exerciseId: 'bench_press',
       exerciseName: 'Barbell Flat Bench Press',
@@ -18,10 +14,10 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       notes: 'Pinch shoulder blades into bench, 1s controlled pause at mid-chest',
       growthFatigueScore: 8.8,
       sets: [
-        { id: 1, type: 'W', weight: 30.0, reps: 10, completed: true, isPR: false },
-        { id: 2, type: '1', weight: 40.0, reps: 10, completed: true, isPR: false },
-        { id: 3, type: '2', weight: 40.0, reps: 10, completed: true, isPR: false },
-        { id: 4, type: '3', weight: 42.5, reps: 8, completed: false, isPR: true },
+        { id: 1, type: 'W', weight: 30.0, reps: 10, completed: false, isPR: false },
+        { id: 2, type: '1', weight: 40.0, reps: 10, completed: false, isPR: false },
+        { id: 3, type: '2', weight: 40.0, reps: 10, completed: false, isPR: false },
+        { id: 4, type: '3', weight: 42.5, reps: 8, completed: false, isPR: false },
       ],
     },
     {
@@ -32,9 +28,9 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       notes: 'Drive elbows down toward back pockets, 2s slow lowering phase',
       growthFatigueScore: 9.3,
       sets: [
-        { id: 1, type: '1', weight: 35.0, reps: 12, completed: true, isPR: false },
-        { id: 2, type: '2', weight: 35.0, reps: 12, completed: true, isPR: false },
-        { id: 3, type: '3', weight: 37.5, reps: 10, completed: false, isPR: true },
+        { id: 1, type: '1', weight: 35.0, reps: 12, completed: false, isPR: false },
+        { id: 2, type: '2', weight: 35.0, reps: 12, completed: false, isPR: false },
+        { id: 3, type: '3', weight: 37.5, reps: 10, completed: false, isPR: false },
       ],
     },
     {
@@ -45,12 +41,62 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       notes: 'Rotate pinky upward at peak contraction, zero hip momentum',
       growthFatigueScore: 9.2,
       sets: [
-        { id: 1, type: '1', weight: 8.0, reps: 10, completed: true, isPR: false },
+        { id: 1, type: '1', weight: 8.0, reps: 10, completed: false, isPR: false },
         { id: 2, type: '2', weight: 8.0, reps: 10, completed: false, isPR: false },
-        { id: 3, type: '3', weight: 10.0, reps: 8, completed: false, isPR: true },
+        { id: 3, type: '3', weight: 10.0, reps: 8, completed: false, isPR: false },
       ],
     },
-  ]);
+  ];
+
+// Bodyweight exercises start at 0 kg; everything else at the empty bar.
+const startingWeight = (item) => (/bodyweight|pull-up/i.test(item.equipment || '') ? 0 : 20);
+
+function buildStarterWorkout() {
+  return STARTER_TEMPLATE.map((ex) => {
+    const last = WorkoutStore.getLastSessionForExercise(ex.exerciseId);
+    if (!last) return ex;
+    return {
+      ...ex,
+      sets: ex.sets.map((s) => ({ ...s, weight: last.bestSet.weight, reps: last.bestSet.reps })),
+    };
+  });
+}
+
+const DRAFT_KEY = 'fitlog_workout_draft';
+const DRAFT_MAX_AGE_MS = 12 * 3_600_000; // an abandoned session must not come back weeks later and be finished by mistake
+
+/** The unfinished workout saved on every change, so a refresh or a killed tab loses nothing. Null when absent or unusable. */
+function readDraft() {
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    const fresh = d && Date.now() - Number(d.savedAt) < DRAFT_MAX_AGE_MS;
+    const ok = fresh && Array.isArray(d.exercises) && d.exercises.length > 0 && d.exercises.every((e) => e && typeof e.exerciseId === 'string' && Array.isArray(e.sets));
+    return ok ? d : null;
+  } catch {
+    return null;
+  }
+}
+
+export function useWorkoutLogger(initialGoal = 'muscle_growth') {
+  const [draft] = useState(readDraft);
+  const [workoutTitle, setWorkoutTitle] = useState(
+    typeof draft?.title === 'string' ? draft.title : initialGoal === 'strength'
+      ? 'Raw Strength & Power Session (Chest & Back)'
+      : 'Muscle Growth Session (Chest, Shoulders & Arms)'
+  );
+
+  const [exercises, setExercises] = useState(() => draft?.exercises ?? buildStarterWorkout());
+
+  const loaded = useRef({ title: workoutTitle, exercises });
+  useEffect(() => {
+    // Opening the app must not refresh the timestamp, or an untouched old draft would never expire.
+    if (loaded.current.title === workoutTitle && loaded.current.exercises === exercises) return;
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ title: workoutTitle, exercises, savedAt: Date.now() }));
+    } catch {
+      // Storage full or blocked: the workout still works in memory.
+    }
+  }, [workoutTitle, exercises]);
 
   const [activeExerciseIndex, setActiveExerciseIndex] = useState(0);
   const currentFocusedExercise = exercises[activeExerciseIndex] || exercises[0];
@@ -66,6 +112,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     } else if (restSeconds === 0 && isRestActive) {
       setIsRestActive(false);
       try {
+        if (!getSettings().sound) return;
         const audio = new AudioContext();
         const osc = audio.createOscillator();
         osc.connect(audio.destination);
@@ -81,7 +128,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     };
   }, [isRestActive, restSeconds]);
 
-  const triggerRestTimer = (sec = 90) => {
+  const triggerRestTimer = (sec = getSettings().restSeconds) => {
     setRestSeconds(sec);
     setIsRestActive(true);
   };
@@ -96,11 +143,13 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       targetSet.completed = !targetSet.completed;
 
       if (targetSet.completed) {
-        triggerRestTimer(90);
+        triggerRestTimer(getSettings().restSeconds);
+        buzz();
         const isPR = WorkoutStore.checkIsPR(
           copy[exIndex].exerciseId,
           targetSet.weight,
-          targetSet.reps
+          targetSet.reps,
+          targetSet.type
         );
         targetSet.isPR = isPR;
 
@@ -120,7 +169,11 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
   const updateSet = (exIndex, setIndex, field, value) => {
     setExercises((prev) => {
       const copy = JSON.parse(JSON.stringify(prev));
-      copy[exIndex].sets[setIndex][field] = Number(value) || 0;
+      // Keep values inside the cloud column limits (weight < 10,000 kg) and sane for a human lift.
+      const limits = { weight: [0, 1000], reps: [0, 200] };
+      const [min, max] = limits[field] || [0, Infinity];
+      const n = Number(value);
+      copy[exIndex].sets[setIndex][field] = Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : 0;
       return copy;
     });
   };
@@ -163,7 +216,11 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     }
   };
 
-  const addExercise = (exerciseItem) => {
+  /** Adds an exercise. `opts.sets` / `opts.reps` override the defaults; weights come from the last session. */
+  const addExercise = (exerciseItem, opts = {}) => {
+    const last = WorkoutStore.getLastSessionForExercise(exerciseItem.id);
+    const weight = last ? last.bestSet.weight : startingWeight(exerciseItem);
+    const reps = opts.reps || (last ? last.bestSet.reps : 10);
     setExercises((prev) => [
       ...prev,
       {
@@ -173,13 +230,65 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
         equipment: exerciseItem.equipment,
         notes: exerciseItem.cue || 'Controlled tempo, focus on mind-muscle connection',
         growthFatigueScore: exerciseItem.growthFatigueScore,
-        sets: [
-          { id: 1, type: '1', weight: 20.0, reps: 10, completed: false, isPR: false },
-          { id: 2, type: '2', weight: 20.0, reps: 10, completed: false, isPR: false },
-          { id: 3, type: '3', weight: 20.0, reps: 10, completed: false, isPR: false },
-        ],
+        sets: Array.from({ length: opts.sets || 3 }, (_, i) => ({
+          id: i + 1,
+          type: String(i + 1),
+          weight,
+          reps,
+          completed: false,
+          isPR: false,
+        })),
       },
     ]);
+  };
+
+  /** After saving: same exercises, fresh sets, weights pre-filled from the session just logged. */
+  const startFreshWorkout = () => {
+    setExercises((prev) =>
+      prev.map((ex) => {
+        const last = WorkoutStore.getLastSessionForExercise(ex.exerciseId);
+        return {
+          ...ex,
+          sets: ex.sets.map((s) => ({
+            ...s,
+            completed: false,
+            isPR: false,
+            ...(last ? { weight: last.bestSet.weight, reps: last.bestSet.reps } : {}),
+          })),
+        };
+      })
+    );
+    setActiveExerciseIndex(0);
+    setIsRestActive(false);
+    setRestSeconds(0);
+  };
+
+  /** Replaces the current workout with `items`: [{ item (library entry), sets, reps }]. */
+  const loadPlan = (title, items) => {
+    setWorkoutTitle(title);
+    setActiveExerciseIndex(0);
+    setExercises(
+      items.map(({ item, sets, reps }) => {
+        const last = WorkoutStore.getLastSessionForExercise(item.id);
+        const weight = last ? last.bestSet.weight : startingWeight(item);
+        return {
+          exerciseId: item.id,
+          exerciseName: item.name,
+          targetMuscle: item.targetMuscle,
+          equipment: item.equipment,
+          notes: item.cue || 'Controlled tempo, focus on the target muscle',
+          growthFatigueScore: item.growthFatigueScore,
+          sets: Array.from({ length: sets }, (_, i) => ({
+            id: i + 1,
+            type: String(i + 1),
+            weight,
+            reps,
+            completed: false,
+            isPR: false,
+          })),
+        };
+      })
+    );
   };
 
   const resetAllSets = () => {
@@ -195,28 +304,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     });
   };
 
-  const stats = useMemo(() => {
-    let volume = 0;
-    let completedSetsCount = 0;
-    let totalSetsCount = 0;
-
-    exercises.forEach((ex) => {
-      ex.sets.forEach((s) => {
-        totalSetsCount++;
-        if (s.completed && s.weight > 0 && s.reps > 0) {
-          volume += s.weight * s.reps;
-          completedSetsCount++;
-        }
-      });
-    });
-
-    return {
-      volume,
-      completedSetsCount,
-      totalSetsCount,
-      progressPercent: totalSetsCount > 0 ? Math.round((completedSetsCount / totalSetsCount) * 100) : 0,
-    };
-  }, [exercises]);
+  const stats = useMemo(() => workoutStats(exercises), [exercises]);
 
   return {
     workoutTitle,
@@ -236,6 +324,8 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     removeSet,
     removeExercise,
     addExercise,
+    loadPlan,
+    startFreshWorkout,
     resetAllSets,
   };
 }
