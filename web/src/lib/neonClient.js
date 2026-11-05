@@ -16,7 +16,7 @@ export const authRequired = isCloudConfigured && !(env.DEV && env.VITE_SKIP_AUTH
 // Google sign-in uses Neon's shared development keys until you add your own. Off unless you opt in.
 export const googleEnabled = env.VITE_GOOGLE_AUTH === 'true';
 
-const authClient = isCloudConfigured ? createAuthClient(`${window.location.origin}/neon-auth`) : null;
+const authClient = isCloudConfigured ? createAuthClient(env.NEON_AUTH_BASE_URL || `${window.location.origin}/neon-auth`) : null;
 
 // ---------------------------------------------------------------------------------------- API calls
 

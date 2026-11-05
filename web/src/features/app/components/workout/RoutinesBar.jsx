@@ -5,6 +5,7 @@ import { WorkoutStore } from '../../../../lib/workoutStore';
 import { addRoutine, deleteRoutine, useUserData } from '../../../../lib/userData.js';
 
 const byId = new Map(EXERCISE_LIBRARY.map((e) => [e.id, e]));
+const ROUTINE_SUGGESTIONS = ['Push Day', 'Pull Day', 'Leg Day', 'Upper Body', 'Lower Body', 'Arm Day'];
 
 /** Turns saved exercises ({ exerciseId, exerciseName, sets, reps }) into the items the logger loads. */
 export function toPlanItems(list) {
@@ -80,19 +81,37 @@ export default function RoutinesBar({ exercises, onLoad }) {
       </div>
 
       {naming && (
-        <form onSubmit={save} className="flex items-center gap-2">
-          <label htmlFor="routine-name" className="sr-only">Routine name</label>
-          <input
-            id="routine-name"
-            autoFocus
-            value={name}
-            maxLength={40}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name it, e.g. Push day"
-            className="flex-1 min-w-0 h-11 px-3 rounded-xl bg-zinc-900 border border-white/[0.1] text-sm text-white placeholder:text-zinc-400 focus:border-emerald-500"
-          />
-          <button type="submit" className="h-11 px-4 rounded-xl bg-emerald-500 text-zinc-950 text-sm font-bold">Save</button>
-          <button type="button" onClick={() => { setNaming(false); setError(''); }} className="h-11 px-3 rounded-xl text-zinc-300 hover:bg-white/[0.06] text-sm">Cancel</button>
+        <form onSubmit={save} className="space-y-2 p-2 rounded-2xl bg-zinc-900/80 border border-white/[0.08]">
+          <div className="flex items-center gap-2">
+            <label htmlFor="routine-name" className="sr-only">Routine name</label>
+            <input
+              id="routine-name"
+              autoFocus
+              value={name}
+              maxLength={40}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Name it, e.g. Push Day"
+              className="flex-1 min-w-0 h-11 px-3 rounded-xl bg-zinc-950 border border-white/[0.1] text-sm text-white placeholder:text-zinc-500 focus:border-emerald-500 focus:outline-none"
+            />
+            <button type="submit" className="h-11 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-zinc-950 text-sm font-bold transition">Save</button>
+            <button type="button" onClick={() => { setNaming(false); setError(''); }} className="h-11 px-3 rounded-xl text-zinc-300 hover:bg-white/[0.06] active:scale-95 text-sm transition">Cancel</button>
+          </div>
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar">
+            {ROUTINE_SUGGESTIONS.map((sug) => (
+              <button
+                key={sug}
+                type="button"
+                onClick={() => setName(sug)}
+                className={`text-[11px] px-2.5 py-1 rounded-full border transition active:scale-95 shrink-0 ${
+                  name === sug
+                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 font-semibold'
+                    : 'bg-zinc-950 text-zinc-400 hover:text-zinc-200 border-white/[0.08]'
+                }`}
+              >
+                {sug}
+              </button>
+            ))}
+          </div>
         </form>
       )}
       {error && <p role="alert" className="text-xs text-amber-300">{error}</p>}

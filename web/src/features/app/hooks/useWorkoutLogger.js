@@ -14,10 +14,9 @@ const STARTER_TEMPLATE = [
       notes: 'Pinch shoulder blades into bench, 1s controlled pause at mid-chest',
       growthFatigueScore: 8.8,
       sets: [
-        { id: 1, type: 'W', weight: 30.0, reps: 10, completed: false, isPR: false },
-        { id: 2, type: '1', weight: 40.0, reps: 10, completed: false, isPR: false },
-        { id: 3, type: '2', weight: 40.0, reps: 10, completed: false, isPR: false },
-        { id: 4, type: '3', weight: 42.5, reps: 8, completed: false, isPR: false },
+        { id: 1, type: 'W', weight: 20.0, reps: 10, completed: false, isPR: false },
+        { id: 2, type: '1', weight: 20.0, reps: 10, completed: false, isPR: false },
+        { id: 3, type: '2', weight: 20.0, reps: 10, completed: false, isPR: false },
       ],
     },
     {
@@ -28,9 +27,9 @@ const STARTER_TEMPLATE = [
       notes: 'Drive elbows down toward back pockets, 2s slow lowering phase',
       growthFatigueScore: 9.3,
       sets: [
-        { id: 1, type: '1', weight: 35.0, reps: 12, completed: false, isPR: false },
-        { id: 2, type: '2', weight: 35.0, reps: 12, completed: false, isPR: false },
-        { id: 3, type: '3', weight: 37.5, reps: 10, completed: false, isPR: false },
+        { id: 1, type: '1', weight: 25.0, reps: 10, completed: false, isPR: false },
+        { id: 2, type: '2', weight: 25.0, reps: 10, completed: false, isPR: false },
+        { id: 3, type: '3', weight: 25.0, reps: 10, completed: false, isPR: false },
       ],
     },
     {
@@ -43,7 +42,7 @@ const STARTER_TEMPLATE = [
       sets: [
         { id: 1, type: '1', weight: 8.0, reps: 10, completed: false, isPR: false },
         { id: 2, type: '2', weight: 8.0, reps: 10, completed: false, isPR: false },
-        { id: 3, type: '3', weight: 10.0, reps: 8, completed: false, isPR: false },
+        { id: 3, type: '3', weight: 8.0, reps: 10, completed: false, isPR: false },
       ],
     },
   ];
@@ -77,12 +76,78 @@ function readDraft() {
   }
 }
 
+// Web Audio chime with Safari / iOS auto-unlock
+let sharedAudioCtx = null;
+
+function getAudioContext() {
+  if (typeof window === 'undefined') return null;
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return null;
+  if (!sharedAudioCtx) {
+    sharedAudioCtx = new AudioCtx();
+  }
+  if (sharedAudioCtx.state === 'suspended') {
+    sharedAudioCtx.resume().catch(() => {});
+  }
+  return sharedAudioCtx;
+}
+
+/** Pre-unlock audio inside an active user click gesture so iOS Safari won't block the rest timer chime */
+export function unlockAudio() {
+  try {
+    const ctx = getAudioContext();
+    if (ctx && ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
+  } catch {
+    // Ignore audio context errors
+  }
+}
+
+/** Plays a dual-tone tactile sports chime (D5 587Hz -> A5 880Hz) */
+function playRestChime() {
+  try {
+    if (!getSettings().sound) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(587.33, now); // D5
+    osc1.frequency.exponentialRampToValueAtTime(880, now + 0.12); // A5
+
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(880, now);
+    osc2.frequency.exponentialRampToValueAtTime(1174.66, now + 0.12); // D6
+
+    gain.gain.setValueAtTime(0.18, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 0.36);
+    osc2.stop(now + 0.36);
+  } catch {
+    // audio fallback
+  }
+}
+
 export function useWorkoutLogger(initialGoal = 'muscle_growth') {
   const [draft] = useState(readDraft);
   const [workoutTitle, setWorkoutTitle] = useState(
-    typeof draft?.title === 'string' ? draft.title : initialGoal === 'strength'
-      ? 'Raw Strength & Power Session (Chest & Back)'
-      : 'Muscle Growth Session (Chest, Shoulders & Arms)'
+    typeof draft?.title === 'string'
+      ? draft.title
+      : initialGoal === 'strength'
+      ? 'Upper Power 1 (Bench & Rows)'
+      : 'Push A (Chest, Shoulders & Triceps)'
   );
 
   const [exercises, setExercises] = useState(() => draft?.exercises ?? buildStarterWorkout());
@@ -111,17 +176,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
       timer = setInterval(() => setRestSeconds((s) => s - 1), 1000);
     } else if (restSeconds === 0 && isRestActive) {
       setIsRestActive(false);
-      try {
-        if (!getSettings().sound) return;
-        const audio = new AudioContext();
-        const osc = audio.createOscillator();
-        osc.connect(audio.destination);
-        osc.frequency.value = 600;
-        osc.start();
-        osc.stop(audio.currentTime + 0.2);
-      } catch (e) {
-        // audio fallback
-      }
+      playRestChime();
     }
     return () => {
       if (timer) clearInterval(timer);
@@ -134,6 +189,7 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
   };
 
   const toggleSet = (exIndex, setIndex, onStartSession) => {
+    unlockAudio();
     if (onStartSession) onStartSession();
     setActiveExerciseIndex(exIndex);
 
@@ -304,6 +360,18 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     });
   };
 
+  /** Wipes the current draft completely and sets up an empty session. */
+  const discardWorkout = () => {
+    try {
+      localStorage.removeItem(DRAFT_KEY);
+    } catch {}
+    setExercises([]);
+    setWorkoutTitle('New Session');
+    setActiveExerciseIndex(0);
+    setIsRestActive(false);
+    setRestSeconds(0);
+  };
+
   const stats = useMemo(() => workoutStats(exercises), [exercises]);
 
   return {
@@ -327,5 +395,6 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
     loadPlan,
     startFreshWorkout,
     resetAllSets,
+    discardWorkout,
   };
 }

@@ -16,7 +16,7 @@ export default function HistoryView({ onOpenCompanion }) {
   const [shown, setShown] = useState(PAGE); // rendering every workout made the tab take ~0.9 s at 500 workouts
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16">
       <div className="space-y-1">
         <h2 className="text-xl font-bold text-white tracking-tight">History</h2>
         <p className="text-xs text-zinc-400">

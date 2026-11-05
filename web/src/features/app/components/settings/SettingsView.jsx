@@ -1,5 +1,5 @@
 import React, { useId } from 'react';
-import { ShieldCheck, User, Database, Download, LogOut, CloudOff } from 'lucide-react';
+import { ShieldCheck, User, Database, Download, LogOut, CloudOff, Sparkles } from 'lucide-react';
 import { isCloudConfigured } from '../../../../lib/neonClient';
 import { WorkoutStore } from '../../../../lib/workoutStore';
 import { REST_OPTIONS, setSettings, useSettings } from '../../../../lib/settings';
@@ -45,13 +45,13 @@ function exportData() {
   URL.revokeObjectURL(url);
 }
 
-export default function SettingsView({ blueprint, session, syncStatus, onSignOut }) {
+export default function SettingsView({ blueprint, session, syncStatus, onSignOut, onReplayTour }) {
   const settings = useSettings();
   const email = session?.user?.email;
   const canInstall = useCanInstall();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16">
       <div className="space-y-1">
         <h2 className="text-xl font-bold text-white tracking-tight">Settings</h2>
         <p className="text-xs text-zinc-400">
@@ -194,6 +194,17 @@ export default function SettingsView({ blueprint, session, syncStatus, onSignOut
               </span>
             )}
           </div>
+
+          {onReplayTour && (
+            <button
+              type="button"
+              onClick={onReplayTour}
+              className="w-full h-11 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold flex items-center justify-center gap-2 transition active:scale-95"
+            >
+              <Sparkles className="w-4 h-4 text-emerald-400" aria-hidden="true" />
+              Replay Feature Tour
+            </button>
+          )}
 
           <button
             type="button"

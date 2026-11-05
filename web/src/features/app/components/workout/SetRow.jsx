@@ -6,10 +6,10 @@ const MAX_KG = 1000;
 const MAX_REPS = 200;
 
 const stepperClass =
-  'w-11 h-11 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 flex items-center justify-center';
+  'w-11 h-11 rounded-xl bg-zinc-800 hover:bg-zinc-750 active:scale-90 active:bg-zinc-700 text-zinc-200 flex items-center justify-center border border-white/[0.06] transition-all duration-100 select-none shadow-sm';
 // Limits here (weight 0-1000 kg, reps 0-200) are tighter than the server's (functions/lib/validate.ts: reps up to 500) on purpose.
 const inputClass =
-  'h-10 px-1 rounded-lg bg-zinc-900 border border-white/[0.1] text-center font-mono font-semibold text-white focus:border-emerald-500 tabular-nums';
+  'h-11 px-1 rounded-xl bg-zinc-900 border border-white/[0.1] text-center font-mono font-semibold text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 tabular-nums transition-all text-base sm:text-sm';
 
 export default function SetRow({ set, exIndex, setIndex, onUpdateSet, onToggleSet }) {
   const { unit } = useSettings();
@@ -49,13 +49,14 @@ export default function SetRow({ set, exIndex, setIndex, onUpdateSet, onToggleSe
           <input
             type="number"
             inputMode="decimal"
+            pattern="[0-9]*(\.[0-9]+)?"
             aria-label={`Weight in ${unit === 'lb' ? 'pounds' : 'kilograms'}, set ${n}`}
             step={unit === 'lb' ? 5 : 0.5}
             min="0"
             max={toDisplay(MAX_KG, unit)}
             value={weightShown}
             onChange={(e) => changeWeight(fromDisplay(Number(e.target.value) || 0, unit))}
-            className={`w-14 ${inputClass}`}
+            className={`w-14 sm:w-16 ${inputClass}`}
           />
           <button
             type="button"
@@ -88,12 +89,13 @@ export default function SetRow({ set, exIndex, setIndex, onUpdateSet, onToggleSe
           <input
             type="number"
             inputMode="numeric"
+            pattern="[0-9]*"
             aria-label={`Reps, set ${n}`}
             min="0"
             max={MAX_REPS}
             value={set.reps}
             onChange={(e) => onUpdateSet(exIndex, setIndex, 'reps', e.target.value)}
-            className={`w-11 ${inputClass}`}
+            className={`w-12 sm:w-14 ${inputClass}`}
           />
           <button
             type="button"
@@ -126,14 +128,14 @@ export default function SetRow({ set, exIndex, setIndex, onUpdateSet, onToggleSe
               e.stopPropagation();
               onToggleSet(exIndex, setIndex);
             }}
-            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-150 ${
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-150 active:scale-90 ${
               set.completed
                 ? 'bg-emerald-500 text-zinc-950 shadow-md shadow-emerald-500/30'
-                : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-400 border border-white/[0.08]'
+                : 'bg-zinc-800 hover:bg-zinc-750 text-zinc-400 border border-white/[0.08] hover:border-emerald-500/40 hover:text-emerald-400'
             }`}
           >
             <Check
-              className={`w-5 h-5 stroke-[3] transition-transform duration-200 ${set.completed ? 'scale-100' : 'scale-75'}`}
+              className={`w-5 h-5 stroke-[3] transition-transform duration-200 ${set.completed ? 'scale-100 text-zinc-950' : 'scale-75'}`}
               aria-hidden="true"
             />
           </button>

@@ -204,6 +204,16 @@ export default function Companion({ open, setOpen, blueprint, onUseDay, onAddExe
                       </div>
                     )}
                     {m.plan ? <CoachPlanCard plan={m.plan} onUseDay={onUseDay} /> : <p className="whitespace-pre-wrap">{m.text}</p>}
+                    {m.error && m.text?.includes('Gemini API key') && (
+                      <a
+                        href="https://aistudio.google.com/app/apikey"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold text-[11px] transition active:scale-95"
+                      >
+                        Get free key on Google AI Studio ↗
+                      </a>
+                    )}
                     {m.applied?.map((a) => (
                       <p key={a} className="mt-1.5 text-[11px] text-emerald-300">✓ {a}</p>
                     ))}

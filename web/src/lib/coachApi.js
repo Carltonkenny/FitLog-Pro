@@ -10,7 +10,7 @@ const FRIENDLY = {
   'request too large': 'That request is too large. Try fewer or smaller photos.',
   'bad-image': 'One of the photos could not be used. Use a JPEG, PNG or WebP image.',
   unauthorized: 'Sign in to use the AI coach.',
-  'not-configured': 'The AI coach is not set up yet.',
+  'not-configured': 'The AI coach needs a Gemini API key. Add GEMINI_API_KEY in your backend settings or Google AI Studio to chat live.',
   truncated: 'The answer was cut off. Try again.',
 };
 

@@ -20,8 +20,10 @@ export default function MobileBottomNav({ activeTab, setActiveTab }) {
             key={item.id}
             onClick={() => setActiveTab(item.id)}
             aria-current={isActive ? 'page' : undefined}
-            className={`flex flex-col items-center justify-center gap-0.5 min-w-14 min-h-12 px-2 rounded-xl transition ${
-              isActive ? 'text-emerald-400 font-semibold' : 'text-zinc-400 hover:text-zinc-200'
+            className={`flex flex-col items-center justify-center gap-1 min-w-14 min-h-12 px-2.5 py-1 rounded-xl transition-all active:scale-90 duration-100 ${
+              isActive
+                ? 'text-emerald-400 font-semibold bg-emerald-500/10'
+                : 'text-zinc-400 hover:text-zinc-200 active:bg-white/[0.04]'
             }`}
           >
             <Icon className="w-5 h-5" />

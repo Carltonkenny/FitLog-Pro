@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/neon-auth/:path*",
-      "destination": "https://ep-late-morning-aoqnwcuj.neonauth.c-2.ap-southeast-1.aws.neon.tech/neondb/auth/:path*"
+      "destination": "https://ep-ancient-king-b3isnfrw.neonauth.c-4.ap-southeast-1.aws.neon.tech/neondb/auth/:path*"
     },
     {
       "source": "/api/:path*",
@@ -21,7 +21,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://*.neon.tech wss://*.neon.tech; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; worker-src 'self' blob:; img-src 'self' data: blob:; connect-src 'self' https://*.neon.tech wss://*.neon.tech; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
         },
         {
           "key": "Strict-Transport-Security",

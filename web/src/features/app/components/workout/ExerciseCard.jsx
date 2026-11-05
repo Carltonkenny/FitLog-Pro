@@ -30,7 +30,7 @@ export default function ExerciseCard({
     >
       {/* Exercise Header */}
       <div className="flex items-start justify-between gap-3">
-        <ExerciseImage id={exercise.exerciseId} name={exercise.exerciseName} size={48} hideIfMissing />
+        <ExerciseImage id={exercise.exerciseId} name={exercise.exerciseName} equipment={exercise.equipment} size={48} hideIfMissing={false} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <h3 className="font-bold text-white text-base tracking-tight">

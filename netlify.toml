@@ -7,7 +7,7 @@
 # cookies). The target is this project's Neon Auth base URL (`neon neon-auth status`). It is public.
 [[redirects]]
   from   = "/neon-auth/*"
-  to     = "https://ep-late-morning-aoqnwcuj.neonauth.c-2.ap-southeast-1.aws.neon.tech/neondb/auth/:splat"
+  to     = "https://ep-ancient-king-b3isnfrw.neonauth.c-4.ap-southeast-1.aws.neon.tech/neondb/auth/:splat"
   status = 200
   force  = true
 

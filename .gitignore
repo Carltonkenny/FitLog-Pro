@@ -42,3 +42,7 @@ docs/performance/results/
 test-results/
 web/test-results/
 web/playwright-report/
+.vercel
+.env*
+.neon
+node_modules/

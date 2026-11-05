@@ -17,7 +17,7 @@ const chipOff = 'bg-zinc-900 text-zinc-300 border-white/[0.1] hover:border-white
 function Row({ ex, reasons, added, favorite, onAdd, onFavorite }) {
   return (
     <li className="p-2.5 rounded-xl bg-zinc-900/60 border border-white/[0.06] flex items-center gap-3">
-      <ExerciseImage id={ex.id} name={ex.name} size={52} />
+      <ExerciseImage id={ex.id} name={ex.name} equipment={ex.equipment} size={52} />
       <div className="min-w-0 flex-1">
         <h4 className="font-semibold text-white text-sm leading-tight">{ex.name}</h4>
         <p className="text-[11px] text-zinc-400 mt-0.5">

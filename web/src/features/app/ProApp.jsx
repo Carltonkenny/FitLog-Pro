@@ -39,7 +39,28 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
   const [layoutMode, setLayoutMode] = useState('laptop');
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [companionOpen, setCompanionOpen] = useState(false);
-  const [showAiSuggestion, setShowAiSuggestion] = useState(true);
+  const [showWalkthrough, setShowWalkthrough] = useState(() => {
+    try {
+      return localStorage.getItem('fitlog_walkthrough_seen') !== 'true';
+    } catch {
+      return true;
+    }
+  });
+
+  const handleDismissWalkthrough = () => {
+    setShowWalkthrough(false);
+    try {
+      localStorage.setItem('fitlog_walkthrough_seen', 'true');
+    } catch {}
+  };
+
+  const handleReplayWalkthrough = () => {
+    try {
+      localStorage.removeItem('fitlog_walkthrough_seen');
+    } catch {}
+    setShowWalkthrough(true);
+    setActiveTab('workout');
+  };
 
   // Auto-detect screen size
   useEffect(() => {
@@ -179,7 +200,7 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
         )}
 
         {/* CENTER COLUMN: Tab Views */}
-        <main id="main" tabIndex={-1} className="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto focus:outline-none">
+        <main id="main" tabIndex={-1} className="flex-1 p-4 md:p-6 pb-28 lg:pb-6 space-y-6 overflow-y-auto focus:outline-none">
           <h1 className="sr-only">FitLog Pro</h1>
           {activeTab === 'workout' && (
             <ActiveWorkoutView
@@ -188,8 +209,8 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
               sessionSeconds={sessionControls.sessionSeconds}
               formatTimer={sessionControls.formatTimer}
               volume={logger.stats.volume}
-              showAiSuggestion={showAiSuggestion}
-              setShowAiSuggestion={setShowAiSuggestion}
+              showWalkthrough={showWalkthrough}
+              onDismissWalkthrough={handleDismissWalkthrough}
               exercises={logger.exercises}
               activeExerciseIndex={logger.activeExerciseIndex}
               setActiveExerciseIndex={logger.setActiveExerciseIndex}
@@ -209,6 +230,14 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
               onOpenPicker={() => setIsPickerOpen(true)}
               onLoadRoutine={replaceWorkout}
               onOpenCoach={() => setCompanionOpen(true)}
+              onFinishWorkout={handleFinishWorkout}
+              onDiscardWorkout={() => {
+                if (window.confirm('Discard current workout? Any logged sets will be cleared.')) {
+                  logger.discardWorkout();
+                  sessionControls.resetSession();
+                }
+              }}
+              canFinish={logger.stats.completedSetsCount > 0}
             />
           )}
 
@@ -227,6 +256,7 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
               session={session}
               syncStatus={syncStatus}
               onSignOut={onSignOut}
+              onReplayTour={handleReplayWalkthrough}
             />
           )}
         </main>
