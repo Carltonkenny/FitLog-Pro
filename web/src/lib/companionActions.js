@@ -1,7 +1,7 @@
 import { EXERCISE_LIBRARY } from './exercises.js';
 import { EQUIPMENT_OPTIONS } from './userData.js';
 
-const TABS = ['workout', 'library', 'analytics', 'history', 'settings'];
+const TABS = ['workout', 'intel', 'library', 'analytics', 'history', 'settings'];
 const ACTION_TYPES = [
   'add_exercise',
   'log_set',

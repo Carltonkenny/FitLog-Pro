@@ -1,6 +1,7 @@
 import React from 'react';
-import { Trash2, Plus } from 'lucide-react';
+import { Trash2, Plus, Ghost, Zap } from 'lucide-react';
 import { WorkoutStore } from '../../../../lib/workoutStore';
+import { calculate1RM } from '../../../../lib/exercises.js';
 import SetRow from './SetRow';
 import ExerciseImage from '../../../../components/ExerciseImage';
 import { formatWeight, useSettings } from '../../../../lib/settings';
@@ -18,6 +19,23 @@ export default function ExerciseCard({
 }) {
   const { unit } = useSettings();
   const lastSession = WorkoutStore.getLastSessionForExercise(exercise.exerciseId);
+
+  const ghost = lastSession?.bestSet;
+  const ghost1RM = ghost ? calculate1RM(ghost.weight, ghost.reps) : 0;
+
+  // Find if current completed sets beat the ghost
+  const currentBestCompleted = (exercise.sets || [])
+    .filter((s) => s.completed && Number(s.weight) > 0 && Number(s.reps) > 0)
+    .reduce(
+      (best, s) => {
+        const e1rm = calculate1RM(s.weight, s.reps);
+        return e1rm > best.e1rm ? { ...s, e1rm } : best;
+      },
+      { e1rm: 0, weight: 0, reps: 0 }
+    );
+
+  const isGhostDefeated = ghost1RM > 0 && currentBestCompleted.e1rm > ghost1RM;
+  const e1rmDelta = isGhostDefeated ? (currentBestCompleted.e1rm - ghost1RM).toFixed(1) : 0;
 
   return (
     <div
@@ -64,21 +82,39 @@ export default function ExerciseCard({
         </button>
       </div>
 
-      {/* Previous Session Delta Proof */}
-      {lastSession && lastSession.bestSet && (
-        <div className="px-3 py-1.5 rounded-lg bg-zinc-900/80 border border-white/[0.05] text-[11px] text-zinc-400 flex items-center justify-between">
-          <span>
-            Last Session: <strong className="text-zinc-200">{formatWeight(lastSession.bestSet.weight ?? 0, unit)} × {lastSession.bestSet.reps ?? 0} reps</strong>
-          </span>
-          <span className="text-emerald-400 font-medium">
-            {WorkoutStore.getNextSessionTarget(
-              exercise.exerciseId,
-              lastSession.bestSet.weight ?? 0,
-              lastSession.bestSet.reps ?? 0,
-              unit
-            )}
-          </span>
-        </div>
+      {/* Previous Session Delta Proof / Beat Your Ghost */}
+      {ghost && (
+        isGhostDefeated ? (
+          <div className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-950/40 via-emerald-950/30 to-zinc-900/60 border border-emerald-500/40 text-xs flex items-center justify-between shadow-md">
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-emerald-400 fill-emerald-400/20 animate-pulse" />
+              <span className="font-bold text-emerald-300 uppercase tracking-wider text-[11px]">
+                Ghost Defeated!
+              </span>
+              <span className="text-zinc-300 text-[11px] hidden sm:inline">
+                {formatWeight(currentBestCompleted.weight, unit)} × {currentBestCompleted.reps} (e1RM: {currentBestCompleted.e1rm} kg)
+              </span>
+            </div>
+            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              +{e1rmDelta} kg 1RM
+            </span>
+          </div>
+        ) : (
+          <div className="px-3 py-1.5 rounded-xl bg-zinc-900/80 border border-white/[0.06] text-[11px] text-zinc-400 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+            <div className="flex items-center gap-1.5">
+              <Ghost className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+              <span>
+                Ghost: <strong className="text-zinc-200">{formatWeight(ghost.weight ?? 0, unit)} × {ghost.reps ?? 0}</strong> ({ghost1RM} kg 1RM)
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-emerald-400 font-medium text-[11px]">
+              <span>🎯 Target:</span>
+              <span className="bg-emerald-500/10 px-1.5 py-0.5 rounded text-emerald-300 border border-emerald-500/20 font-mono">
+                {WorkoutStore.getNextSessionTarget(exercise.exerciseId, ghost.weight ?? 0, ghost.reps ?? 0, unit)}
+              </span>
+            </div>
+          </div>
+        )
       )}
 
       {/* Sets Table */}

@@ -6,6 +6,7 @@ import {
   History,
   Settings,
   Sparkles,
+  Zap,
   Wifi,
   WifiOff,
 } from 'lucide-react';
@@ -28,6 +29,7 @@ export default function StudioSidebar({
       icon: Dumbbell,
       badge: `${workoutStats.completedSetsCount}/${workoutStats.totalSetsCount}`,
     },
+    { id: 'intel', label: 'Physique Intel', icon: Zap, badge: 'VERDICT' },
     { id: 'library', label: 'Exercise Explorer', icon: Layers, badge: String(EXERCISE_LIBRARY.length) },
     { id: 'analytics', label: 'Progress', icon: LineChart, badge: null },
     { id: 'history', label: 'History', icon: History, badge: null },

@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { WorkoutStore } from '../../../lib/workoutStore';
+import { calculate1RM } from '../../../lib/exercises.js';
 import { buzz, getSettings } from '../../../lib/settings';
 import { workoutStats } from '../../../lib/stats';
 
@@ -209,12 +210,18 @@ export function useWorkoutLogger(initialGoal = 'muscle_growth') {
         );
         targetSet.isPR = isPR;
 
-        if (isPR) {
+        const last = WorkoutStore.getLastSessionForExercise(copy[exIndex].exerciseId);
+        const ghost1RM = last?.bestSet ? calculate1RM(last.bestSet.weight, last.bestSet.reps) : 0;
+        const current1RM = calculate1RM(targetSet.weight, targetSet.reps);
+        const beatGhost = ghost1RM > 0 && current1RM > ghost1RM;
+        targetSet.beatGhost = beatGhost;
+
+        if (isPR || beatGhost) {
           confetti({
-            particleCount: 70,
-            spread: 60,
+            particleCount: 80,
+            spread: 70,
             origin: { y: 0.7 },
-            colors: ['#10b981', '#3b82f6', '#f59e0b'],
+            colors: ['#00F59B', '#a855f7', '#38bdf8', '#fbbf24'],
           });
         }
       }

@@ -23,6 +23,7 @@ import MobileBottomNav from './components/layout/MobileBottomNav';
 import ActiveWorkoutView from './components/workout/ActiveWorkoutView';
 import CascadingExplorerView from './components/explorer/CascadingExplorerView';
 import AnalyticsView from './components/analytics/AnalyticsView';
+import PhysiqueIntelView from './components/intel/PhysiqueIntelView';
 import HistoryView from './components/history/HistoryView';
 import SettingsView from './components/settings/SettingsView';
 
@@ -274,6 +275,15 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
 
           {activeTab === 'library' && (
             <CascadingExplorerView onAddExercise={logger.addExercise} />
+          )}
+
+          {activeTab === 'intel' && (
+            <PhysiqueIntelView
+              activeWorkout={{
+                exercises: logger.exercises,
+              }}
+              onStartWorkout={() => setActiveTab('workout')}
+            />
           )}
 
           {activeTab === 'analytics' && <AnalyticsView onStartWorkout={() => setActiveTab('workout')} />}

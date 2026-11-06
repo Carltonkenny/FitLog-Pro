@@ -1,5 +1,5 @@
 import React from 'react';
-import { Minus, Plus, Check, Trophy } from 'lucide-react';
+import { Minus, Plus, Check, Trophy, Zap } from 'lucide-react';
 import { fromDisplay, stepKg, toDisplay, useSettings } from '../../../../lib/settings';
 
 const MAX_KG = 1000;
@@ -118,6 +118,12 @@ export default function SetRow({ set, exIndex, setIndex, onUpdateSet, onToggleSe
             <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
               <Trophy className="inline w-3 h-3 -mt-0.5 mr-0.5" aria-hidden="true" />
               PR
+            </span>
+          )}
+          {set.beatGhost && (
+            <span className="text-[10px] font-bold text-purple-300 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">
+              <Zap className="inline w-3 h-3 -mt-0.5 mr-0.5 text-purple-400" aria-hidden="true" />
+              GHOST
             </span>
           )}
           <button

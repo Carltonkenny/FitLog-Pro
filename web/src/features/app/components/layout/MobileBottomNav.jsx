@@ -1,9 +1,10 @@
 import React from 'react';
-import { Dumbbell, Layers, LineChart, History, Settings } from 'lucide-react';
+import { Dumbbell, Zap, Layers, LineChart, History, Settings } from 'lucide-react';
 
 export default function MobileBottomNav({ activeTab, setActiveTab }) {
   const items = [
     { id: 'workout', label: 'Workout', icon: Dumbbell },
+    { id: 'intel', label: 'Intel', icon: Zap },
     { id: 'library', label: 'Explorer', icon: Layers },
     { id: 'analytics', label: 'Analytics', icon: LineChart },
     { id: 'history', label: 'History', icon: History },
