@@ -26,6 +26,48 @@ export default function MemoryPanel() {
 
   return (
     <div className="p-4 space-y-4 text-xs overflow-y-auto">
+      {/* Permanent Athlete Profile */}
+      <div className="p-3.5 rounded-2xl bg-zinc-900 border border-white/[0.08] space-y-2">
+        <div className="flex items-center justify-between">
+          <p className="text-zinc-200 font-semibold flex items-center gap-1.5">
+            <span>👤</span> Athlete Profile
+          </p>
+          {memory.athleteProfile?.name ? (
+            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              Locked & Saved
+            </span>
+          ) : (
+            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-zinc-800 text-zinc-400">
+              Not Enrolled
+            </span>
+          )}
+        </div>
+        {memory.athleteProfile?.name ? (
+          <div className="grid grid-cols-2 gap-2 text-xs pt-1">
+            <div className="p-2 rounded-xl bg-zinc-950/60 border border-white/[0.04]">
+              <span className="text-[10px] text-zinc-500 uppercase font-bold block">Name</span>
+              <span className="text-zinc-200 font-semibold">{memory.athleteProfile.name}</span>
+            </div>
+            <div className="p-2 rounded-xl bg-zinc-950/60 border border-white/[0.04]">
+              <span className="text-[10px] text-zinc-500 uppercase font-bold block">Age</span>
+              <span className="text-zinc-200 font-semibold">{memory.athleteProfile.age ? `${memory.athleteProfile.age} yrs` : 'Not set'}</span>
+            </div>
+            <div className="p-2 rounded-xl bg-zinc-950/60 border border-white/[0.04] col-span-2">
+              <span className="text-[10px] text-zinc-500 uppercase font-bold block">Occupation / Lifestyle</span>
+              <span className="text-zinc-200 font-medium truncate block">{memory.athleteProfile.occupation || 'Not set'}</span>
+            </div>
+            <div className="p-2 rounded-xl bg-zinc-950/60 border border-white/[0.04] col-span-2">
+              <span className="text-[10px] text-zinc-500 uppercase font-bold block">Primary Target</span>
+              <span className="text-zinc-200 font-medium truncate block">{memory.athleteProfile.goal || 'Hypertrophy & Strength'}</span>
+            </div>
+          </div>
+        ) : (
+          <p className="text-zinc-400 text-xs leading-relaxed">
+            Not enrolled yet. Start talking to Coach Marcus or use the voice onboarding walkthrough to set up your profile.
+          </p>
+        )}
+      </div>
+
       <div>
         <label htmlFor="pet-name" className="text-zinc-300 font-medium block mb-1">Companion name</label>
         <input

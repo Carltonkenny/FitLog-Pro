@@ -174,3 +174,4 @@ export default function EquipmentBadge({ equipment = '', size = 48, className = 
     </div>
   );
 }
+

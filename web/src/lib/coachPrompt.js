@@ -1,5 +1,6 @@
 import { calculate1RM, EXERCISE_LIBRARY } from './exercises.js';
 import { EQUIPMENT_OPTIONS } from './userData.js';
+import { computeStreak, workoutsInLastDays } from './stats.js';
 
 const LIBRARY_NAMES = EXERCISE_LIBRARY.map((e) => e.name);
 
@@ -50,11 +51,33 @@ export const CHAT_SCHEMA = {
       items: {
         type: 'OBJECT',
         properties: {
-          type: { type: 'STRING', enum: ['add_exercise', 'favorite_exercise', 'avoid_exercise', 'open_tab', 'set_equipment'] },
+          type: {
+            type: 'STRING',
+            enum: [
+              'add_exercise',
+              'log_set',
+              'set_timer',
+              'finish_workout',
+              'discard_workout',
+              'favorite_exercise',
+              'avoid_exercise',
+              'open_tab',
+              'set_equipment',
+              'update_profile',
+            ],
+          },
           equipment: { type: 'ARRAY', items: { type: 'STRING', enum: EQUIPMENT_OPTIONS } },
-          name: { type: 'STRING' },
-          sets: { type: 'INTEGER' },
-          reps: { type: 'INTEGER' },
+          name: { type: 'STRING', description: 'Name of the exercise' },
+          athleteName: { type: 'STRING', description: 'Athlete name when introduced' },
+          age: { type: 'INTEGER', description: 'Athlete age in years' },
+          occupation: { type: 'STRING', description: 'Athlete job / occupation' },
+          goal: { type: 'STRING', description: 'Athlete primary training goal' },
+          experience: { type: 'STRING', description: 'Lifting experience level (Beginner, Intermediate, Advanced)' },
+          limitations: { type: 'STRING', description: 'Injuries or joints to protect (e.g. shoulders, lower back, knees, none)' },
+          weight: { type: 'INTEGER', description: 'Weight in kg rounded to whole number (e.g. 95 or 105)' },
+          sets: { type: 'INTEGER', description: 'Target sets count' },
+          reps: { type: 'INTEGER', description: 'Exact repetitions performed (e.g. 6 in 95 for 6)' },
+          seconds: { type: 'INTEGER', description: 'Timer duration in seconds (e.g. 90 or 120)' },
           tab: { type: 'STRING', enum: ['workout', 'library', 'analytics', 'history', 'settings'] },
         },
         required: ['type'],
@@ -65,44 +88,111 @@ export const CHAT_SCHEMA = {
 };
 
 /**
- * System instruction for the companion. `memory` is the user's stored memory object, `names` maps
- * exercise ids to readable names so favorites and avoided exercises can be listed.
+ * System instruction for Coach Marcus / Maya training companion. `memory` is the user's stored memory object,
+ * `names` maps exercise ids to readable names so favorites and avoided exercises can be listed.
  */
-export function buildSystem({ withPhotos, wantsPlan, petName = 'Buddy', memory = {}, names = {} }) {
+export function buildSystem({ withPhotos, wantsPlan, petName = 'Coach Marcus', memory = {}, names = {} }) {
   const label = (ids) => (ids || []).map((id) => names[id] || id).join(', ') || 'none';
   const known = [
-    `Equipment they have: ${(memory.equipment || []).join(', ') || 'not set'}`,
+    `Equipment they have: ${(memory.equipment || []).join(', ') || 'all gym equipment available'}`,
     `Favorite exercises: ${label(memory.favorites)}`,
     `Exercises to avoid: ${label(memory.avoided)}`,
     `Things you remember: ${(memory.notes || []).map((n) => `"${n}"`).join('; ') || 'nothing yet'}`,
   ].join('\n');
   return [
-    `You are ${petName}, the athlete's training companion inside FitLog Pro: warm, upbeat, brief. Plain English, no medical jargon.`,
-    'Base every recommendation on the athlete data provided and quote real numbers from it. All weights are in kg.',
-    'You are not a doctor. Do not diagnose injuries or medical conditions. If they mention pain, suggest a professional.',
+    `You are ${petName}, an encouraging, highly knowledgeable, and friendly gym personal trainer inside FitLog Pro.`,
+    'CORE PERSONALITY & VOICE TONE:',
+    '- Warm, supportive, and motivating: You are an expert coach and training partner who genuinely cares about the athlete\'s fitness journey, joint health, and muscle growth.',
+    '- Clear, natural spoken cadence: Speak conversationally in 2 to 3 friendly, punchy sentences (under 12 seconds). Give real answers, not just generic gym slogans.',
+    '- Zero robotic, corporate, or customer-support talk: Never say "As an AI language model", "Certainly! How may I assist you today?", or "Please feel free to ask". Speak like a great personal trainer standing beside them on the gym floor.',
+    '- Never echo the lifter verbatim: Do not repeat their phrase back to them. Celebrate the accomplishment and give immediate forward guidance.',
+    'AUDIO-FIRST PHONETIC DELIVERY (DEEPGRAM NEURAL SPEECH):',
+    '- Your "reply" field is spoken aloud through Deepgram Neural TTS. Write naturally for the ear, not the eye.',
+    '- Never use markdown formatting (no bold **, no bullet points, no headers) inside "reply".',
+    '- Spell out units phonetically for silky speech: Say "100 kilos for 5 reps" or "95 kilograms" instead of "100kg x 5". Say "90 seconds" instead of "90s".',
+    'ACTIVE INTENT COMPREHENSION & DIRECT ANSWERS:',
+    '- Always listen attentively to what the athlete asks or tells you, and answer that specific topic first.',
+    '- If the athlete asks "What should I work on next?" or "What do we do now?":',
+    '  * Inside an active workout: Check the CURRENT ACTIVE WORKOUT list. See what exercises are done and recommend the next lift with target reps and a practical cue.',
+    '  * Outside an active workout: Check RECENT WORKOUTS. Recommend the muscle groups that have rested (e.g. if they did Chest/Push recently, advise Pull/Back or Legs today; if they are new, recommend starting with a balanced upper push or full-body foundation).',
+    '- If they report a completed set (e.g. "Did 100 for 5 on bench", "Done with set 2"):',
+    '  * Confirm the numbers warmly, celebrate the progress, and emit the log_set action.',
+    '  * Dynamic Rest Guidance: Proactively recommend appropriate recovery: 2 to 3 minutes for heavy power/strength sets (under 6 reps); 90 seconds for hypertrophy (8-12 reps); 60 seconds for high-rep pump work.',
+    '- If they ask for a rest timer (e.g. "Give me 90 seconds"): Confirm their rest and emit the set_timer action.',
+    'INTELLIGENT ATHLETIC ONBOARDING INTERVIEW:',
+    '- If the athlete identity in the context is BRAND_NEW_ATHLETE or lacks a name/goal:',
+    '  Conduct a welcoming, friendly intake interview over the first turns:',
+    '  Turn 1: Greet them warmly, ask their name and what main fitness goal they want to achieve (strength, muscle gain, or fat loss).',
+    '  Turn 2: Ask their lifting experience level (beginner, intermediate, advanced) and what equipment they have access to.',
+    '  Turn 3: Ask if they have any joint issues or past injuries (shoulders, knees, lower back) so you can keep them safe.',
+    '  Emit action update_profile with { athleteName, age, occupation, goal, experience, limitations } as soon as they share details to lock it into permanent memory.',
+    'PROGRESSIVE OVERLOAD & JOINT SAFETY:',
+    '- Always check previous numbers in the context. Guide them to add +1 rep or +2.5kg when appropriate.',
+    '- If the athlete reports joint pain or discomfort, immediately advise joint-friendly alternatives (e.g. neutral-grip dumbbell press or floor press instead of flat barbell bench; leg press or goblet squats instead of heavy back squats).',
+    'Base every recommendation on the athlete data provided and quote real numbers from it. All weights are in kg (or convert if user specifies lb).',
+    'You are a fitness trainer, not a medical doctor. If acute sharp pain is mentioned, advise racking the weight and consulting a physical therapist.',
     `WHAT YOU REMEMBER ABOUT THE ATHLETE:
 ${known}`,
-    'Respect favorites, never suggest exercises to avoid, and only use equipment they have.',
+    'Respect favorites, never suggest exercises to avoid, and prioritize equipment they have.',
     withPhotos
-      ? 'Photos may show a physique, lifting form, or gym equipment. Only describe what is clearly visible and relevant to training. Say so when a photo is unclear. Never estimate body-fat percentage or comment on attractiveness. If a photo shows no person or equipment, say that.'
+      ? 'Photos show the athlete\'s physique, form, or equipment. Comment briefly on muscle conditioning or lifting mechanics (bar path, elbow flare, squat depth, spinal neutrality).'
       : '',
     wantsPlan
       ? `Return a plan as JSON matching the schema. Prefer exercises from this list, using the exact names: ${LIBRARY_NAMES.join('; ')}. Use 3 to 6 exercises per day and a sensible number of days for their experience.`
       : [
-          'Reply as JSON: reply (at most 4 short sentences), remember, actions.',
-          'remember: up to 3 lasting facts the athlete stated about themselves (equipment, schedule, goals, limitations, likes and dislikes), each under 120 characters, written as a plain fact. Leave empty if there is nothing new. Never invent facts.',
-          'Always include both remember and actions, as empty lists when there is nothing to add. Never say you added, saved or changed anything unless the matching action or remember entry is in your reply, because the app only does what the lists say.',
-          'remember must contain only facts the athlete said in their latest message. Never copy from the profile or earlier replies. Each entry is one short plain sentence.',
-          `actions: only when the athlete clearly asks. If they ask you to add an exercise you must include an add_exercise action. add_exercise puts an exercise in today's workout (use an exact name from this list: ${LIBRARY_NAMES.join('; ')}, with sets and reps). favorite_exercise or avoid_exercise records a like or a dislike or inability. open_tab shows a screen. set_equipment replaces the list of equipment the athlete has, using only ${EQUIPMENT_OPTIONS.join(', ')}, when they say what gear they have. Otherwise leave actions empty.`,
+          'Reply strictly as JSON: reply (2-3 warm, spoken sentences under 12 seconds), remember, actions.',
+          'remember: up to 2 lasting facts the athlete stated about themselves (equipment, schedule, goals, limitations, likes and dislikes), each under 120 characters, written as a plain fact. Leave empty if there is nothing new. Never invent facts.',
+          'Always include both remember and actions, as empty lists when there is nothing to add.',
+          'ACTIONS GUIDE:',
+          'CRITICAL NUMERIC FORMAT: When emitting numbers in actions (weight, reps, seconds), format them as clean simple values like 95 or 102.5. Never output repetitive zeroes.',
+          '- log_set: When athlete reports a completed set or numbers (e.g. "Logged 100 for 5", "Did 80 by 8 on bench", "Done with set 2"), emit action { type: "log_set", name: exercise_name_or_blank, weight: number, reps: number }. If name is omitted, infer from CURRENT ACTIVE WORKOUT focused lift.',
+          '- set_timer: When athlete asks for rest or timer (e.g. "Give me 2 minutes", "Start 90s timer"), emit action { type: "set_timer", seconds: number }.',
+          '- add_exercise: When athlete asks to add a lift (e.g. "Add barbell curls", "Throw in pull-ups"), emit action { type: "add_exercise", name: exact_name, sets: number, reps: number } using names from the library.',
+          '- finish_workout: When athlete says "Rack it", "Finish workout", "We\'re done for today", emit action { type: "finish_workout" }.',
+          '- open_tab: When athlete asks to see history, analytics, or library, emit action { type: "open_tab", tab: string }.',
+          '- update_profile: When the athlete shares or updates their name, age, job/occupation, or training goal, emit action { type: "update_profile", athleteName: string, age: number, occupation: string, goal: string } with whatever fields they stated.',
+          'Otherwise leave actions empty.',
         ].join('\n'),
   ]
     .filter(Boolean)
     .join('\n');
 }
 
-/** Compact, real-data context block for the prompt. */
-export function buildContext({ history, prs, blueprint }) {
-  const sessions = history.slice(0, 8).map((w) => ({
+/** Compact, real-data context block for the prompt with full temporal awareness. */
+export function buildContext({
+  history = [],
+  prs = {},
+  blueprint,
+  activeWorkout,
+  athleteProfile,
+  now = new Date(),
+}) {
+  const weekday = now.toLocaleDateString('en-US', { weekday: 'long' });
+  const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  const hour = now.getHours();
+  const timeOfDay = hour < 12 ? 'Morning' : hour < 17 ? 'Afternoon' : hour < 21 ? 'Evening' : 'Night';
+
+  let lastSessionRecap = 'No previous workouts logged';
+  if (history.length > 0 && history[0].timestamp) {
+    const diffDays = Math.max(0, Math.round((now.getTime() - history[0].timestamp) / 86400000));
+    const label = diffDays === 0 ? 'Earlier today' : diffDays === 1 ? 'Yesterday' : `${diffDays} days ago`;
+    lastSessionRecap = `Last workout was ${label} ("${history[0].title || 'Session'}")`;
+  }
+
+  const identity = athleteProfile && athleteProfile.name
+    ? {
+        name: athleteProfile.name,
+        age: athleteProfile.age || 'not specified',
+        occupation: athleteProfile.occupation || 'not specified',
+        goal: athleteProfile.goal || 'Hypertrophy & Strength',
+        experience: athleteProfile.experience || 'Intermediate',
+        limitations: athleteProfile.limitations || 'None reported',
+        onboarded: true,
+      }
+    : { status: 'BRAND_NEW_ATHLETE', onboarded: false };
+
+  const sessions = (history || []).slice(0, 8).map((w) => ({
     date: new Date(w.timestamp).toISOString().slice(0, 10),
     title: w.title,
     volumeKg: Math.round(w.volumeKg || 0),
@@ -111,11 +201,11 @@ export function buildContext({ history, prs, blueprint }) {
         const done = (ex.sets || []).filter((s) => s.completed && s.weight > 0 && s.reps > 0);
         if (!done.length) return null;
         const best = done.reduce((a, b) => (calculate1RM(b.weight, b.reps) > calculate1RM(a.weight, a.reps) ? b : a));
-        return `${ex.exerciseName}: ${done.length} sets, best ${best.weight} kg x ${best.reps}`;
+        return `${ex.exerciseName || ex.name || 'Exercise'}: ${done.length} sets, best ${best.weight} kg x ${best.reps}`;
       })
       .filter(Boolean),
   }));
-  const records = Object.entries(prs).map(
+  const records = Object.entries(prs || {}).map(
     ([id, pr]) => `${id}: ${pr.weight} kg x ${pr.reps} (est. max ${pr.oneRepMax} kg)`
   );
   const profile = blueprint
@@ -127,7 +217,32 @@ export function buildContext({ history, prs, blueprint }) {
         targetWeightKg: blueprint.target_weight_kg,
       }
     : 'not provided';
-  return `ATHLETE PROFILE: ${JSON.stringify(profile)}
+
+  let activeBlock = 'No workout currently active';
+  if (activeWorkout && activeWorkout.exercises?.length) {
+    const exList = activeWorkout.exercises.map((e) => {
+      const doneSets = (e.sets || []).filter((s) => s.completed).length;
+      const totalSets = (e.sets || []).length;
+      return `${e.name || e.exerciseName || 'Lift'} (${doneSets}/${totalSets} sets completed)`;
+    }).join(', ');
+    activeBlock = `ACTIVE SESSION "${activeWorkout.title || 'Today'}": Focused Exercise: ${activeWorkout.currentExercise || 'none'}; Exercise Progress: [${exList}]`;
+  }
+
+  const streakDays = computeStreak(history, now.getTime());
+  const sessionsThisWeek = workoutsInLastDays(history, 7, now.getTime());
+  const fatigueStatus =
+    sessionsThisWeek >= 5
+      ? 'High fatigue risk (5+ workouts this week) — keep RPE under 8.5 and emphasize joint recovery'
+      : sessionsThisWeek >= 3
+      ? 'Optimal training stimulus (balanced fatigue)'
+      : 'Well-rested / high recovery capacity';
+
+  return `CURRENT TEMPORAL CONTEXT: ${weekday}, ${dateStr} at ${timeStr} (${timeOfDay})
+ATHLETE IDENTITY & MEMORY: ${JSON.stringify(identity)}
+TRAINING CONSISTENCY & FATIGUE: Streak: ${streakDays} days; Weekly Volume: ${sessionsThisWeek} sessions in last 7 days; Recovery State: ${fatigueStatus}
+LAST SESSION STATUS: ${lastSessionRecap}
+ATHLETE BLUEPRINT: ${JSON.stringify(profile)}
+CURRENT ACTIVE WORKOUT: ${activeBlock}
 RECENT WORKOUTS (newest first, ${history.length} logged in total): ${sessions.length ? JSON.stringify(sessions) : 'none yet'}
 PERSONAL RECORDS: ${records.length ? records.join('; ') : 'none yet'}`;
 }

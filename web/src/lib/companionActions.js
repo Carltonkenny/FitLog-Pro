@@ -2,7 +2,18 @@ import { EXERCISE_LIBRARY } from './exercises.js';
 import { EQUIPMENT_OPTIONS } from './userData.js';
 
 const TABS = ['workout', 'library', 'analytics', 'history', 'settings'];
-const ACTION_TYPES = ['add_exercise', 'favorite_exercise', 'avoid_exercise', 'open_tab', 'set_equipment'];
+const ACTION_TYPES = [
+  'add_exercise',
+  'log_set',
+  'set_timer',
+  'finish_workout',
+  'discard_workout',
+  'favorite_exercise',
+  'avoid_exercise',
+  'open_tab',
+  'set_equipment',
+  'update_profile',
+];
 const GEAR = EQUIPMENT_OPTIONS;
 const MAX_ACTIONS = 5;
 
@@ -53,16 +64,40 @@ export function parseChatReply(text) {
       .filter((a) => {
         if (a.type === 'open_tab') return TABS.includes(a.tab);
         if (a.type === 'set_equipment') return Array.isArray(a.equipment) && a.equipment.some((g) => GEAR.includes(g));
+        if (a.type === 'finish_workout' || a.type === 'discard_workout' || a.type === 'update_profile') return true;
+        if (a.type === 'set_timer') return Number.isFinite(Number(a.seconds)) || a.seconds === undefined;
+        if (a.type === 'log_set') return true;
         return typeof a.name === 'string' && a.name.trim();
       })
-      .map((a) => ({
-        type: a.type,
-        name: typeof a.name === 'string' ? a.name.trim().slice(0, 100) : undefined,
-        tab: a.tab,
-        equipment: a.type === 'set_equipment' ? [...new Set(a.equipment.filter((g) => GEAR.includes(g)))] : undefined,
-        sets: clamp(a.sets, 1, 10, 3),
-        reps: clamp(a.reps, 1, 100, 10),
-      }))
+      .map((a) => {
+        const item = {
+          type: a.type,
+          name: typeof a.name === 'string' ? a.name.trim().slice(0, 100) : undefined,
+          tab: a.tab,
+          equipment: a.type === 'set_equipment' ? [...new Set(a.equipment.filter((g) => GEAR.includes(g)))] : undefined,
+          sets: clamp(a.sets, 1, 10, 3),
+          reps: clamp(a.reps, 1, 100, 10),
+        };
+        if (a.weight !== undefined) {
+          item.weight = typeof a.weight === 'number' ? Math.max(0, Math.min(500, a.weight)) : (Number(a.weight) || undefined);
+        }
+        if (a.seconds !== undefined) {
+          item.seconds = Math.max(10, Math.min(600, Number(a.seconds) || 90));
+        }
+        if (a.athleteName !== undefined) {
+          item.athleteName = typeof a.athleteName === 'string' ? a.athleteName.trim().slice(0, 40) : undefined;
+        }
+        if (a.age !== undefined && Number.isFinite(Number(a.age))) {
+          item.age = clamp(a.age, 10, 120, undefined);
+        }
+        if (a.occupation !== undefined) {
+          item.occupation = typeof a.occupation === 'string' ? a.occupation.trim().slice(0, 60) : undefined;
+        }
+        if (a.goal !== undefined) {
+          item.goal = typeof a.goal === 'string' ? a.goal.trim().slice(0, 140) : undefined;
+        }
+        return item;
+      })
       .slice(0, MAX_ACTIONS),
   };
 }

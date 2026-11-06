@@ -45,6 +45,15 @@ export function normalize(raw) {
       favorites,
       avoided: idList(m.avoided).filter((id) => !favorites.includes(id)),
       notes: (Array.isArray(m.notes) ? m.notes : []).map((n) => str(n, LIMITS.noteChars)).filter(Boolean).slice(-LIMITS.notes),
+      athleteProfile: {
+        name: str(m.athleteProfile?.name, 40),
+        age: int(m.athleteProfile?.age, 10, 120, null),
+        occupation: str(m.athleteProfile?.occupation, 60),
+        goal: str(m.athleteProfile?.goal, 140),
+        experience: str(m.athleteProfile?.experience, 60),
+        limitations: str(m.athleteProfile?.limitations, 140),
+        onboardedAt: Number.isFinite(m.athleteProfile?.onboardedAt) ? m.athleteProfile.onboardedAt : 0,
+      },
     },
   };
 }
@@ -139,6 +148,13 @@ export function mergeUserData(local, cloud, base = normalize({})) {
       favorites: mergeSet(l.memory.favorites, c.memory.favorites, b.memory.favorites, byText),
       avoided: mergeSet(l.memory.avoided, c.memory.avoided, b.memory.avoided, byText),
       notes: mergeSet(l.memory.notes, c.memory.notes, b.memory.notes, byText),
+      athleteProfile: {
+        name: l.memory.athleteProfile?.name || c.memory.athleteProfile?.name || '',
+        age: l.memory.athleteProfile?.age || c.memory.athleteProfile?.age || null,
+        occupation: l.memory.athleteProfile?.occupation || c.memory.athleteProfile?.occupation || '',
+        goal: (localIsNewer ? l : c).memory.athleteProfile?.goal || l.memory.athleteProfile?.goal || c.memory.athleteProfile?.goal || '',
+        onboardedAt: Math.max(l.memory.athleteProfile?.onboardedAt || 0, c.memory.athleteProfile?.onboardedAt || 0),
+      },
     },
   });
 }
@@ -193,3 +209,32 @@ export function addNotes(notes) {
 
 export const deleteNote = (index) => withMemory({ notes: current.memory.notes.filter((_, i) => i !== index) });
 export const clearNotes = () => withMemory({ notes: [] });
+
+/**
+ * Updates the permanent athlete profile in companion memory.
+ * Immutability rule: name, age, and occupation cannot be altered once established.
+ * Goal is dynamic and can evolve over time.
+ */
+export function updateAthleteProfile(updates = {}) {
+  const data = getUserData();
+  const existing = data.memory.athleteProfile || {};
+  const name = existing.name || str(updates.name, 40);
+  const age = existing.age !== null && existing.age !== undefined && existing.age > 0
+    ? existing.age
+    : int(updates.age, 10, 120, null);
+  const occupation = existing.occupation || str(updates.occupation, 60);
+  const goal = str(updates.goal, 140) || existing.goal || '';
+  const experience = str(updates.experience, 60) || existing.experience || '';
+  const limitations = str(updates.limitations, 140) || existing.limitations || '';
+  const onboardedAt = existing.onboardedAt || (name ? Date.now() : 0);
+
+  const nextProfile = { name, age, occupation, goal, experience, limitations, onboardedAt };
+  commit({
+    ...data,
+    memory: {
+      ...data.memory,
+      athleteProfile: nextProfile,
+    },
+  });
+  return nextProfile;
+}

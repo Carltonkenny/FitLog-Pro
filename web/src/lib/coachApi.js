@@ -14,11 +14,65 @@ const FRIENDLY = {
   truncated: 'The answer was cut off. Try again.',
 };
 
+const localKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) || (typeof window !== 'undefined' && window.FITLOG_GEMINI_KEY);
+const localModel = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_MODEL) || 'gemini-3.1-flash-lite';
+
+async function callDirectGemini(body) {
+  const models = Array.from(new Set([localModel, 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemini-flash-latest'].filter(Boolean)));
+  let lastErr = null;
+
+  for (const mod of models) {
+    try {
+      const payload = {
+        contents: body.contents,
+        generationConfig: {
+          temperature: 0.6,
+          maxOutputTokens: body.maxOutputTokens || 2048,
+        },
+      };
+      if (body.system) {
+        payload.systemInstruction = { parts: [{ text: body.system }] };
+      }
+      if (body.responseSchema) {
+        payload.generationConfig.responseMimeType = 'application/json';
+        payload.generationConfig.responseSchema = body.responseSchema;
+      }
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${mod}:generateContent`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': localKey,
+        },
+        body: JSON.stringify(payload),
+      });
+      if (res.status === 429 || res.status === 503) {
+        // Fallback to secondary model if rate-limited on free tier
+        continue;
+      }
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new CoachError(errData?.error?.message || 'Gemini service unreachable');
+      }
+      const data = await res.json();
+      let text = (data?.candidates?.[0]?.content?.parts ?? []).map((p) => p.text ?? '').join('');
+      if (data?.candidates?.[0]?.finishReason === 'MAX_TOKENS') throw new CoachError(FRIENDLY.truncated);
+      // Guard against LLM constrained grammar floating-point runaways (e.g. 105.000000000...)
+      if (body.responseSchema && text) {
+        text = text.replace(/(\d+)\.0{4,}\d*/g, '$1');
+      }
+      return text;
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new CoachError(FRIENDLY.busy);
+}
+
 /**
  * Sends a prompt to the coach and resolves with the model's text.
  * body: { system, contents: [{ role, parts: [{ text } | { inlineData: { mimeType, data } }] }],
  *         responseSchema?, maxOutputTokens? }
- * The request goes to POST /coach on the FitLog API, which holds the Gemini key. It is never in the browser.
+ * The request goes to direct Gemini API when a local key is present, or to POST /coach on the FitLog API.
  */
 export async function askCoach(body) {
   try {
@@ -34,6 +88,9 @@ export async function askCoach(body) {
 }
 
 async function askOnce(body) {
+  if (localKey) {
+    return callDirectGemini(body);
+  }
   if (!isCloudConfigured) throw new CoachError('Connect the app to its backend to use the AI coach.');
 
   let data;

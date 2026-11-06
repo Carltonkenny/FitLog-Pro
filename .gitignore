@@ -46,3 +46,5 @@ web/playwright-report/
 .env*
 .neon
 node_modules/
+
+scratch/

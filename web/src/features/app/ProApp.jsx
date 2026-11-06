@@ -121,6 +121,37 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
     setActiveTab('workout');
   };
 
+  // Voice Coach set logging handler
+  const handleVoiceLogSet = ({ name, weight, reps }) => {
+    let exIdx = logger.activeExerciseIndex;
+    if (name) {
+      const matchIdx = logger.exercises.findIndex((e) =>
+        e.exerciseName.toLowerCase().includes(name.toLowerCase()) ||
+        name.toLowerCase().includes(e.exerciseName.toLowerCase())
+      );
+      if (matchIdx !== -1) exIdx = matchIdx;
+    }
+    const currentEx = logger.exercises[exIdx];
+    if (!currentEx) return;
+
+    let setIdx = currentEx.sets.findIndex((s) => !s.completed);
+    if (setIdx === -1) {
+      logger.addSet(exIdx);
+      setIdx = currentEx.sets.length;
+    }
+
+    if (weight !== undefined && !isNaN(Number(weight))) {
+      logger.updateSet(exIdx, setIdx, 'weight', Number(weight));
+    }
+    if (reps !== undefined && !isNaN(Number(reps))) {
+      logger.updateSet(exIdx, setIdx, 'reps', Number(reps));
+    }
+
+    logger.toggleSet(exIdx, setIdx, sessionControls.startSession);
+    logger.setRestSeconds(90);
+    logger.setIsRestActive(true);
+  };
+
   // Turn one day of a coach plan into today's workout.
   const handleUseCoachDay = (day) =>
     replaceWorkout(
@@ -300,11 +331,29 @@ export default function ProApp({ blueprint, session, onBack, onUpdateBlueprint, 
         open={companionOpen}
         setOpen={setCompanionOpen}
         blueprint={blueprint}
+        activeWorkout={{
+          title: logger.workoutTitle,
+          currentExercise: logger.currentFocusedExercise?.exerciseName,
+          exercises: logger.exercises,
+          completedSets: logger.stats.completedSetsCount,
+        }}
         onUseDay={(day) => {
           handleUseCoachDay(day);
           setCompanionOpen(false);
         }}
         onAddExercise={logger.addExercise}
+        onLogSet={handleVoiceLogSet}
+        onSetTimer={(sec) => {
+          logger.setRestSeconds(sec);
+          logger.setIsRestActive(true);
+        }}
+        onFinishWorkout={handleFinishWorkout}
+        onDiscardWorkout={() => {
+          if (window.confirm('Discard current workout? Any logged sets will be cleared.')) {
+            logger.discardWorkout();
+            sessionControls.resetSession();
+          }
+        }}
         onOpenTab={(tab) => {
           setActiveTab(tab);
           if (tab !== 'workout') setCompanionOpen(false);

@@ -9,6 +9,7 @@ import {
   Trash2,
   Dumbbell,
   Sparkles,
+  Mic,
 } from 'lucide-react';
 import ExerciseCard from './ExerciseCard';
 import RoutinesBar from './RoutinesBar';
@@ -116,7 +117,7 @@ export default function ActiveWorkoutView({
             ))}
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-zinc-400 mt-2">
+          <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 mt-2">
             <span className="flex items-center gap-1.5 font-mono tabular-nums text-emerald-300/90 font-medium">
               <Clock className="w-3.5 h-3.5 text-emerald-400" />
               {formatTimer(sessionSeconds)}
@@ -125,6 +126,15 @@ export default function ActiveWorkoutView({
               <Zap className="w-3.5 h-3.5 text-amber-400" />
               {formatWeight(volume, unit)} total lifted
             </span>
+            <button
+              type="button"
+              onClick={onOpenCoach}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold transition active:scale-95 shadow-sm"
+              title="Open Voice & Form Coach Marcus"
+            >
+              <Mic className="w-3 h-3 text-emerald-400" />
+              <span>Voice Coach</span>
+            </button>
           </div>
         </div>
 

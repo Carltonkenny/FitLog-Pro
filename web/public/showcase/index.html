@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitLog Pro: 5-Persona Voice Agent Showcase</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #090a0f;
+      color: #e4e4e7;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #a1a1aa;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: #12141c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .persona-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .avatar { font-size: 24px; }
+    .persona-name { font-size: 17px; font-weight: 700; color: #fff; }
+    .persona-type { font-size: 12px; color: #71717a; }
+    .voice-tag {
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .dialogue-turn {
+      background: #0d0f15;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .speaker {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .speaker-user { color: #38bdf8; }
+    .speaker-coach { color: #34d399; }
+    .text { font-size: 14px; line-height: 1.5; color: #f4f4f5; }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .action-pill {
+      font-size: 11px;
+      font-family: monospace;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.1);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    audio {
+      width: 100%;
+      margin-top: 14px;
+      border-radius: 10px;
+    }
+    .meta {
+      font-size: 11px;
+      color: #71717a;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎙️ FitLog Pro: 5-Persona Voice Agent Recordings</h1>
+    <p class="subtitle">Complete two-way spoken verification across 5 diverse athlete archetypes using Google Gemini Neural TTS.</p>
+
+    
+    <div class="card">
+      <div class="header-row">
+        <div class="persona-badge">
+          <span class="avatar">🐣</span>
+          <div>
+            <div class="persona-name">Alex</div>
+            <div class="persona-type">The Anxious Beginner</div>
+          </div>
+        </div>
+        <span class="voice-tag">Coach Marcus (Charon)</span>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-user">👤 Alex Spoke:</div>
+        <div class="text">"Hey coach, I'm new here and pretty nervous. Can you teach me how to log a set and start light on squats?"</div>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-coach">🔊 Coach Marcus Replied:</div>
+        <div class="text">"No sweat, Alex. We'll get you strong. Just hit 'log set' after you finish. Let's get 5 reps of bodyweight squats, then log it."</div>
+        
+        <div class="actions">
+          <span class="action-pill">✓ add_exercise: Squats</span><span class="action-pill">✓ log_set: Squats x 5</span>
+        </div>
+      </div>
+
+      <audio controls src="persona_1_alex.wav"></audio>
+      <div class="meta">
+        <span>Chat: 5107ms | TTS: 3906ms</span>
+        <span>Format: 24kHz Studio WAV (358.5 KB)</span>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="header-row">
+        <div class="persona-badge">
+          <span class="avatar">🦍</span>
+          <div>
+            <div class="persona-name">Dave</div>
+            <div class="persona-type">The Heavy Powerlifter (Out of Breath)</div>
+          </div>
+        </div>
+        <span class="voice-tag">Coach Marcus (Charon)</span>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-user">👤 Dave Spoke:</div>
+        <div class="text">"Just ground out 140kg for 3 on deadlift. RPE 9. Log it and start 3 minute rest timer."</div>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-coach">🔊 Coach Marcus Replied:</div>
+        <div class="text">"Solid work, Dave. That's a good grind."</div>
+        
+        <div class="actions">
+          <span class="action-pill">✓ log_set: Deadlift 140kg x 3</span><span class="action-pill">✓ set_timer (180s)</span>
+        </div>
+      </div>
+
+      <audio controls src="persona_2_dave.wav"></audio>
+      <div class="meta">
+        <span>Chat: 1616ms | TTS: 2575ms</span>
+        <span>Format: 24kHz Studio WAV (116.6 KB)</span>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="header-row">
+        <div class="persona-badge">
+          <span class="avatar">⚡</span>
+          <div>
+            <div class="persona-name">Sarah</div>
+            <div class="persona-type">The Busy Professional (20-Min Crunch)</div>
+          </div>
+        </div>
+        <span class="voice-tag">Coach Maya (Aoede)</span>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-user">👤 Sarah Spoke:</div>
+        <div class="text">"I have exactly 20 minutes before my next meeting. Give me a fast upper push superset and let's go."</div>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-coach">🔊 Coach Maya Replied:</div>
+        <div class="text">"Alright Sarah, let's crush this. Hit some Dumbbell Bench Press right into Push-ups. No wasted time."</div>
+        
+        <div class="actions">
+          <span class="action-pill">✓ add_exercise: Dumbbell Bench Press x 10</span><span class="action-pill">✓ add_exercise: Push-ups x 15</span><span class="action-pill">✓ set_timer (60s)</span>
+        </div>
+      </div>
+
+      <audio controls src="persona_3_sarah.wav"></audio>
+      <div class="meta">
+        <span>Chat: 2898ms | TTS: 3238ms</span>
+        <span>Format: 24kHz Studio WAV (249.7 KB)</span>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="header-row">
+        <div class="persona-badge">
+          <span class="avatar">💪</span>
+          <div>
+            <div class="persona-name">Leo</div>
+            <div class="persona-type">The Hypertrophy Bodybuilder (Drop Set Chase)</div>
+          </div>
+        </div>
+        <span class="voice-tag">Coach Marcus (Charon)</span>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-user">👤 Leo Spoke:</div>
+        <div class="text">"Incline dumbbell press: hit 32kg for 10 reps, then drop set 22kg for 8 to failure. Log both sets."</div>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-coach">🔊 Coach Marcus Replied:</div>
+        <div class="text">"{"reply":"Solid work, Leo. That drop set crushed it.","actions":[{"type":"log_set","name":"Incline dumbbell press","weight":32.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"</div>
+        
+      </div>
+
+      <audio controls src="persona_4_leo.wav"></audio>
+      <div class="meta">
+        <span>Chat: 5125ms | TTS: 2375ms</span>
+        <span>Format: 24kHz Studio WAV (161.6 KB)</span>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="header-row">
+        <div class="persona-badge">
+          <span class="avatar">🛡️</span>
+          <div>
+            <div class="persona-name">Elena</div>
+            <div class="persona-type">The Injured / Rehab Lifter (Shoulder Impingement)</div>
+          </div>
+        </div>
+        <span class="voice-tag">Coach Maya (Aoede)</span>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-user">👤 Elena Spoke:</div>
+        <div class="text">"Flat barbell bench is pinching my front shoulder today. What can I swap it with right now to keep my chest working safely?"</div>
+      </div>
+
+      <div class="dialogue-turn">
+        <div class="speaker speaker-coach">🔊 Coach Maya Replied:</div>
+        <div class="text">"Alright, ditch the bar. Grab some dumbbells for flat press; you'll get a much safer path for your shoulders. Focus on control."</div>
+        
+        <div class="actions">
+          <span class="action-pill">✓ add_exercise: Flat Dumbbell Press x 10</span>
+        </div>
+      </div>
+
+      <audio controls src="persona_5_elena.wav"></audio>
+      <div class="meta">
+        <span>Chat: 5441ms | TTS: 2850ms</span>
+        <span>Format: 24kHz Studio WAV (324.7 KB)</span>
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>

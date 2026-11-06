@@ -15,6 +15,7 @@ export default function App() {
       const path = window.location.pathname.toLowerCase();
       if (path === '/app' || path === '/simulator') return 'app';
       if (path === '/onboarding') return 'onboarding';
+      if (import.meta.env.DEV && import.meta.env.VITE_SKIP_AUTH === 'true') return 'app';
     }
     return 'landing';
   };
