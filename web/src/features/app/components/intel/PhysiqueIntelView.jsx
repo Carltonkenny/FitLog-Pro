@@ -320,3 +320,4 @@ export default function PhysiqueIntelView({ activeWorkout = null, onStartWorkout
     </div>
   );
 }
+

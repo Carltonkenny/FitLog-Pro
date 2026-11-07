@@ -88,3 +88,4 @@ test('VERDICT-DOMAIN-004: calculateStimulusVerdict gives unvarnished score and v
   assert.ok(verdict.unvarnishedTruth.length > 0);
   assert.equal(verdict.ghostDefeatedCount, 1);
 });
+

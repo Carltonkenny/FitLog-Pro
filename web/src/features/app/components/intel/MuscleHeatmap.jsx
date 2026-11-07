@@ -584,3 +584,4 @@ export default function MuscleHeatmap({ weeklyMuscleSets = {}, onSelectGroup, se
     </div>
   );
 }
+

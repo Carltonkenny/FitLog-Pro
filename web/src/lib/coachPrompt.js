@@ -107,6 +107,7 @@ export function buildSystem({ withPhotos, wantsPlan, petName = 'Coach Marcus', m
     '- Zero robotic, polite corporate talk: NEVER say "Certainly!", "I\'d be happy to assist", "Feel free to ask", or "Great question!". Never apologize unnecessarily. Talk like you\'re standing right next to the power rack.',
     '- Progressive Overload & Beat Your Ghost: Always challenge the lifter to beat their previous session ghost target (+1 rep or +2.5kg). If they exceed it, acknowledge the PR with real hype.',
     '- Call out junk volume: If they do more than 10 sets on a single muscle group in one session, warn them straight up that extra sets are junk volume causing fatigue without extra growth.',
+    '- Lifetime Exercise Memory: You have absolute recall of every exercise the athlete has ever performed under "LIFETIME EXERCISE RECALL". When they ask "What did I do on bench last time?", "What was my squat?", or "Have I done curls before?", quote their real historical weights, reps, and dates with total precision.',
     '- Never echo the lifter verbatim: Do not repeat their phrase back to them. Acknowledge the weight/reps and immediately give the next cue or rest guidance.',
     'AUDIO-FIRST PHONETIC DELIVERY (DEEPGRAM NEURAL SPEECH):',
     '- Your "reply" field is spoken aloud through Deepgram Neural TTS. Write naturally for the ear, not the eye.',
@@ -210,6 +211,46 @@ export function buildContext({
   const records = Object.entries(prs || {}).map(
     ([id, pr]) => `${id}: ${pr.weight} kg x ${pr.reps} (est. max ${pr.oneRepMax} kg)`
   );
+
+  // Full aggregate of EVERY exercise ever performed by the athlete
+  const exercisesHistoryMap = new Map();
+  for (const w of history || []) {
+    for (const ex of w.exercises || []) {
+      const name = ex.exerciseName || ex.name;
+      if (!name) continue;
+      const done = (ex.sets || []).filter((s) => s.completed && Number(s.weight) >= 0 && Number(s.reps) > 0);
+      if (!done.length) continue;
+      const sessionBest = done.reduce((a, b) => (Number(b.weight) > Number(a.weight) ? b : a), done[0]);
+      const session1RM = calculate1RM(sessionBest.weight, sessionBest.reps);
+
+      if (!exercisesHistoryMap.has(name)) {
+        exercisesHistoryMap.set(name, {
+          name,
+          sessionsCount: 1,
+          lastDate: new Date(w.timestamp).toISOString().slice(0, 10),
+          lastWeight: Number(sessionBest.weight),
+          lastReps: Number(sessionBest.reps),
+          last1RM: session1RM,
+          bestWeight: Number(sessionBest.weight),
+          bestReps: Number(sessionBest.reps),
+          best1RM: session1RM,
+        });
+      } else {
+        const item = exercisesHistoryMap.get(name);
+        item.sessionsCount += 1;
+        if (session1RM > item.best1RM) {
+          item.best1RM = session1RM;
+          item.bestWeight = Number(sessionBest.weight);
+          item.bestReps = Number(sessionBest.reps);
+        }
+      }
+    }
+  }
+
+  const exerciseRecall = Array.from(exercisesHistoryMap.values()).map(
+    (e) => `${e.name}: ${e.sessionsCount} session(s), last on ${e.lastDate} (${e.lastWeight}kg x ${e.lastReps}), all-time best ${e.bestWeight}kg x ${e.bestReps} (e1RM ${e.best1RM}kg)`
+  );
+
   const profile = blueprint
     ? {
         goal: blueprint.fitness_goal || blueprint.goal,
@@ -246,5 +287,6 @@ LAST SESSION STATUS: ${lastSessionRecap}
 ATHLETE BLUEPRINT: ${JSON.stringify(profile)}
 CURRENT ACTIVE WORKOUT: ${activeBlock}
 RECENT WORKOUTS (newest first, ${history.length} logged in total): ${sessions.length ? JSON.stringify(sessions) : 'none yet'}
-PERSONAL RECORDS: ${records.length ? records.join('; ') : 'none yet'}`;
+PERSONAL RECORDS: ${records.length ? records.join('; ') : 'none yet'}
+LIFETIME EXERCISE RECALL (Every movement ever done): ${exerciseRecall.length ? exerciseRecall.join('; ') : 'none yet'}`;
 }

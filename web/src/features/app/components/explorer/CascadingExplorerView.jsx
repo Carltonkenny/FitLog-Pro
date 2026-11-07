@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import {
   CASCADING_CATEGORIES,
   EXERCISE_LIBRARY,
+  WorkoutStore,
 } from '../../../../lib/workoutStore';
 import {
   Search,
@@ -10,10 +11,14 @@ import {
   Check,
   ChevronDown,
   ChevronUp,
+  TrendingUp,
 } from 'lucide-react';
 import EquipmentBadge from '../../../../components/EquipmentBadge';
+import { formatWeight, useSettings } from '../../../../lib/settings';
+import { formatWorkoutDate } from '../../../../lib/stats';
 
 export default function CascadingExplorerView({ onAddExercise }) {
+  const { unit } = useSettings();
   const [selectedCategory, setSelectedCategory] = useState('chest');
   const [selectedSubregion, setSelectedSubregion] = useState('upper_chest');
   const [selectedEquipment, setSelectedEquipment] = useState('all');
@@ -252,6 +257,25 @@ export default function CascadingExplorerView({ onAddExercise }) {
                     </span>
                   </div>
                 </div>
+
+                {/* Previous History Recall Badge */}
+                {(() => {
+                  const last = WorkoutStore.getLastSessionForExercise(ex.id);
+                  if (!last) return null;
+                  return (
+                    <div className="px-3 py-1.5 rounded-xl bg-zinc-950/70 border border-white/[0.05] text-[11px] text-zinc-300 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5 text-zinc-400">
+                        <TrendingUp className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>
+                          History: <strong className="text-white">{formatWeight(last.bestSet.weight, unit)} × {last.bestSet.reps}</strong>
+                        </span>
+                      </span>
+                      <span className="text-[10px] font-mono text-emerald-400/90">
+                        {formatWorkoutDate(last.timestamp)}
+                      </span>
+                    </div>
+                  );
+                })()}
 
                 {/* Form Guidance & Mind-Muscle Cue */}
                 {ex.cue && (
